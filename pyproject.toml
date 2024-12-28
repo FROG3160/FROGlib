@@ -14,7 +14,14 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-dependencies = ["numpy"]
+dependencies = [
+    "math",
+    "robotpy",
+    "robotpy-commands-v2",
+    "robotpy-ctre",
+    "phoenix6",
+    "robotpy-navx",
+]
 
 [project.urls]
 Homepage = "https://github.com/FROG3160/FROGlib"
