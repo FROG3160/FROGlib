@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "froglib"
+version = "2025.0.0"
+description = "Custom Python classes and functions for FRC robot code used by FRC team 3160 - F.R.O.G."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = ["numpy"]
+
+[project.urls]
+Homepage = "https://github.com/FROG3160/FROGlib"
