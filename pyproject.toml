@@ -15,7 +15,6 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "math",
     "robotpy",
     "robotpy-commands-v2",
     "robotpy-ctre",
