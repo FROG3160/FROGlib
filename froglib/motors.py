@@ -5,6 +5,7 @@ from phoenix6.hardware.talon_fx import TalonFX
 from phoenix6.configs.talon_fx_configs import FeedbackSensorSourceValue
 from phoenix6.configs.config_groups import Slot0Configs, Slot1Configs, FeedbackConfigs
 from phoenix6.signals.spn_enums import GravityTypeValue
+
 # from rev import CANSparkMax, SparkAbsoluteEncoder
 from phoenix5 import StatusFrameEnhanced, TalonSRX, TalonSRXConfiguration
 
@@ -18,7 +19,7 @@ class FROGFeedbackConfig(FeedbackConfigs):
         Args:
             remote_sensor_id (int, optional): CAN ID of the sensor. Defaults to 0.
             sensor_source (_type_, optional): Source value from FeedbackSensorSourceValue. Defaults to FeedbackSensorSourceValue.ROTOR_SENSOR.
-        """        
+        """
         super().__init__()
         self.feedback_remote_sensor_id = remote_sensor_id
         self.feedback_sensor_source = sensor_source
@@ -42,7 +43,7 @@ class FROGTalonFXConfig(TalonFXConfiguration):
             feedback_config (_type_, optional): _description_. Defaults to FROGFeedbackConfig().
             slot0gains (_type_, optional): _description_. Defaults to Slot0Configs().
             slot1gains (_type_, optional): _description_. Defaults to Slot1Configs().
-        """        
+        """
         super().__init__()
         self.feedback = feedback_config
         self.slot0 = slot0gains
@@ -52,8 +53,7 @@ class FROGTalonFXConfig(TalonFXConfiguration):
 class FROGTalonSRXConfig(TalonSRXConfiguration):
 
     def __init__(self):
-        """A FROG subclass of TalonSRXConfiguration.
-        """        
+        """A FROG subclass of TalonSRXConfiguration."""
         super().__init__()
 
 

@@ -57,7 +57,7 @@ class SwerveModule:
             cancoder_config (FROGCANCoderConfig): config for the CANcoder (steer encoder).
             parent_nt (str, optional): parent Network Table to place this device under.
                 Defaults to "Undefined".
-        """        # set module name
+        """  # set module name
         self.name = name
         # set neutral mode for drive motor
         drive_motor_config.motor_output.neutral_mode = NeutralModeValue.BRAKE
@@ -155,7 +155,9 @@ class SwerveModule:
         Returns:
             float: distance in meters
         """
-        return self.drivetrain.rotations_to_distance(self.drive_motor.get_position().value)
+        return self.drivetrain.rotations_to_distance(
+            self.drive_motor.get_position().value
+        )
 
     def getCurrentSpeed(self) -> float:
         return self.drivetrain.input_rps_to_speed(self.drive_motor.get_velocity().value)
