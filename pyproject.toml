@@ -1,26 +1,20 @@
 [build-system]
-requires = ["setuptools>=64", "setuptools-scm>=8"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "froglib"
-version = "2025.0.0"
-description = "Custom Python classes and functions for FRC robot code used by FRC team 3160 - F.R.O.G."
-license = {file = "license.md"}
+name = "FROGlib"
+version = "0.1.0"
+description = "Hardware Abstraction and Utility Library for FROG 3160"
+authors = [{ name = "FROG 3160", email = "your-email@example.com" }]
 readme = "README.md"
-requires-python = ">=3.8"
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
-]
+requires-python = ">=3.10"
 dependencies = [
-    "robotpy",
-    "robotpy-commands-v2",
-    "robotpy-ctre",
-    "phoenix6",
-    "robotpy-navx",
+    "robotpy>=2026.2.2",
+    "robotpy-commands-v2>=2026.2.2",
+    "phoenix6>26.0.0",
+    "photonlibpy>2026.1.1",
+    "numpy",
 ]
-
 [project.urls]
 Homepage = "https://github.com/FROG3160/FROGlib"

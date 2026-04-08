@@ -19,109 +19,179 @@ from phoenix6.controls import (
     VelocityVoltage,
     PositionVoltage,
 )
-from phoenix6.signals.spn_enums import NeutralModeValue, InvertedValue
-from wpimath.units import radiansToRotations, rotationsToRadians
-from .motors import FROGTalonFX, FROGTalonFXConfig, DriveTrain
-from .sensors import FROGCANCoderConfig, FROGCanCoder, FROGGyro
+from wpimath.units import (
+    radiansToRotations,
+    rotationsToRadians,
+    rotationsToDegrees,
+    meters_per_second,
+    meters,
+)
+
+from .sds import MK4C_L3_GEARING, WHEEL_DIAMETER
+
+from .ctre import (
+    MOTOR_OUTPUT_CCWP_BRAKE,
+    MOTOR_OUTPUT_CWP_BRAKE,
+    MAGNET_CONFIG_CONTWRAP_CCWP,
+    FROGPigeonGyro,
+    FROGTalonFX,
+    FROGCanCoder,
+    get_frog_talon_config,
+    get_frog_cancoder_config,
+)
+
+from .utils import DriveTrain
+from phoenix6.configs import (
+    TalonFXConfiguration,
+    CANcoderConfiguration,
+    Slot0Configs,
+    FeedbackConfigs,
+    MotorOutputConfigs,
+)
 from phoenix6.configs.config_groups import ClosedLoopGeneralConfigs
 from wpilib import Timer
+from dataclasses import dataclass, field
+from phoenix6.signals.spn_enums import FeedbackSensorSourceValue
+
+from wpimath.controller import ProfiledPIDControllerRadians
+from wpimath.trajectory import TrapezoidProfileRadians
+
+
+@dataclass
+class SwerveModuleConfig:
+
+    def __init__(
+        self,
+        name: str = "undefined",
+        location: Translation2d = field(default_factory=Translation2d),
+        drive_motor_id: int = 0,
+        steer_motor_id: int = 0,
+        cancoder_id: int = 0,
+        drive_motor_config: TalonFXConfiguration = get_frog_talon_config(),
+        steer_motor_config: TalonFXConfiguration = get_frog_talon_config(),
+        cancoder_config: CANcoderConfiguration = get_frog_cancoder_config(),
+        wheel_diameter: float = 0.0,
+    ):
+        """Config parameters for the individual swerve modules
+
+        Args:
+            name (str, optional): The name of the module, used for network tables. Defaults to "undefined".
+            location (Translation2d, optional): Position of the module from the center of the robot. Defaults to field(default_factory=Translation2d).
+            drive_motor_id (int, optional): CAN ID of the drive motor. Defaults to 0.
+            steer_motor_id (int, optional): CAN ID of the steer motor. Defaults to 0.
+            cancoder_id (int, optional): CAN ID of the CANCoder. Defaults to 0.
+            cancoder_offset (float, optional): Magnet offset of the cancoder. Defaults to 0.0.
+        """
+        self.name = name
+        self.location = location
+        self.drive_motor_id = drive_motor_id
+        self.steer_motor_id = steer_motor_id
+        self.cancoder_id = cancoder_id
+        self.drive_motor_config = drive_motor_config
+        self.steer_motor_config = steer_motor_config
+        self.cancoder_config = cancoder_config
+        self.wheel_diameter = wheel_diameter
+
+
+class RotationControllerConfig:
+    def __init__(
+        self,
+        kProfiledRotationP: float = 0.0,
+        kProfiledRotationI: float = 0.0,
+        kProfiledRotationD: float = 0.0,
+        kProfiledRotationMaxVelocity: float = 0.0,
+        kProfiledRotationMaxAccel: float = 0.0,
+    ):
+        self.kProfiledRotationP = kProfiledRotationP
+        self.kProfiledRotationI = kProfiledRotationI
+        self.kProfiledRotationD = kProfiledRotationD
+        self.kProfiledRotationMaxVelocity = kProfiledRotationMaxVelocity
+        self.kProfiledRotationMaxAccel = kProfiledRotationMaxAccel
 
 
 class SwerveModule:
     def __init__(
         self,
-        name: str,
-        location: Translation2d,
-        drive_gearing: list,
-        wheel_diameter: float,
-        drive_motor_id: int,
-        drive_motor_config: FROGTalonFXConfig,
-        steer_motor_id: int,
-        steer_motor_config: FROGTalonFXConfig,
-        cancoder_id: int,
-        cancoder_config: FROGCANCoderConfig,
+        module_config: SwerveModuleConfig,
         parent_nt="Undefined",
     ):
         """Creates a Swerve Module
 
         Args:
-            name (str): Name of the module
-            location (Translation2d): coordinates from the center of the robot.
-            drive_gearing (list): the gear stages of the drive wheel
-            wheel_diameter (float): the diameter of the drive wheel in meters.
-            drive_motor_id (int): CAN ID of the drive motor.
-            drive_motor_config (FROGTalonFXConfig): config for the drive motor.
-            steer_motor_id (int): CAN ID of the steer motor.
-            steer_motor_config (FROGTalonFXConfig): config for the steer motor.
-            cancoder_id (int): CAN ID of the CANcoder (steer encoder).
-            cancoder_config (FROGCANCoderConfig): config for the CANcoder (steer encoder).
+            config (SwerveModuleConfig, optional): Configuration for this swerve module.
+                Defaults to SwerveModuleConfig().
             parent_nt (str, optional): parent Network Table to place this device under.
                 Defaults to "Undefined".
-        """  # set module name
-        self.name = name
-        # set neutral mode for drive motor
-        drive_motor_config.motor_output.neutral_mode = NeutralModeValue.BRAKE
-        # with the non-inverted SwerveDriveSpecialties swerve modules, and
-        # the bevel gears facing left, the drive motors need to be inverted
-        # in order to move the drivetrain forward with a positive value.
-        # the default inverted setting is CCW positive.
-        drive_motor_config.motor_output.inverted = InvertedValue.CLOCKWISE_POSITIVE
+        """
+        # set module name
+        self.name = module_config.name
+        nt_table = f"{parent_nt}/{self.name}"
 
         # create/configure drive motor
         self.drive_motor = FROGTalonFX(
-            drive_motor_id,
-            drive_motor_config,
-            parent_nt=f"{parent_nt}/{self.name}",
-            motor_name="Drive",
-        )
-
-        # set continuous wrap to wrap around the 180 degree point
-        steer_motor_config.closed_loop_general.continuous_wrap = True
-        # create/configure steer motor
-        self.steer_motor = FROGTalonFX(
-            steer_motor_id,
-            steer_motor_config,
-            parent_nt=f"{parent_nt}/{self.name}",
-            motor_name="Steer",
+            id=module_config.drive_motor_id,
+            motor_config=module_config.drive_motor_config,
+            motor_name=f"{self.name} Drive",
+            signal_profile=FROGTalonFX.SignalProfile.SWERVE_DRIVE,
         )
 
         # create/configure cancoder
-        self.steer_encoder = FROGCanCoder(cancoder_id, cancoder_config)
+        self.steer_encoder = FROGCanCoder(
+            id=module_config.cancoder_id, config=module_config.cancoder_config
+        )
 
-        self.drive_motor.get_velocity().set_update_frequency(50)
-        self.drive_motor.get_motor_voltage().set_update_frequency(50)
-        self.steer_motor.get_position().set_update_frequency(50)
-        self.steer_encoder.get_absolute_position().set_update_frequency(50)
-        self.drive_motor.optimize_bus_utilization()
-        self.steer_motor.optimize_bus_utilization()
+        # create/configure steer motor using a feedback config that uses the steer encoder as a remote sensor
+        self.steer_motor = FROGTalonFX(
+            id=module_config.steer_motor_id,
+            motor_config=module_config.steer_motor_config.with_feedback(
+                FeedbackConfigs()
+                .with_feedback_remote_sensor_id(self.steer_encoder.device_id)
+                .with_feedback_sensor_source(FeedbackSensorSourceValue.REMOTE_CANCODER)
+            ),
+            motor_name=f"{self.name} Steer",
+            signal_profile=FROGTalonFX.SignalProfile.SWERVE_AZIMUTH,
+        )
+
+        #  cancoder, update status signal frequency - need absolute position
+        self.steer_encoder.get_absolute_position().set_update_frequency(100)
         self.steer_encoder.optimize_bus_utilization()
 
         # set module location
-        self.location = location
-        #
-        self.drivetrain = DriveTrain(drive_gearing, wheel_diameter)
-
+        self.location = module_config.location
+        self.wheel_diameter = module_config.wheel_diameter
+        # initialize the state of the module as disabled
         self.enabled = False
 
-        nt_table = f"{parent_nt}/{self.name}"
-        self._moduleSpeedPub = (
+        # publish all values as children of the specific swerve module
+        # log various values to network tables
+        self._moduleCommandedVelocityPub = (
             NetworkTableInstance.getDefault()
-            .getFloatTopic(f"{nt_table}/commanded_speed")
+            .getFloatTopic(f"{nt_table}/commanded_mps")
             .publish()
         )
-        self._moduleRotationPub = (
+        self._moduleCommandedAnglePub = (
             NetworkTableInstance.getDefault()
-            .getFloatTopic(f"{nt_table}/commanded_angle")
+            .getFloatTopic(f"{nt_table}/commanded_degrees")
             .publish()
         )
-        self._moduleVelocityPub = (
+        self._moduleActualVelocityPub = (
             NetworkTableInstance.getDefault()
-            .getFloatTopic(f"{nt_table}/actual_velocity")
+            .getFloatTopic(f"{nt_table}/actual_mps")
             .publish()
         )
-        self._modulePositionPub = (
+        self._moduleActualAnglePub = (
             NetworkTableInstance.getDefault()
-            .getFloatTopic(f"{nt_table}/actual_position")
+            .getFloatTopic(f"{nt_table}/actual_degrees")
+            .publish()
+        )
+        self._module_velocity_error_pub = (
+            NetworkTableInstance.getDefault()
+            .getFloatTopic(f"{nt_table}/velocity_error")
+            .publish()
+        )
+        self._module_angle_error_pub = (
+            NetworkTableInstance.getDefault()
+            .getFloatTopic(f"{nt_table}/angle_error")
             .publish()
         )
 
@@ -131,10 +201,10 @@ class SwerveModule:
     def enable(self):
         self.enabled = True
 
-    def getEncoderAzimuthRotations(self) -> float:
+    def getEncoderAzimuthRotations(self):
         """gets the absolute position from the CANCoder
         Returns:
-            float: absolute position of the sensor in rotations
+            rotation: absolute position of the sensor in rotations
         """
         return self.steer_encoder.get_absolute_position().value
 
@@ -149,18 +219,21 @@ class SwerveModule:
         else:
             return Rotation2d(0)
 
-    def getCurrentDistance(self) -> float:
+    def getCurrentDistance(self) -> meters:
         """Gets distance traveled by the system.
 
         Returns:
-            float: distance in meters
+            meters: distance in meters
         """
-        return self.drivetrain.rotations_to_distance(
-            self.drive_motor.get_position().value
-        )
+        return self.drive_motor.get_position().value
 
-    def getCurrentSpeed(self) -> float:
-        return self.drivetrain.input_rps_to_speed(self.drive_motor.get_velocity().value)
+    def getCurrentSpeed(self) -> meters_per_second:
+        """Gets the current speed of the drive motor.
+
+        Returns:
+            meters_per_second: speed in meters per second
+        """
+        return self.drive_motor.get_velocity().value
 
     def getCurrentState(self):
         return SwerveModuleState(
@@ -173,71 +246,81 @@ class SwerveModule:
             self.getCurrentDistance(), self.getCurrentSteerAzimuth()
         )
 
-    def setState(self, requested_state: SwerveModuleState):
+    def apply_state(self, requested_state: SwerveModuleState):
         if self.enabled:
             # log the current state of the motors before commanding them to a new value
-            self._moduleVelocityPub.set(self.drive_motor.get_velocity().value)
-            self._modulePositionPub.set(self.steer_motor.get_position().value)
+            # log actual velocity (rps) and position (rotations)
+            self.current_velocity = self.getCurrentSpeed()
+            self.current_angle = self.getCurrentSteerAzimuth()
+            self._moduleActualVelocityPub.set(self.current_velocity)
+            self._moduleActualAnglePub.set(self.current_angle.degrees())
 
-            self.requestedState = SwerveModuleState.optimize(
-                requested_state, self.getCurrentSteerAzimuth()
-            )
-            self.commandedRotation = radiansToRotations(
-                self.requestedState.angle.radians()
-            )
-            self.commandedSpeed = self.drivetrain.speed_to_input_rps(
-                self.requestedState.speed
-            )
+            # update the state with the steer angle that is closest to the current angle
+            requested_state.optimize(self.current_angle)
+
+            # command the steer motor to the requested angle
+            self.commandedRotation = radiansToRotations(requested_state.angle.radians())
             self.steer_motor.set_control(
-                PositionDutyCycle(
+                PositionVoltage(
                     position=self.commandedRotation,
-                    slot=0,  # Duty Cycle gains for steer
+                    slot=0,  # Position voltage gains for steer
                 )
             )
-            self._moduleRotationPub.set(self.commandedRotation)
+            self._moduleCommandedAnglePub.set(
+                rotationsToDegrees(self.commandedRotation)
+            )
+
+            self.commandedSpeed = requested_state.speed
             self.drive_motor.set_control(
                 VelocityVoltage(
                     velocity=self.commandedSpeed,
-                    slot=1,  # Voltage gains for drive
+                    slot=0,  # Voltage gains for drive
                 )
             )
-            self._moduleSpeedPub.set(self.commandedSpeed)
+            self._moduleCommandedVelocityPub.set(self.commandedSpeed)
+
+            # publish the error for velocicty and anble
+            self._module_velocity_error_pub.set(
+                self.drive_motor.get_closed_loop_error().value
+            )
+            self._module_angle_error_pub.set(
+                self.drive_motor.get_closed_loop_error().value
+            )
 
         else:
             # stop the drive motor, steer motor can stay where it is
             self.drive_motor.set_control(VelocityVoltage(velocity=0, slot=1))
-        self.drive_motor.logData()
         # self.steer.logData()
 
 
-class SwerveBase(Subsystem):
+class SwerveChassis:
+
     def __init__(
         self,
-        swerve_module_configs,
-        gyro: FROGGyro,
+        swerve_module_configs: tuple[SwerveModuleConfig],
+        gyro: FROGPigeonGyro,
+        rotation_contoller_config: RotationControllerConfig,
         max_speed: float,
         max_rotation_speed: float,
-        parent_nt: str = "Subsystems",
+        parent_nt: str = "Undefined",
     ):
-        super().__init__()
-        self.setName("SwerveChassis")
-        nt_table = f"{parent_nt}/{self.getName()}"
-        # need each of the swerve modules
-        self.enabled = False
+        # set the name of this component to the class name
+        self.name = self.__class__.__name__
+        # set the network tables path for this component
+        nt_table = f"{parent_nt}/{self.name}"
 
-        self.center = Translation2d(0, 0)
+        # Swerve components
+        #####################################
+
+        # instantiate all 4 swerve modules.  Using a tuple to preserve the order of the modules.
+        # Convention is to list them in the following order:
+        # Front Left, Front Right, Back Left, Back Right
         self.modules = tuple(
-            SwerveModule(**config, parent_nt=nt_table)
-            for config in swerve_module_configs
+            SwerveModule(config, parent_nt=nt_table) for config in swerve_module_configs
         )
         self.gyro = gyro
-        self.max_speed = max_speed
-        self.max_rotation_speed = max_rotation_speed
 
-        # creates a tuple of 4 SwerveModuleState objects
-        self.moduleStates = (SwerveModuleState(),) * 4
-
-        self.kinematics = SwerveDrive4Kinematics(
+        self.swerve_kinematics = SwerveDrive4Kinematics(
             # the splat operator (asterisk) below expands
             # the list into positional arguments for the
             # kinematics object.  We are taking the location
@@ -248,27 +331,58 @@ class SwerveBase(Subsystem):
             # each SwerveModule in the same order we use here.
             *[m.location for m in self.modules]
         )
-
-        self.chassisSpeeds = ChassisSpeeds(0, 0, 0)
-
-        self.estimator = SwerveDrive4PoseEstimator(
-            self.kinematics,
-            self.gyro.getRotation2d(),
-            tuple(
-                [
-                    SwerveModulePosition(0, x.getCurrentSteerAzimuth())
-                    for x in self.modules
-                ]
-            ),
-            Pose2d(),  # TODO:  Determine if we want vision data to supply initial pose
-            # last year, setFieldPosition was called and passed the vision pose during
-            # robotInit()
+        # the swerve estimator needs to know the initial position of each module to start tracking the pose of the robot.
+        # We start with an initial distance of 0 for each module and the current steer azimuth.
+        initial_module_positions = tuple(
+            [SwerveModulePosition(0, x.getCurrentSteerAzimuth()) for x in self.modules]
         )
+        self.swerve_estimator = SwerveDrive4PoseEstimator(
+            self.swerve_kinematics,
+            self.gyro.getRotation2d(),
+            initial_module_positions,
+            Pose2d(),  # Initial pose set to empty by design; vision initialization handled separately if needed.
+        )
+
+        # Swerve Characteristics
+        #####################################
+
+        # define the center of rotation for the robot.  All swerve modules positions must be given in relation to this point.
+        self.center = Translation2d(0, 0)
+        self.max_speed = max_speed
+        self.max_rotation_speed = max_rotation_speed
+
+        # Swerve initial variables
+        #####################################
+
+        # creates a tuple of 4 SwerveModuleState objects
+        # this attribute will hold the desired state (speed and direction) for each module
+        self.moduleStates = (SwerveModuleState(),) * 4
+        # this attribute will hold the requested speeds of the robot chassis (x, y, and rotational)
+        self.chassisSpeeds = ChassisSpeeds(0, 0, 0)
+        # start with the chassis disabled
+        self.enabled = False
+
+        # initialize timer for loop time calculations
         self.timer = Timer()
         self.timer.start()
-        self.lastTime = 0
+        self.lastTime = self.timer.get()
         self.loopTime = 0
 
+        # create rotation controller for auto-rotation
+        self.profiledRotationConstraints = TrapezoidProfileRadians.Constraints(
+            rotation_contoller_config.kProfiledRotationMaxVelocity,
+            rotation_contoller_config.kProfiledRotationMaxAccel,
+        )
+        self.profiledRotationController = ProfiledPIDControllerRadians(
+            rotation_contoller_config.kProfiledRotationP,
+            rotation_contoller_config.kProfiledRotationI,
+            rotation_contoller_config.kProfiledRotationD,
+            self.profiledRotationConstraints,
+        )
+        self.profiledRotationController.enableContinuousInput(-math.pi, math.pi)
+
+        # Network Tables publishers
+        #####################################
         self._chassisSpeedsPub = (
             NetworkTableInstance.getDefault()
             .getStructTopic(f"{nt_table}/chassisSpeedsCommanded", ChassisSpeeds)
@@ -284,9 +398,15 @@ class SwerveBase(Subsystem):
             .getStructTopic(f"{nt_table}/chassisSpeedsError", ChassisSpeeds)
             .publish()
         )
-        self._estimatedPositionPub = (
+        self._estimatorPosePub = (
             NetworkTableInstance.getDefault()
-            .getStructTopic(f"{nt_table}/estimatedPosition", Pose2d)
+            .getStructTopic(f"{nt_table}/estimatorPose", Pose2d)
+            .publish()
+        )
+        # create NT publisher for boolean odding vision measurements to the swerve estimator
+        self._useVisionMeasurementsPub = (
+            NetworkTableInstance.getDefault()
+            .getBooleanTopic(f"{nt_table}/useVisionMeasurements")
             .publish()
         )
 
@@ -300,6 +420,8 @@ class SwerveBase(Subsystem):
         for module in self.modules:
             module.enable()
 
+    # TODO: #4 Consolidate fieldOrientedDrive and fieldOrientedAutoRotateDrive
+    # add a boolean parameter to indicate whether to apply throttle to rotation or not
     def fieldOrientedDrive(self, vX: float, vY: float, vT: float, throttle=1.0):
         """Calculates the necessary chassis speeds given the commanded field-oriented
         x, y, and rotational speeds.  An optional throttle value adjusts all inputs
@@ -317,11 +439,10 @@ class SwerveBase(Subsystem):
         xSpeed = vX * self.max_speed * throttle
         ySpeed = vY * self.max_speed * throttle
         rotSpeed = vT * self.max_rotation_speed * throttle
-        self.chassisSpeeds = ChassisSpeeds.discretize(
+        self.apply_chassis_speeds(
             ChassisSpeeds.fromFieldRelativeSpeeds(
                 xSpeed, ySpeed, rotSpeed, self.getRotation2d()
-            ),
-            self.loopTime,
+            )
         )
 
     def fieldOrientedAutoRotateDrive(
@@ -343,15 +464,62 @@ class SwerveBase(Subsystem):
         xSpeed = vX * self.max_speed * throttle
         ySpeed = vY * self.max_speed * throttle
         rotSpeed = vT * self.max_rotation_speed
-        self.chassisSpeeds = ChassisSpeeds.discretize(
+        self.apply_chassis_speeds(
             ChassisSpeeds.fromFieldRelativeSpeeds(
                 xSpeed, ySpeed, rotSpeed, self.getRotation2d()
-            ),
-            self.loopTime,
+            )
         )
 
+    def fieldOrientedDriveWithHeading(
+        self, vX: float, vY: float, target_heading: float, throttle: float = 1.0
+    ) -> None:
+        """
+        Calculates the necessary chassis speeds for field-oriented driving with a target heading (rotation).
+        Uses the profiled rotation controller to generate rotational velocity to reach the target angle.
+        Throttle applies only to translational speeds (vX, vY); rotation is profiled independently.
+
+        Args:
+            vX (float): Velocity requested in the X direction (downfield), proportion of max speed (-1 to 1).
+            vY (float): Velocity requested in the Y direction (left), proportion of max speed (-1 to 1).
+            target_angle (float): Desired robot heading in radians (field-relative, continuous -π to π).
+            throttle (float, optional): Proportion applied to vX and Vy (translational). Defaults to 1.0.
+        """
+        # Compute translational speeds (throttled)
+        x_speed = vX * self.max_speed * throttle
+        y_speed = vY * self.max_speed * throttle
+
+        # Get current heading in radians
+        current_heading = self.getRotation2d().radians()
+
+        # Use profiled controller to compute rotational velocity towards target
+        rot_speed = self.profiledRotationController.calculate(
+            current_heading, target_heading
+        )
+
+        # Create field-relative chassis speeds
+        robot_speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+            x_speed, y_speed, rot_speed, self.getRotation2d()
+        )
+
+        # Apply the speeds
+        self.apply_chassis_speeds(robot_speeds)
+
+    def calculateHeadingToTarget(self, target_position: Pose2d) -> float:
+        """
+        Calculates the heading angle (in radians) from the robot's current position to a target position.
+        Args:
+            target_position (Pose2d): The target position on the field.
+        Returns:
+            float: The angle in radians from the robot's current position to the target position.
+        """
+        current_pose = self.getPose()
+        calculated_heading = (
+            target_position.translation() - current_pose.translation()
+        ).angle()
+        return calculated_heading.radians()
+
     def getActualChassisSpeeds(self):
-        return self.kinematics.toChassisSpeeds(self.getModuleStates())
+        return self.swerve_kinematics.toChassisSpeeds(self.getModuleStates())
 
     def getChassisVelocityFPS(self):
         return math.sqrt(self.chassisSpeeds.vx_fps**2 + self.chassisSpeeds.vy_fps**2)
@@ -365,30 +533,20 @@ class SwerveBase(Subsystem):
     def getModuleStates(self):
         return [module.getCurrentState() for module in self.modules]
 
-    # Returns a ChassisSpeeds object representing the speeds in the robot's frame
-    # of reference.
-    def getRobotRelativeSpeeds(self):
-        return self.chassisSpeeds
-
     # Returns the current pose of the robot as a Pose2d.
     def getPose(self) -> Pose2d:
         # translation = self.estimator.getEstimatedPosition().translation()
         # rotation = self.gyro.getRotation2d()
         # return Pose2d(translation, rotation)
-        return self.estimator.getEstimatedPosition()
+        return self.swerve_estimator.getEstimatedPosition()
+
+    # Returns a ChassisSpeeds object representing the speeds in the robot's frame
+    # of reference.
+    def getRobotRelativeSpeeds(self):
+        return self.chassisSpeeds
 
     def getRotation2d(self) -> Rotation2d:
         return self.getPose().rotation()
-
-    # returns a Pose with rotation flipped
-    # SHOULD NO LONGER BE USED when using blue alliance coordintate system all the time
-    # def getFlippedPose(self) -> Pose2d:
-    #     if DriverStation.getAlliance() == DriverStation.Alliance.kRed:
-    #         translation = self.estimator.getEstimatedPosition().translation()
-    #         rotation = self.gyro.getRotation2d().rotateBy(Rotation2d(math.pi))
-    #         return Pose2d(translation, rotation)
-    #     else:
-    #         return self.getPose()
 
     def lockChassis(self):
         # getting the "angle" of each module location on the robot.
@@ -399,47 +557,77 @@ class SwerveBase(Subsystem):
         # with each angle turned to the center of the robot, the chassis
         # is effectively "locked" in position on the field.
         for module, moduleAngle in zip(self.modules, moduleAngles):
-            module.setState(SwerveModuleState(0, moduleAngle))
+            module.apply_state(SwerveModuleState(0, moduleAngle))
 
     def logTelemetry(self):
-        # self._actualChassisSpeeds = self.getActualChassisSpeeds()
-        # self._chassisSpeedsActualPub.set(self._actualChassisSpeeds)
-        # self._chassisSpeedsPub.set(self.chassisSpeeds)
-        # self._chassisSpeedsErrorPub.set(self.chassisSpeeds - self._actualChassisSpeeds)
-        self._estimatedPositionPub.set(self.estimator.getEstimatedPosition())
+        self._actualChassisSpeeds = self.getActualChassisSpeeds()
+        self._chassisSpeedsActualPub.set(self._actualChassisSpeeds)
+        self._chassisSpeedsPub.set(self.chassisSpeeds)
+        self._chassisSpeedsErrorPub.set(self.chassisSpeeds - self._actualChassisSpeeds)
+        self._estimatorPosePub.set(self.swerve_estimator.getEstimatedPosition())
 
     def periodic(self):
+        self.update_loop_time()
+
+        # if self.enabled:
+        #     self._setStatesFromSpeeds()  # apply chassis Speeds
+        #     for module, state in zip(self.modules, self.moduleStates):
+        #         module.apply_state(state)
+
+        self.logTelemetry()
+
+    def update_loop_time(self):
         self.newTime = self.timer.get()
         self.loopTime = self.newTime - self.lastTime
         self.lastTime = self.newTime
 
-        if self.enabled:
-            self.setStatesFromSpeeds()  # apply chassis Speeds
-        for module, state in zip(self.modules, self.moduleStates):
-            module.setState(state)
-
-        self.logTelemetry()
+    def get_loop_time(self):
+        return self.loopTime
 
     # Resets the pose by running the resetPosition method of the estimator.
     def resetPose(self, pose: Pose2d):
-        self.estimator.resetPosition(
+        self.swerve_estimator.resetPosition(
             self.gyro.getRotation2d(),
             tuple(self.getModulePositions()),
             pose,
         )
 
-    def robotOrientedDrive(self, vX, vY, vT):
-        self.chassisSpeeds = ChassisSpeeds.discretize(
-            ChassisSpeeds(vX, vY, vT), self.loopTime
+    def robotOrientedDrive(self, vX, vY, vT, throttle=1.0):
+        xSpeed = vX * self.max_speed * throttle
+        ySpeed = vY * self.max_speed * throttle
+        rotSpeed = vT * self.max_rotation_speed
+        self.apply_chassis_speeds(ChassisSpeeds(xSpeed, ySpeed, rotSpeed))
+
+    # def setChassisSpeeds(self, speeds: ChassisSpeeds):
+    #     """Give the swerve drive the latest discretized ChassisSpeeds for it to apply.
+
+    #     Args:
+    #         speeds (ChassisSpeeds): The ChassisSpeeds to apply.
+    #     """
+    #     self.chassisSpeeds = ChassisSpeeds.discretize(speeds, self.get_loop_time())
+
+    # def _setModuleStates(self, states):
+    #     self.moduleStates = states
+
+    # def _setStatesFromSpeeds(self):
+    #     """Calculates and sets the module states from the current chassis speeds."""
+
+    #     states = self.kinematics.toSwerveModuleStates(self.chassisSpeeds, self.center)
+    #     states = self.kinematics.desaturateWheelSpeeds(states, self.max_speed)
+    #     self._setModuleStates(states)
+
+    def apply_chassis_speeds(self, speeds: ChassisSpeeds):
+        """Applies the given chassis speeds to the swerve drive.
+
+        Args:
+            speeds (ChassisSpeeds): The chassis speeds to apply.
+        """
+        self.chassisSpeeds = ChassisSpeeds.discretize(speeds, self.get_loop_time())
+        states = self.swerve_kinematics.toSwerveModuleStates(
+            self.chassisSpeeds, self.center
         )
 
-    def setChassisSpeeds(self, chassis_speeds):
-        self.chassisSpeeds = ChassisSpeeds.discretize(chassis_speeds, self.loopTime)
-
-    def setModuleStates(self, states):
-        self.moduleStates = states
-
-    def setStatesFromSpeeds(self):
-        states = self.kinematics.toSwerveModuleStates(self.chassisSpeeds, self.center)
-        states = self.kinematics.desaturateWheelSpeeds(states, self.max_speed)
-        self.moduleStates = states
+        if self.enabled:
+            # apply module states
+            for module, state in zip(self.modules, states):
+                module.apply_state(state)
