@@ -1,4 +1,4 @@
-# FROGlib/subsystem.py
+# froglib/subsystem.py
 from typing import Any, Callable, Optional, Type, Dict
 import ntcore
 from commands2 import Subsystem
@@ -217,7 +217,7 @@ class FROGSubsystem(Subsystem):
         self._telemetry_attrs = []
         self._tunable_attrs = []
         discovered_motors = []
-        from FROGlib.ctre import FROGTalonFX
+        from froglib.ctre import FROGTalonFX
 
         for name in dir(self.__class__):
             attr = getattr(self.__class__, name)

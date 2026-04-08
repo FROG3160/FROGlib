@@ -6,7 +6,7 @@ from photonlibpy.targeting import PhotonTrackedTarget
 from wpimath.geometry import Transform3d
 from wpimath.geometry import Pose3d, Pose2d
 from wpiutil import Sendable, SendableBuilder
-from FROGlib.utils import PoseBuffer
+from froglib.utils import PoseBuffer
 from robotpy_apriltag import AprilTagField, AprilTagFieldLayout
 from ntcore import NetworkTableInstance
 from commands2.button import Trigger
