@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "setuptools_scm>=8.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "FROGlib"
+name = "froglib"
 dynamic = ["version"]
 description = "Hardware Abstraction and Utility Library for FROG 3160"
 authors = [{ name = "FROG 3160", email = "your-email@example.com" }]

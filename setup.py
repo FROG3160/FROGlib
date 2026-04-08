@@ -17,7 +17,7 @@ def get_requirements():
 install_requires = get_requirements()
 
 setup(
-    name='FROGlib',
+    name='froglib',
     use_scm_version=True,
     description='FROG 3160 library of commonly used classes and functions',
     author='FROG - Team 3160',
