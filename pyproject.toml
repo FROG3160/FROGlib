@@ -6,9 +6,16 @@ build-backend = "setuptools.build_meta"
 name = "froglib"
 dynamic = ["version"]
 description = "Hardware Abstraction and Utility Library for FROG 3160"
-authors = [{ name = "FROG 3160", email = "your-email@example.com" }]
+authors = [
+    { name = "FROG 3160", email = "frog3160web@gmail.com" }
+]
 readme = "README.md"
 requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Typing :: Typed"
+]
 dependencies = [
     "robotpy>=2026.2.2",
     "robotpy-commands-v2>=2026.2.2",
@@ -16,8 +23,15 @@ dependencies = [
     "photonlibpy>2026.1.1",
     "numpy",
 ]
+
 [project.urls]
 Homepage = "https://github.com/FROG3160/FROGlib"
 
 [tool.setuptools_scm]
 
+[tool.setuptools.package-data]
+"*" = ["py.typed"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["froglib*"]
