@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version="2025.0.0.1"
+
 # remember to create a requirements.txt
 # pipreqs makes this easier
 def get_requirements():
@@ -18,7 +18,7 @@ install_requires = get_requirements()
 
 setup(
     name='FROGlib',
-    version=version,
+    use_scm_version=True,
     description='FROG 3160 library of commonly used classes and functions',
     author='FROG - Team 3160',
     author_email='frog3160web.gmail.com',
