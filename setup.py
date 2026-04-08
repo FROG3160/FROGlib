@@ -23,6 +23,8 @@ setup(
     author='FROG - Team 3160',
     author_email='frog3160web.gmail.com',
     packages=find_packages(),
+    package_data={'froglib': ['py.typed']},
+    include_package_data=True,
     install_requires=install_requires,
     classifiers=[
         'Programming Language :: Python :: 3',
