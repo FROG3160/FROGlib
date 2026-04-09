@@ -1,0 +1,62 @@
+site_name: FROGlib Documentation
+site_description: Hardware Abstraction and Utility Library for FROG 3160
+site_author: FROG 3160
+repo_url: https://github.com/FROG3160/FROGlib
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: green
+      accent: light green
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: green
+      accent: light green
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: ["."]
+          options:
+            docstring_style: google
+            show_root_heading: true
+            show_source: true
+            show_symbol_type_heading: true
+            show_category_heading: true
+            separate_signature: true
+
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - API Reference:
+      - CTRE: api/ctre.md
+      - Field: api/field.md
+      - Motors: api/motors.md
+      - NavX: api/navx.md
+      - SDS: api/sds.md
+      - Sensors: api/sensors.md
+      - Subsystem: api/subsystem.md
+      - Swerve: api/swerve.md
+      - Utils: api/utils.md
+      - Vision: api/vision.md
+      - Xbox: api/xbox.md

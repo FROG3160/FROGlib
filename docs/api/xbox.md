@@ -1,0 +1,3 @@
+# Xbox API
+
+::: froglib.xbox
