@@ -1,0 +1,56 @@
+/* Override the primary Material theme color to the custom FROG green (#0c9e00) */
+:root {
+  --md-primary-fg-color: #0c9e00;
+  --md-primary-fg-color--light: #12cc00;
+  --md-primary-fg-color--dark: #087300;
+  --md-primary-fg-color--transparent: rgba(12, 158, 0, 0.1);
+  --md-accent-fg-color: #0c9e00;
+  --md-accent-fg-color--transparent: rgba(12, 158, 0, 0.1);
+}
+
+/* Apply the dark mode gradient matching the 2025 page */
+[data-md-color-scheme="slate"] body {
+  background: linear-gradient(180deg, #000000 58%, #0c9e00 150%) !important;
+  background-attachment: fixed !important;
+  color: #f6eeee; /* Match the text color from the site */
+}
+
+/* Ensure cards and sidebars are slightly transparent in dark mode to let the gradient show through */
+[data-md-color-scheme="slate"] .md-main__inner,
+[data-md-color-scheme="slate"] .md-sidebar {
+  background-color: transparent !important;
+}
+
+[data-md-color-scheme="slate"] .md-content {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+/* --- API Formatting Improvements --- */
+
+/* Indent the child members (methods, attributes) under a class in mkdocstrings */
+.doc-children {
+  margin-left: 2rem !important;
+  padding-left: 1.5rem !important;
+  border-left: 2px solid var(--md-primary-fg-color--transparent) !important;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Make class/function headings more distinct */
+.doc-symbol-heading {
+  background-color: var(--md-primary-fg-color--transparent);
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  border-left: 4px solid var(--md-primary-fg-color);
+  margin-top: 2rem !important;
+}
+
+/* Slightly smaller, distinct style for method headings inside classes */
+.doc-children .doc-symbol-heading {
+  background-color: transparent;
+  border-left: 2px solid var(--md-primary-fg-color--dark);
+  margin-top: 1.5rem !important;
+  padding: 0.25rem 0.5rem;
+}
