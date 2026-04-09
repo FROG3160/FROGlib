@@ -80,7 +80,6 @@ class SwerveModuleConfig:
             drive_motor_id (int, optional): CAN ID of the drive motor. Defaults to 0.
             steer_motor_id (int, optional): CAN ID of the steer motor. Defaults to 0.
             cancoder_id (int, optional): CAN ID of the CANCoder. Defaults to 0.
-            cancoder_offset (float, optional): Magnet offset of the cancoder. Defaults to 0.0.
         """
         self.name = name
         self.location = location
@@ -118,7 +117,7 @@ class SwerveModule:
         """Creates a Swerve Module
 
         Args:
-            config (SwerveModuleConfig, optional): Configuration for this swerve module.
+            module_config (SwerveModuleConfig, optional): Configuration for this swerve module.
                 Defaults to SwerveModuleConfig().
             parent_nt (str, optional): parent Network Table to place this device under.
                 Defaults to "Undefined".
@@ -481,7 +480,7 @@ class SwerveChassis:
         Args:
             vX (float): Velocity requested in the X direction (downfield), proportion of max speed (-1 to 1).
             vY (float): Velocity requested in the Y direction (left), proportion of max speed (-1 to 1).
-            target_angle (float): Desired robot heading in radians (field-relative, continuous -π to π).
+            target_heading (float): Desired robot heading in radians (field-relative, continuous -π to π).
             throttle (float, optional): Proportion applied to vX and Vy (translational). Defaults to 1.0.
         """
         # Compute translational speeds (throttled)

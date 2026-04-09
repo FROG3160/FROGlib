@@ -183,7 +183,7 @@ class DriveTrain:
 
         Args:
             gear_stages (list): list of gear stages expressed as tuples of two integers e.g. [(10, 32), (9, 24)]
-            diameter (float): Diameter of the attached wheel in meters
+            wheel_diameter (float): Diameter of the attached wheel in meters
         """
         self.gear_stages = gear_stages
         self.gear_reduction = math.prod(

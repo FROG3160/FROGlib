@@ -71,8 +71,8 @@ class FROGTalonFX(TalonFX):
         Args:
             id (int, required): The CAN ID assigned to the motor.
             motor_config (FROGTalonFXConfig, required): The configuration to apply to the motor.
-            table_name: NetworksTable to put the motor data on
-            motor_name: NetworksTable name
+            parent_nt (str): NetworksTable to put the motor data on
+            motor_name (str): NetworksTable name
         """
         super().__init__(device_id=id)
         self.config = motor_config
@@ -123,8 +123,8 @@ class FROGTalonSRX(TalonSRX):
         Args:
             id (int, required): The CAN ID assigned to the motor.
             motor_config (FROGTalonSRXConfig, required): The configuration to apply to the motor.
-            table_name: NetworksTable to put the motor data on
-            motor_name: NetworksTable name
+            parent_nt (str, optional): NetworksTable to put the motor data on.
+            motor_name (str, optional): NetworksTable name.
         """
         super().__init__(deviceNumber=id)
         self.config = motor_config
@@ -185,7 +185,7 @@ class DriveTrain:
 
         Args:
             gear_stages (list): list of gear stages expressed as tuples of two integers e.g. [(10, 32), (9, 24)]
-            diameter (float): Diameter of the attached wheel in meters
+            wheel_diameter (float): Diameter of the attached wheel in meters
         """
         self.gearing = GearTrain(gear_stages)
         self.circumference = math.pi * wheel_diameter

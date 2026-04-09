@@ -170,9 +170,7 @@ class FROGDetector(PhotonCamera):
         Initialize the lightweight detection camera.
 
         Args:
-            camera_name: Name of the PhotonVision camera
-            use_weighted_centroid: Weight targets by area (True) or simple average (False)
-            cluster_radius: Maximum distance (degrees) for targets to be in same cluster
+            camera_config: Configuration for the camera
         """
         super().__init__(camera_config.name)
         self._min_confidence = 0.8

@@ -213,11 +213,11 @@ class FROGTalonFX(TalonFX):
 
     def simulation_update(
         self,
-        dt,
-        battery_v,
-        coupled_motors=None,
-        max_velocity_rps=None,
-        velocity_sign_multiplier=1,
+        dt: float,
+        battery_v: float,
+        coupled_motors: Optional[list["FROGTalonFX"]] = None,
+        max_velocity_rps: Optional[float] = None,
+        velocity_sign_multiplier: int = 1,
     ):
         """Update simulation for this motor and optionally coupled motors.
 
