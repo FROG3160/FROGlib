@@ -48,6 +48,7 @@ plugins:
 nav:
   - Home: index.md
   - Getting Started: getting_started.md
+  - Tuning Guide: tuning_guide.md
   - API Reference:
       - CTRE: api/ctre.md
       - Field: api/field.md
