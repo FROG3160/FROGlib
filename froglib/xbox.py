@@ -18,7 +18,6 @@ from wpimath.filter import SlewRateLimiter
 from wpimath import applyDeadband
 from wpilib.interfaces import GenericHID
 from wpilib import DriverStation
-import constants
 
 RIGHT_RUMBLE = GenericHID.RumbleType.kRightRumble
 LEFT_RUMBLE = GenericHID.RumbleType.kLeftRumble

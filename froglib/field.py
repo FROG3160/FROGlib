@@ -34,7 +34,7 @@ class FROGField:
             tag_id (int): Fiducial tag ID number.
 
         Returns:
-            Pose3d | None: The 3D pose of the tag relative to the field origin,
+            Optional[Pose3d]: The 3D pose of the tag relative to the field origin,
                 or None if the tag is not present in the layout.
         """
         return self._layout.getTagPose(tag_id)

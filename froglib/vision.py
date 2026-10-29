@@ -178,7 +178,7 @@ class FROGPoseEstimator:
             tag_id (int): The fiducial ID of the AprilTag.
 
         Returns:
-            Pose3d | None: The 3D pose of the tag, or None if not present in the layout.
+            Optional[Pose3d]: The 3D pose of the tag, or None if not present in the layout.
         """
         return self.fieldTags.getTagPose(tag_id)
 
