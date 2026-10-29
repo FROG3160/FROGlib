@@ -1,3 +1,11 @@
+"""CTRE Phoenix 6 hardware abstraction and automated characterization for FROGlib.
+
+Provides wrapper classes for CTRE Phoenix 6 devices (TalonFX, CANcoder, Pigeon 2.0)
+with optimized CAN bus utilization via update frequency profiling. Also includes
+comprehensive automated characterization tools (TalonFXCharacterizer, FROGSysIdHelper)
+for empirical gain determination (kS, kV, kA) and pole-placement feedback synthesis (kP, kD).
+"""
+
 from dataclasses import dataclass, field
 from enum import Enum, auto
 import math
@@ -283,39 +291,60 @@ except ImportError:
 # Standard Motor & Sensor Configurations
 # ------------------------------------------------------------------------------
 
-MOTOR_OUTPUT_CWP_BRAKE = (
+MOTOR_OUTPUT_CWP_BRAKE: MotorOutputConfigs = (
     MotorOutputConfigs()
     .with_neutral_mode(NeutralModeValue.BRAKE)
     .with_inverted(InvertedValue.CLOCKWISE_POSITIVE)
 )
-MOTOR_OUTPUT_CCWP_BRAKE = (
-    MotorOutputConfigs()
-    .with_neutral_mode(NeutralModeValue.BRAKE)
-    .with_inverted(InvertedValue.COUNTER_CLOCKWISE_POSITIVE)
-)
-MOTOR_OUTPUT_CWP_COAST = (
-    MotorOutputConfigs()
-    .with_neutral_mode(NeutralModeValue.COAST)
-    .with_inverted(InvertedValue.CLOCKWISE_POSITIVE)
-)
-MOTOR_OUTPUT_CCWP_COAST = (
-    MotorOutputConfigs()
-    .with_neutral_mode(NeutralModeValue.COAST)
-    .with_inverted(InvertedValue.COUNTER_CLOCKWISE_POSITIVE)
-)
+"""MotorOutputConfigs: Brake neutral mode and Clockwise Positive inversion."""
 
-MAGNET_SENSOR_CCWP = (
+MOTOR_OUTPUT_CCWP_BRAKE: MotorOutputConfigs = (
+    MotorOutputConfigs()
+    .with_neutral_mode(NeutralModeValue.BRAKE)
+    .with_inverted(InvertedValue.COUNTER_CLOCKWISE_POSITIVE)
+)
+"""MotorOutputConfigs: Brake neutral mode and Counter-Clockwise Positive inversion."""
+
+MOTOR_OUTPUT_CWP_COAST: MotorOutputConfigs = (
+    MotorOutputConfigs()
+    .with_neutral_mode(NeutralModeValue.COAST)
+    .with_inverted(InvertedValue.CLOCKWISE_POSITIVE)
+)
+"""MotorOutputConfigs: Coast neutral mode and Clockwise Positive inversion."""
+
+MOTOR_OUTPUT_CCWP_COAST: MotorOutputConfigs = (
+    MotorOutputConfigs()
+    .with_neutral_mode(NeutralModeValue.COAST)
+    .with_inverted(InvertedValue.COUNTER_CLOCKWISE_POSITIVE)
+)
+"""MotorOutputConfigs: Coast neutral mode and Counter-Clockwise Positive inversion."""
+
+MAGNET_SENSOR_CCWP: MagnetSensorConfigs = (
     MagnetSensorConfigs()
     .with_sensor_direction(SensorDirectionValue.COUNTER_CLOCKWISE_POSITIVE)
     .with_absolute_sensor_range(0)
 )
+"""MagnetSensorConfigs: Counter-Clockwise Positive direction with 0 to 1 absolute range."""
+
+MAGNET_CONFIG_CONTWRAP_CCWP = MAGNET_SENSOR_CCWP
+"""Backward compatibility alias for MAGNET_SENSOR_CCWP."""
 
 
 def get_frog_talon_config() -> TalonFXConfiguration:
+    """Returns a default TalonFXConfiguration instance for FROGlib mechanisms.
+
+    Returns:
+        TalonFXConfiguration: Default TalonFX configuration.
+    """
     return TalonFXConfiguration()
 
 
 def get_frog_cancoder_config() -> CANcoderConfiguration:
+    """Returns a standard CANcoderConfiguration with CCW positive magnet sensor.
+
+    Returns:
+        CANcoderConfiguration: CANcoder configuration with MAGNET_SENSOR_CCWP applied.
+    """
     return CANcoderConfiguration().with_magnet_sensor(MAGNET_SENSOR_CCWP)
 
 
@@ -397,7 +426,34 @@ def calculate_feedback_gains(
 
 @dataclass
 class CharacterizationConfig:
-    """Configuration parameters for automated TalonFX characterization and gain calculation."""
+    """Configuration parameters for automated TalonFX characterization and gain calculation.
+
+    Attributes:
+        mechanism_name (str): Identifier name used for telemetry topics and reports.
+        is_bounded (bool): Whether mechanism has physical travel limits (e.g., arms, elevators).
+        min_test_pos (float): Minimum safe position in mechanism rotations.
+        max_test_pos (float): Maximum safe position in mechanism rotations.
+        safe_home_pos (float): Safe reset position returned to between test stages in mechanism rotations.
+        soft_limit_buffer (float): Safety margin buffer from travel boundaries in rotations.
+        max_voltage (float): Absolute voltage clamp during characterization in Volts.
+        stator_current_limit_amps (float): Temporary stator current limit clamp in Amperes.
+        step_timeout_s (float): Maximum duration before aborting an unresponsive test step in seconds.
+        stall_detection_enabled (bool): Whether automatic stall abort protection is active.
+        stall_current_threshold (float): Current threshold for stall detection in Amperes.
+        stall_velocity_threshold (float): Velocity threshold below which stall timer accumulates in RPS.
+        stall_duration_threshold_s (float): Duration of stall before triggering an emergency abort in seconds.
+        ramp_rate_v_per_s (float): Voltage ramp rate for static friction breakaway test in Volts/sec.
+        breakaway_threshold_rps (float): Velocity threshold to detect initial breakaway movement in RPS.
+        kv_test_voltages (List[float]): Discrete voltage setpoints applied during steady-state velocity sweep.
+        kv_settle_time_s (float): Settle time allowed at each voltage step before sampling velocity in seconds.
+        ka_step_voltage (float): Voltage step applied during short acceleration pulse in Volts.
+        ka_step_duration_s (float): Duration of acceleration voltage pulse in seconds.
+        target_bandwidth_rad_s (float): Desired closed-loop bandwidth omega_n in rad/s.
+        damping_ratio (float): Damping ratio zeta (1.0 = critically damped).
+        auto_apply (bool): Whether to automatically apply computed gains to motor slot configuration.
+        target_slot (int): Motor configuration slot to apply gains to (0 or 1).
+        distance_per_rotation_meters (Optional[float]): Optional conversion factor for linear mechanisms.
+    """
 
     mechanism_name: str = "TalonFX_Mechanism"
 
@@ -441,7 +497,21 @@ class CharacterizationConfig:
 
 @dataclass
 class TuningResult:
-    """Structured results from automated TalonFX characterization."""
+    """Structured results from automated TalonFX characterization.
+
+    Attributes:
+        mechanism_name (str): Identifier name of the characterized mechanism.
+        k_s (float): Static friction feedforward gain in Volts.
+        k_v (float): Velocity feedforward gain in Volts / RPS.
+        k_a (float): Acceleration feedforward gain in Volts / (RPS/s).
+        k_g (Optional[float]): Gravity feedforward gain in Volts (for arms/elevators).
+        k_p (float): Proportional feedback gain in Volts / rotation (position) or Volts / RPS (velocity).
+        k_d (float): Derivative feedback gain in Volts / RPS (position) or Volts / (RPS/s) (velocity).
+        r_squared (float): Goodness-of-fit score for kV regression (0.0 to 1.0).
+        gearing (float): Sensor-to-mechanism ratio applied during test.
+        is_mechanism_units (bool): True if gains are scaled to mechanism output units.
+        timestamp (float): Monotonic or epoch timestamp when results were computed.
+    """
 
     mechanism_name: str
     k_s: float  # Volts
@@ -456,7 +526,11 @@ class TuningResult:
     timestamp: float = field(default_factory=time.time)
 
     def to_slot0_configs(self) -> Slot0Configs:
-        """Exports the tuning results into a Phoenix 6 Slot0Configs object."""
+        """Exports the tuning results into a Phoenix 6 Slot0Configs object.
+
+        Returns:
+            Slot0Configs: Slot 0 configuration object populated with calculated gains.
+        """
         configs = Slot0Configs()
         configs.k_s = self.k_s
         configs.k_v = self.k_v
@@ -468,7 +542,11 @@ class TuningResult:
         return configs
 
     def to_slot1_configs(self) -> Slot1Configs:
-        """Exports the tuning results into a Phoenix 6 Slot1Configs object."""
+        """Exports the tuning results into a Phoenix 6 Slot1Configs object.
+
+        Returns:
+            Slot1Configs: Slot 1 configuration object populated with calculated gains.
+        """
         configs = Slot1Configs()
         configs.k_s = self.k_s
         configs.k_v = self.k_v
@@ -480,7 +558,11 @@ class TuningResult:
         return configs
 
     def to_python_code(self) -> str:
-        """Returns executable Python snippet to apply these gains in robot configuration."""
+        """Returns executable Python snippet to apply these gains in robot configuration.
+
+        Returns:
+            str: Generated Python function applying gains to a TalonFXConfiguration.
+        """
         slot_name = "slot0"
         kg_line = f"    cfg.{slot_name}.k_g = {self.k_g:.4f}\n" if self.k_g is not None else ""
         return (
@@ -495,7 +577,11 @@ class TuningResult:
         )
 
     def format_report(self) -> str:
-        """Returns a formatted multi-line summary of the characterization results."""
+        """Returns a formatted multi-line summary of the characterization results.
+
+        Returns:
+            str: Multi-line human-readable summary report.
+        """
         unit_str = "Mechanism" if self.is_mechanism_units else "Rotor"
         kg_str = f"kG (Gravity)   : {self.k_g:.4f} V\n" if self.k_g is not None else ""
         return (
@@ -542,7 +628,12 @@ class TalonFXCharacterizer:
         ABORTED = auto()
 
     def __init__(self, motor: Any, config: Optional[CharacterizationConfig] = None):
-        """Initializes the characterizer for a given motor and configuration."""
+        """Initializes the characterizer for a given motor and configuration.
+
+        Args:
+            motor: Motor instance to test (must support Phoenix 6 TalonFX methods).
+            config: Characterization routine configuration. Defaults to default CharacterizationConfig.
+        """
         self.motor = motor
         self.config = config or CharacterizationConfig()
         self.state = self.State.IDLE
@@ -572,7 +663,15 @@ class TalonFXCharacterizer:
         self._vel_pub = NetworkTableInstance.getDefault().getFloatTopic(f"{nt_table}/VelocityRPS").publish()
 
     def validate_gearing(self, measured_kv: float, motor_free_speed_rps: float = 100.0) -> Tuple[bool, str]:
-        """Validates that measured kV matches expected theoretical gearing."""
+        """Validates that measured kV matches expected theoretical gearing.
+
+        Args:
+            measured_kv: Empirical kV determined from linear regression in V/rps.
+            motor_free_speed_rps: Manufacturer free-speed of the motor in RPS (default 100.0 for Falcon 500).
+
+        Returns:
+            Tuple of (is_valid, message).
+        """
         gearing = self.get_active_gearing()
         theoretical_kv = (12.0 / motor_free_speed_rps) * gearing
 
@@ -590,7 +689,11 @@ class TalonFXCharacterizer:
         return True, f"Measured kV closely aligns with theoretical expectation ({theoretical_kv:.4f} V/rps)."
 
     def get_active_gearing(self) -> float:
-        """Retrieves the effective gear reduction from the motor's feedback configuration."""
+        """Retrieves the effective gear reduction from the motor's feedback configuration.
+
+        Returns:
+            float: Active sensor-to-mechanism ratio (default 1.0 if unspecified).
+        """
         try:
             gearing = self.motor.config.feedback.sensor_to_mechanism_ratio
             return gearing if gearing > 0.0 else 1.0
@@ -598,7 +701,11 @@ class TalonFXCharacterizer:
             return 1.0
 
     def check_safety_guards(self) -> bool:
-        """Evaluates active position boundaries, stall detection, and timeout safety guards."""
+        """Evaluates active position boundaries, stall detection, and timeout safety guards.
+
+        Returns:
+            bool: True if safe to continue, False if an emergency abort was triggered.
+        """
         current_pos = self.motor.get_position().value
         current_vel = abs(self.motor.get_velocity().value)
         stator_curr = abs(self.motor.get_stator_current().value)
@@ -643,7 +750,11 @@ class TalonFXCharacterizer:
         return True
 
     def emergency_abort(self, reason: str):
-        """Immediately zeroes motor output and halts the testing sequence."""
+        """Immediately zeroes motor output and halts the testing sequence.
+
+        Args:
+            reason: Explanation of the condition that triggered the abort.
+        """
         self._abort_reason = reason
         self.state = self.State.ABORTED
         self._set_voltage(0.0)
@@ -872,10 +983,19 @@ class TalonFXCharacterizer:
             )
 
     def get_result(self) -> Optional[TuningResult]:
+        """Retrieves the characterization result once testing has concluded.
+
+        Returns:
+            Optional[TuningResult]: TuningResult if testing completed, None otherwise.
+        """
         return self._result
 
     def create_characterization_command(self) -> Any:
-        """Creates a runnable WPILib Command that executes the characterization routine."""
+        """Creates a runnable WPILib Command that executes the characterization routine.
+
+        Returns:
+            FunctionalCommand: A WPILib command running setup(), periodic(), and teardown().
+        """
         try:
             from commands2 import FunctionalCommand
 
@@ -890,7 +1010,12 @@ class TalonFXCharacterizer:
 
 
 class FROGSysIdHelper:
-    """Helper class integrating WPILib's SysIdRoutine with CTRE Phoenix 6 SignalLogger."""
+    """Helper class integrating WPILib's SysIdRoutine with CTRE Phoenix 6 SignalLogger.
+
+    Manages automated switching of signal update frequencies to 250Hz TUNING profile
+    during SysId routines, records routine states into CTRE hoot log files, and
+    safely restores production 20Hz/50Hz signal profiles upon command completion.
+    """
 
     def __init__(
         self,
@@ -903,6 +1028,18 @@ class FROGSysIdHelper:
         min_pos: float = float("-inf"),
         max_pos: float = float("inf"),
     ):
+        """Initializes a FROGSysIdHelper instance.
+
+        Args:
+            motor: TalonFX motor instance.
+            mechanism_name (str, optional): Mechanism name used for SignalLogger logging. Defaults to "Mechanism".
+            ramp_rate_v_per_s (float, optional): Ramp rate in Volts/sec for quasistatic tests. Defaults to 1.0.
+            step_voltage (float, optional): Step voltage in Volts for dynamic tests. Defaults to 7.0.
+            timeout_s (float, optional): Maximum timeout in seconds per SysId routine test. Defaults to 10.0.
+            is_bounded (bool, optional): Whether the mechanism has travel limits. Defaults to False.
+            min_pos (float, optional): Minimum safe position in mechanism rotations. Defaults to -inf.
+            max_pos (float, optional): Maximum safe position in mechanism rotations. Defaults to inf.
+        """
         self.motor = motor
         self.mechanism_name = mechanism_name
         self.is_bounded = is_bounded
@@ -942,21 +1079,41 @@ class FROGSysIdHelper:
             SignalLogger.write_string(f"SysIdRoutine_State_{self.mechanism_name}", str(state))
 
     def quasistatic_forward(self) -> Any:
+        """Returns a WPILib Command executing the forward quasistatic SysId test.
+
+        Returns:
+            Command: Runnable SysId command with automatic frequency scaling and logging.
+        """
         if self._routine is None:
             return None
         return self._wrap_sysid_command(self._routine.quasistatic(SysIdRoutine.Direction.kForward))
 
     def quasistatic_reverse(self) -> Any:
+        """Returns a WPILib Command executing the reverse quasistatic SysId test.
+
+        Returns:
+            Command: Runnable SysId command with automatic frequency scaling and logging.
+        """
         if self._routine is None:
             return None
         return self._wrap_sysid_command(self._routine.quasistatic(SysIdRoutine.Direction.kReverse))
 
     def dynamic_forward(self) -> Any:
+        """Returns a WPILib Command executing the forward dynamic SysId test.
+
+        Returns:
+            Command: Runnable SysId command with automatic frequency scaling and logging.
+        """
         if self._routine is None:
             return None
         return self._wrap_sysid_command(self._routine.dynamic(SysIdRoutine.Direction.kForward))
 
     def dynamic_reverse(self) -> Any:
+        """Returns a WPILib Command executing the reverse dynamic SysId test.
+
+        Returns:
+            Command: Runnable SysId command with automatic frequency scaling and logging.
+        """
         if self._routine is None:
             return None
         return self._wrap_sysid_command(self._routine.dynamic(SysIdRoutine.Direction.kReverse))
@@ -1001,11 +1158,15 @@ class FROGSysIdHelper:
 
 
 class FROGTalonFX(TalonFX):
-    """FROG custom TalonFX that takes parameters during instantiation."""
+    """Custom TalonFX hardware abstraction with CAN bus frequency optimization and characterization."""
 
     class SignalProfile(Enum):
         """Frame-aligned frequency profiles for Phoenix 6.
-        Tuple: (Primary, Secondary, Health) frame frequencies in Hz.
+
+        Each profile tuple defines: `(primary_hz, secondary_hz, health_hz)`.
+        - Primary frame: Motion signals (Position, Velocity, Acceleration).
+        - Secondary frame: Electrical signals (Motor Voltage, Stator Current, Supply Voltage).
+        - Health frame: Diagnostics (Device Temp, Fault Field).
         """
 
         SWERVE_DRIVE = (50, 50, 4)
@@ -1028,6 +1189,16 @@ class FROGTalonFX(TalonFX):
         signal_profile: SignalProfile = SignalProfile.BASIC,
         motor_model: Optional[DCMotor] = None,
     ):
+        """Initializes a FROGTalonFX instance with applied configuration and signal profiling.
+
+        Args:
+            id: CAN ID assigned to the TalonFX.
+            motor_config: TalonFXConfiguration to apply. Defaults to get_frog_talon_config().
+            canbus: CAN bus identifier string (e.g. "rio" or CANivore name). Defaults to "rio".
+            motor_name: Descriptive name for telemetry and diagnostics. Defaults to "".
+            signal_profile: Preconfigured update frequency profile. Defaults to SignalProfile.BASIC.
+            motor_model: Optional DCMotor model for physics simulation. Defaults to None.
+        """
         super().__init__(device_id=id, canbus=CANBus(canbus))
         self.motor_name = motor_name if motor_name else f"TalonFX({id})"
         self.config = motor_config
@@ -1036,6 +1207,11 @@ class FROGTalonFX(TalonFX):
         self.apply_usage_mode(signal_profile)
 
     def apply_usage_mode(self, signal_profile: SignalProfile):
+        """Sets CAN status frame update frequencies according to the chosen signal profile.
+
+        Args:
+            signal_profile: SignalProfile enum member specifying primary, secondary, and health rates.
+        """
         primary, secondary, health = signal_profile.value
 
         # Primary Frame: Motion data
@@ -1054,13 +1230,26 @@ class FROGTalonFX(TalonFX):
 
         self.optimize_bus_utilization()
 
-    def getMotorVoltage(self):
+    def getMotorVoltage(self) -> float:
+        """Retrieves the applied motor output voltage.
+
+        Returns:
+            float: Output voltage in Volts.
+        """
         return self.get_motor_voltage().value
 
     def is_stalled(
         self, current_threshold: float = 40.0, velocity_threshold: float = 0.1
     ) -> bool:
-        """Returns True if the motor is likely stalled based on current and rotor velocity."""
+        """Returns True if the motor is likely stalled based on current and rotor velocity.
+
+        Args:
+            current_threshold: Stator current threshold in Amperes. Defaults to 40.0.
+            velocity_threshold: Rotor velocity threshold in RPS. Defaults to 0.1.
+
+        Returns:
+            bool: True if stator current exceeds threshold and rotor speed is below threshold.
+        """
         stator_current = self.get_stator_current().value
         velocity = abs(self.get_rotor_velocity().value)
         return stator_current > current_threshold and velocity < velocity_threshold
@@ -1068,13 +1257,27 @@ class FROGTalonFX(TalonFX):
     def get_characterizer(
         self, config: Optional[CharacterizationConfig] = None
     ) -> TalonFXCharacterizer:
-        """Creates an autonomous TalonFXCharacterizer instance for this motor."""
+        """Creates an autonomous TalonFXCharacterizer instance for this motor.
+
+        Args:
+            config: Optional CharacterizationConfig. Defaults to None (uses defaults).
+
+        Returns:
+            TalonFXCharacterizer: Configured characterizer instance.
+        """
         return TalonFXCharacterizer(self, config)
 
     def create_characterization_command(
         self, config: Optional[CharacterizationConfig] = None
     ) -> Any:
-        """Creates a runnable WPILib Command that executes autonomous characterization on this motor."""
+        """Creates a runnable WPILib Command that executes autonomous characterization on this motor.
+
+        Args:
+            config: Optional CharacterizationConfig. Defaults to None.
+
+        Returns:
+            Command: WPILib Command executing characterization setup, execution, and teardown.
+        """
         characterizer = self.get_characterizer(config)
         return characterizer.create_characterization_command()
 
@@ -1088,7 +1291,20 @@ class FROGTalonFX(TalonFX):
         min_pos: float = float("-inf"),
         max_pos: float = float("inf"),
     ) -> FROGSysIdHelper:
-        """Creates a FROGSysIdHelper instance wrapping WPILib SysIdRoutine and SignalLogger."""
+        """Creates a FROGSysIdHelper instance wrapping WPILib SysIdRoutine and SignalLogger.
+
+        Args:
+            mechanism_name: Descriptive name for logging. Defaults to "Mechanism".
+            ramp_rate_v_per_s: Voltage ramp rate for quasistatic test in V/s. Defaults to 1.0.
+            step_voltage: Voltage step for dynamic test in Volts. Defaults to 7.0.
+            timeout_s: Maximum test timeout in seconds. Defaults to 10.0.
+            is_bounded: Whether the mechanism has travel limits. Defaults to False.
+            min_pos: Minimum safe position in mechanism rotations. Defaults to -inf.
+            max_pos: Maximum safe position in mechanism rotations. Defaults to inf.
+
+        Returns:
+            FROGSysIdHelper: Helper configured with SysIdRoutine and SignalLogger.
+        """
         return FROGSysIdHelper(
             motor=self,
             mechanism_name=mechanism_name,
@@ -1107,7 +1323,14 @@ class FROGTalonFX(TalonFX):
         gearing: Optional[float] = None,
         measurement_std_devs: Optional[list[float]] = None,
     ):
-        """Initialize physics-based simulation for this motor."""
+        """Initialize physics-based simulation for this motor.
+
+        Args:
+            moi: Moment of inertia in kg*m^2.
+            motor_model: DCMotor gearbox model (e.g. DCMotor.falcon500(1)). Defaults to None.
+            gearing: Sensor-to-mechanism gear ratio. Defaults to None (reads motor config).
+            measurement_std_devs: Standard deviations of sensor measurement noise [pos, vel].
+        """
         if motor_model is None:
             motor_model = self.motor_model or DCMotor.falcon500(1)
 
@@ -1132,7 +1355,15 @@ class FROGTalonFX(TalonFX):
         max_velocity_rps: Optional[float] = None,
         velocity_sign_multiplier: int = 1,
     ):
-        """Update simulation for this motor and optionally coupled motors."""
+        """Update simulation for this motor and optionally coupled motors.
+
+        Args:
+            dt: Time step duration in seconds.
+            battery_v: Simulated battery bus voltage in Volts.
+            coupled_motors: Optional list of mechanically coupled follower motors.
+            max_velocity_rps: Free speed ceiling in RPS for simple kinematic fallback simulation.
+            velocity_sign_multiplier: Inversion multiplier (+1 or -1) for velocity sign.
+        """
         if hasattr(self, "physim"):
             unmanaged.feed_enable(0.100)
             self.sim_state.set_supply_voltage(battery_v)
@@ -1174,43 +1405,92 @@ class FROGTalonFX(TalonFX):
 
 
 class FROGPigeonGyro(Pigeon2):
-    """Gyro class that creates an instance of the Pigeon 2.0 Gyro."""
+    """Pigeon 2.0 gyro wrapper optimized for swerve odometry and heading tracking."""
 
     def __init__(self, can_id: int):
+        """Initializes the Pigeon 2.0 gyro with CAN bus optimization and 100Hz yaw update.
+
+        Args:
+            can_id: CAN ID assigned to the Pigeon 2.0.
+        """
         super().__init__(can_id)
         self.reset()
         self.optimize_bus_utilization()
         self.get_yaw().set_update_frequency(100)
 
     def getAngleCCW(self) -> float:
+        """Returns the continuous Counter-Clockwise heading angle in degrees.
+
+        Returns:
+            float: Continuous yaw in degrees.
+        """
         return self.getYaw()
 
     def getYaw(self) -> float:
+        """Returns the current yaw angle in degrees.
+
+        Returns:
+            float: Yaw in degrees.
+        """
         return self.get_yaw().value
 
     def getRoll(self) -> float:
+        """Returns the current roll angle in degrees.
+
+        Returns:
+            float: Roll in degrees.
+        """
         return self.get_roll().value
 
     def getPitch(self) -> float:
+        """Returns the current pitch angle in degrees.
+
+        Returns:
+            float: Pitch in degrees.
+        """
         return self.get_pitch().value
 
     def getDegreesPerSecCCW(self) -> float:
+        """Returns the angular velocity around the Z axis in degrees per second.
+
+        Returns:
+            float: Rotational speed in deg/s.
+        """
         return self.get_angular_velocity_z_world().value
 
     def getRadiansPerSecCCW(self) -> float:
+        """Returns the angular velocity around the Z axis in radians per second.
+
+        Returns:
+            float: Rotational speed in rad/s.
+        """
         return math.radians(self.getDegreesPerSecCCW())
 
-    def setAngleAdjustment(self, angle):
+    def setAngleAdjustment(self, angle: float):
+        """Sets the yaw angle adjustment offset.
+
+        Args:
+            angle: Heading angle in degrees to re-zero or offset yaw.
+        """
         self.set_yaw(angle)
 
 
 class FROGCanCoder(CANcoder):
+    """CANcoder absolute encoder wrapper configured with CCW positive direction."""
+
     def __init__(
         self,
         id: int,
         config: CANcoderConfiguration = get_frog_cancoder_config(),
         canbus: str = "rio",
     ):
+        """Initializes the CANcoder with configuration and bus utilization optimization.
+
+        Args:
+            id: CAN ID assigned to the CANcoder.
+            config: CANcoderConfiguration to apply. Defaults to get_frog_cancoder_config().
+            canbus: CAN bus identifier string. Defaults to "rio".
+        """
         super().__init__(id, canbus)
         self.configurator.apply(config)
         self.optimize_bus_utilization()
