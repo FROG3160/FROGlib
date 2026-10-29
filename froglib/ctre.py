@@ -552,10 +552,13 @@ class TalonFXCharacterizer:
         self._current_voltage = 0.0
         self._ks_fwd = 0.0
         self._ks_rev = 0.0
+        self._ks_break_vel = 0.0
+        self._ks_break_accel = 0.0
         self._kv_samples_rps: List[float] = []
         self._kv_samples_volts: List[float] = []
         self._kv_index = 0
         self._ka_accel = 0.0
+        self._ka_vel = 0.0
         self._abort_reason = ""
         self._result: Optional[TuningResult] = None
 
@@ -714,22 +717,42 @@ class TalonFXCharacterizer:
         velocity = self.motor.get_velocity().value
 
         if self.state == self.State.KS_FORWARD:
-            target_v = dt * self.config.ramp_rate_v_per_s
-            self._set_voltage(target_v)
-            if velocity >= self.config.breakaway_threshold_rps:
+            if velocity >= self.config.breakaway_threshold_rps and self._current_voltage > 0.0:
                 self._ks_fwd = self._current_voltage
+                self._ks_break_vel = abs(velocity)
+                self._ks_break_accel = abs(getattr(self.motor.get_acceleration(), "value", 0.0))
                 self._transition_to(self.State.RETURN_HOME_1)
+            else:
+                target_v = dt * self.config.ramp_rate_v_per_s
+                self._set_voltage(target_v)
+                if velocity >= self.config.breakaway_threshold_rps:
+                    self._ks_fwd = self._current_voltage
+                    self._ks_break_vel = abs(velocity)
+                    self._ks_break_accel = abs(getattr(self.motor.get_acceleration(), "value", 0.0))
+                    self._transition_to(self.State.RETURN_HOME_1)
 
         elif self.state == self.State.RETURN_HOME_1:
             if self._handle_return_home():
                 self._transition_to(self.State.KS_REVERSE)
 
         elif self.state == self.State.KS_REVERSE:
-            target_v = -(dt * self.config.ramp_rate_v_per_s)
-            self._set_voltage(target_v)
-            if velocity <= -self.config.breakaway_threshold_rps:
+            if velocity <= -self.config.breakaway_threshold_rps and self._current_voltage < 0.0:
                 self._ks_rev = abs(self._current_voltage)
+                self._ks_break_vel = 0.5 * (self._ks_break_vel + abs(velocity))
+                self._ks_break_accel = 0.5 * (
+                    self._ks_break_accel + abs(getattr(self.motor.get_acceleration(), "value", 0.0))
+                )
                 self._transition_to(self.State.RETURN_HOME_2)
+            else:
+                target_v = -(dt * self.config.ramp_rate_v_per_s)
+                self._set_voltage(target_v)
+                if velocity <= -self.config.breakaway_threshold_rps:
+                    self._ks_rev = abs(self._current_voltage)
+                    self._ks_break_vel = 0.5 * (self._ks_break_vel + abs(velocity))
+                    self._ks_break_accel = 0.5 * (
+                        self._ks_break_accel + abs(getattr(self.motor.get_acceleration(), "value", 0.0))
+                    )
+                    self._transition_to(self.State.RETURN_HOME_2)
 
         elif self.state == self.State.RETURN_HOME_2:
             if self._handle_return_home():
@@ -758,6 +781,9 @@ class TalonFXCharacterizer:
                 accel = getattr(self.motor.get_acceleration(), "value", 0.0)
                 if abs(accel) < 0.1 and dt > 0:
                     accel = velocity / dt
+                    self._ka_vel = 0.5 * abs(velocity)
+                else:
+                    self._ka_vel = abs(velocity)
                 self._ka_accel = abs(accel)
                 self._set_voltage(0.0)
                 self._transition_to(self.State.RETURN_HOME_4)
@@ -794,10 +820,19 @@ class TalonFXCharacterizer:
         return False
 
     def _compute_results(self):
-        k_s = (self._ks_fwd + self._ks_rev) / 2.0 if (self._ks_fwd > 0 and self._ks_rev > 0) else self._ks_fwd
-        effective_volts = [max(0.0, v - k_s) for v in self._kv_samples_volts]
-        k_v, _, r_squared = linear_regression(self._kv_samples_rps, effective_volts)
-        k_a = (self.config.ka_step_voltage - k_s) / max(0.1, self._ka_accel) if self._ka_accel > 0 else 0.005
+        raw_ks = (self._ks_fwd + self._ks_rev) / 2.0 if (self._ks_fwd > 0 and self._ks_rev > 0) else self._ks_fwd
+        k_v, _, r_squared = linear_regression(self._kv_samples_rps, self._kv_samples_volts)
+
+        # Compensate breakaway voltage for back-EMF and rotor inertia at the detection threshold
+        k_s = max(0.0, raw_ks - (k_v * self._ks_break_vel))
+        accel_volts = max(0.0, self.config.ka_step_voltage - k_s - (k_v * self._ka_vel))
+        k_a = accel_volts / max(0.1, self._ka_accel) if self._ka_accel > 0 and accel_volts > 0 else 0.005
+
+        if self._ks_break_accel > 0.0 and raw_ks > 0.0:
+            k_s = max(0.0, raw_ks - (k_v * self._ks_break_vel) - (k_a * self._ks_break_accel))
+            accel_volts = max(0.0, self.config.ka_step_voltage - k_s - (k_v * self._ka_vel))
+            if self._ka_accel > 0 and accel_volts > 0:
+                k_a = accel_volts / max(0.1, self._ka_accel)
 
         k_p, k_d = calculate_feedback_gains(
             k_v,
@@ -826,9 +861,15 @@ class TalonFXCharacterizer:
             print(validation_msg)
 
         if self.config.auto_apply and hasattr(self.motor, "configurator"):
-            slot_config = self._result.to_slot0_configs()
+            slot_config = (
+                self._result.to_slot1_configs()
+                if self.config.target_slot == 1
+                else self._result.to_slot0_configs()
+            )
             self.motor.configurator.apply(slot_config)
-            print(f"[HOT APPLY] Successfully applied gains to Slot 0 on {self.config.mechanism_name}.")
+            print(
+                f"[HOT APPLY] Successfully applied gains to Slot {self.config.target_slot} on {self.config.mechanism_name}."
+            )
 
     def get_result(self) -> Optional[TuningResult]:
         return self._result
