@@ -1,0 +1,4236 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Hardware Abstraction and Utility Library for FROG 3160">
+      
+      
+        <meta name="author" content="FROG 3160">
+      
+      
+      
+        <link rel="prev" href="../utils/">
+      
+      
+        <link rel="next" href="../xbox/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Vision - FROGlib Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#vision-api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="FROGlib Documentation" class="md-header__button md-logo" aria-label="FROGlib Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FROGlib Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Vision
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="light-green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FROG3160/FROGlib" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting_started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tuning_guide/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tuning Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../testing_tuning/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Testing Motor Tuning
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../ctre/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FROGlib Documentation" class="md-nav__button md-logo" aria-label="FROGlib Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FROGlib Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FROG3160/FROGlib" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tuning_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing_tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Motor Tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ctre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CTRE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../motors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NavX
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../subsystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subsystem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../swerve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Swerve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apriltag-pose-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AprilTag Pose Estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#game-piece-detection-clustering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Game-Piece Detection &amp; Clustering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#froglib.vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vision
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="vision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.DetectionResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DetectionResult
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGCameraConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FROGCameraConfig
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FROGCameraConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGCameraConfig-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGCameraConfig.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __init__
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FROGDetector
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FROGDetector">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __init__
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector.get_best_cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_best_cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector.get_concentration_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_concentration_info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector.get_detection_results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_detection_results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector.get_targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_targets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector.get_trigger_targets_close" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_trigger_targets_close
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector.has_targets_close" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        has_targets_close
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector.has_valid_target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        has_valid_target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGDetector.process_targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        process_targets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGPoseEstimator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FROGPoseEstimator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FROGPoseEstimator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGPoseEstimator-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGPoseEstimator.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __init__
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGPoseEstimator.getTagPose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getTagPose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGPoseEstimator.get_distance_to_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_distance_to_tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.vision.FROGPoseEstimator.get_estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_estimate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xbox
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="vision-api">Vision API</h1>
+<h2 id="overview">Overview</h2>
+<p>The <code>froglib.vision</code> module integrates computer vision into FRC robot control systems using <a href="https://photonvision.org/">PhotonVision</a> and <a href="https://robotpy.readthedocs.io/">RobotPy</a>. It provides two primary vision workflows:</p>
+<ol>
+<li><strong>Global Pose Estimation (<code>FROGPoseEstimator</code>)</strong>: Fuses AprilTag fiducial detections with known 3D field layouts (<code>AprilTagFieldLayout</code>) to produce high-accuracy robot poses. It supports both multi-tag coprocessor estimation and lowest-ambiguity single-tag estimation, while publishing real-time telemetry (pose, standard deviations, target IDs) to NetworkTables for dashboard visualization and odometry integration.</li>
+<li><strong>Object &amp; Game-Piece Detection (<code>FROGDetector</code>)</strong>: A lightweight vision pipeline that clusters detected game pieces (such as notes or balls) into spatial groups using vectorized NumPy operations without requiring heavier machine learning dependencies like scikit-learn. It identifies target density centroids and exposes WPILib Command <code>Trigger</code> instances for automated intake and targeting routines.</li>
+</ol>
+<h2 id="key-components">Key Components</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="autorefs autorefs-internal" title="            FROGCameraConfig" href="#froglib.vision.FROGCameraConfig"><code>FROGCameraConfig</code></a></td>
+<td>Class</td>
+<td>Configuration container holding the camera name and 3D mounting transform relative to the robot frame.</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" title="            FROGPoseEstimator" href="#froglib.vision.FROGPoseEstimator"><code>FROGPoseEstimator</code></a></td>
+<td>Class</td>
+<td>Wraps <code>PhotonCamera</code> and <code>PhotonPoseEstimator</code> to compute robot field poses and publish telemetry to NetworkTables.</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" title="            DetectionResult
+
+
+  
+      dataclass
+  " href="#froglib.vision.DetectionResult"><code>DetectionResult</code></a></td>
+<td>Dataclass</td>
+<td>Holds centroid coordinates (<code>target_yaw</code>, <code>target_pitch</code>), concentration score, and detection count of a clustered group.</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" title="            FROGDetector" href="#froglib.vision.FROGDetector"><code>FROGDetector</code></a></td>
+<td>Class</td>
+<td>Extends <code>PhotonCamera</code> to filter object detections, perform angular clustering via NumPy, and provide command triggers.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usage-examples">Usage Examples</h2>
+<h3 id="apriltag-pose-estimation">AprilTag Pose Estimation</h3>
+<pre><code class="language-python">from wpimath.geometry import Transform3d, Translation3d, Rotation3d
+from robotpy_apriltag import AprilTagField, AprilTagFieldLayout
+from froglib.vision import FROGPoseEstimator
+
+# 1. Load the official FRC field layout
+field_layout = AprilTagFieldLayout().loadField(AprilTagField.k2024Crescendo)
+
+# 2. Define camera position relative to robot center (e.g. 0.25m forward, 0.5m up, pitched up 15 deg)
+robot_to_camera = Transform3d(
+    Translation3d(0.25, 0.0, 0.5),
+    Rotation3d.fromDegrees(0.0, -15.0, 0.0)
+)
+
+# 3. Instantiate the pose estimator
+pose_estimator = FROGPoseEstimator(
+    fieldTags=field_layout,
+    camera_name=&quot;front_camera&quot;,
+    robotToCamera=robot_to_camera
+)
+
+# 4. Periodically poll for estimated pose (e.g., inside a subsystem's periodic method)
+estimated_pose = pose_estimator.get_estimate()
+if estimated_pose is not None:
+    current_pose2d = estimated_pose.estimatedPose.toPose2d()
+    timestamp = estimated_pose.timestampSeconds
+    print(f&quot;Pose estimate: X={current_pose2d.X():.2f}m, Y={current_pose2d.Y():.2f}m, Time={timestamp:.2f}s&quot;)
+</code></pre>
+<h3 id="game-piece-detection-clustering">Game-Piece Detection &amp; Clustering</h3>
+<pre><code class="language-python">from wpimath.geometry import Transform3d
+from commands2 import Command
+from froglib.vision import FROGCameraConfig, FROGDetector
+
+# 1. Configure and instantiate the detector
+config = FROGCameraConfig(name=&quot;note_camera&quot;, robotToCamera=Transform3d())
+detector = FROGDetector(camera_config=config)
+
+# 2. Update targets during periodic loop
+def periodic():
+    detector.get_targets()
+    detector.process_targets()
+    result = detector.get_detection_results()
+    if result and detector.has_valid_target():
+        print(f&quot;Centroid: yaw={result.target_yaw:.1f}°, pitch={result.target_pitch:.1f}°, items={result.num_detections}&quot;)
+
+# 3. Create a trigger that executes an intake command when game pieces are close
+intake_trigger = detector.get_trigger_targets_close(yaw_threshold_deg=15.0, pitch_threshold_deg=-12.0)
+# intake_trigger.onTrue(RunIntakeCommand())
+</code></pre>
+<h2 id="reference">Reference</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="froglib.vision" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <span class="doc doc-object-name doc-module-name">froglib.vision</span>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+        <p>Computer vision utilities and pose estimation for FRC robots using PhotonVision.</p>
+<p>This module provides high-level abstractions for AprilTag-based robot pose estimation
+and lightweight object/game-piece detection using PhotonVision. It includes pose estimation
+with NetworkTables telemetry logging (<code>FROGPoseEstimator</code>), camera configuration helpers
+(<code>FROGCameraConfig</code>), and density-based target clustering without external machine
+learning dependencies (<code>FROGDetector</code>, <code>DetectionResult</code>).</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<h3 id="froglib.vision-classes">Classes</h3>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="froglib.vision.DetectionResult" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DetectionResult</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Result of detection processing and spatial clustering.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.DetectionResult.target_yaw">target_yaw</span></code></td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Centroid yaw angle in degrees relative to the camera center.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.DetectionResult.target_pitch">target_pitch</span></code></td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Centroid pitch angle in degrees relative to the camera center.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.DetectionResult.concentration_score">concentration_score</span></code></td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Density or area-weighted concentration score of the cluster.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.DetectionResult.num_detections">num_detections</span></code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Total number of detected targets grouped within the cluster.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.DetectionResult.avg_confidence">avg_confidence</span></code></td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Average detection confidence of targets in the cluster.
+Defaults to 0.0.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+              <details class="mkdocstrings-source">
+                <summary>Source code in <code>froglib/vision.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DetectionResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Result of detection processing and spatial clustering.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        target_yaw (float): Centroid yaw angle in degrees relative to the camera center.</span>
+<span class="sd">        target_pitch (float): Centroid pitch angle in degrees relative to the camera center.</span>
+<span class="sd">        concentration_score (float): Density or area-weighted concentration score of the cluster.</span>
+<span class="sd">        num_detections (int): Total number of detected targets grouped within the cluster.</span>
+<span class="sd">        avg_confidence (float, optional): Average detection confidence of targets in the cluster.</span>
+<span class="sd">            Defaults to 0.0.</span>
+<span class="sd">    """</span>
+
+    <span class="n">target_yaw</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">target_pitch</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="c1"># density_score: float  #sum of areas in cluster, weighted if enabled</span>
+    <span class="n">concentration_score</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># sum of areas in cluster / concentration score</span>
+    <span class="n">num_detections</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># number of targets in cluster?</span>
+    <span class="n">avg_confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="froglib.vision.FROGCameraConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">FROGCameraConfig</span>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Configuration container for a PhotonVision camera mounted on the robot.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.FROGCameraConfig.name">name</span></code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The NetworkTables/PhotonVision camera name.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.FROGCameraConfig.robotToCamera">robotToCamera</span></code></td>
+            <td>
+                  <code><span title="wpimath.geometry.Transform3d">Transform3d</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The 3D coordinate transform from the robot
+center of rotation to the camera optical center.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+              <details class="mkdocstrings-source">
+                <summary>Source code in <code>froglib/vision.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FROGCameraConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Configuration container for a PhotonVision camera mounted on the robot.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): The NetworkTables/PhotonVision camera name.</span>
+<span class="sd">        robotToCamera (Transform3d): The 3D coordinate transform from the robot</span>
+<span class="sd">            center of rotation to the camera optical center.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">robotToCamera</span><span class="p">:</span> <span class="n">Transform3d</span> <span class="o">=</span> <span class="n">Transform3d</span><span class="p">()):</span>
+<span class="w">        </span><span class="sd">"""Initializes a camera configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The unique name of the camera in PhotonVision.</span>
+<span class="sd">            robotToCamera (Transform3d, optional): 3D transform from robot frame</span>
+<span class="sd">                to camera frame. Defaults to identity Transform3d().</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robotToCamera</span> <span class="o">=</span> <span class="n">robotToCamera</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+<h5 id="froglib.vision.FROGCameraConfig-functions">Methods:</h5>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGCameraConfig.__init__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__init__</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">robotToCamera</span><span class="o">=</span><span class="n">Transform3d</span><span class="p">())</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Initializes a camera configuration.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The unique name of the camera in PhotonVision.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>robotToCamera</code>
+            </td>
+            <td>
+                  <code><span title="wpimath.geometry.Transform3d">Transform3d</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>3D transform from robot frame
+to camera frame. Defaults to identity Transform3d().</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="wpimath.geometry.Transform3d">Transform3d</span>()</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">robotToCamera</span><span class="p">:</span> <span class="n">Transform3d</span> <span class="o">=</span> <span class="n">Transform3d</span><span class="p">()):</span>
+<span class="w">    </span><span class="sd">"""Initializes a camera configuration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): The unique name of the camera in PhotonVision.</span>
+<span class="sd">        robotToCamera (Transform3d, optional): 3D transform from robot frame</span>
+<span class="sd">            to camera frame. Defaults to identity Transform3d().</span>
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">robotToCamera</span> <span class="o">=</span> <span class="n">robotToCamera</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="froglib.vision.FROGDetector" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">FROGDetector</span>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="photonlibpy.PhotonCamera">PhotonCamera</span></code></p>
+
+
+
+        <p>Lightweight version of FROGDetection with no sklearn dependency.</p>
+<p>Uses only numpy for all clustering operations.</p>
+
+
+
+
+
+
+
+
+              <details class="mkdocstrings-source">
+                <summary>Source code in <code>froglib/vision.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FROGDetector</span><span class="p">(</span><span class="n">PhotonCamera</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Lightweight version of FROGDetection with no sklearn dependency.</span>
+
+<span class="sd">    Uses only numpy for all clustering operations.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">camera_config</span><span class="p">:</span> <span class="n">FROGCameraConfig</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Initialize the lightweight detection camera.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            camera_config (FROGCameraConfig): Configuration containing camera name and transform.</span>
+<span class="sd">        """</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">camera_config</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_min_confidence</span> <span class="o">=</span> <span class="mf">0.8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cluster_radius_deg</span> <span class="o">=</span> <span class="mf">12.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_min_neighbors</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_use_area_weighting</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">PhotonTrackedTarget</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detection_target</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DetectionResult</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># self.alt_detection_target: Optional[DetectionResult] = None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Retrieves the latest unread target detections from the camera.</span>
+
+<span class="sd">        Updates the internal targets list with targets from the most recent frame,</span>
+<span class="sd">        or clears the list if no targets are detected.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">results</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAllUnreadResults</span><span class="p">():</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">hasTargets</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">getTargets</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">process_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Filters detected targets by confidence and converts angular data into NumPy arrays.</span>
+
+<span class="sd">        Extracts yaw, pitch, and bounding area arrays for targets meeting or exceeding</span>
+<span class="sd">        the minimum detection confidence threshold (`_min_confidence`).</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+            <span class="k">return</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">objDetectConf</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_confidence</span><span class="p">]</span>
+
+        <span class="c1"># Extract to numpy for other clustering and other analysis methods</span>
+        <span class="k">if</span> <span class="n">valid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">((</span><span class="n">t</span><span class="o">.</span><span class="n">yaw</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">((</span><span class="n">t</span><span class="o">.</span><span class="n">pitch</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">((</span><span class="n">t</span><span class="o">.</span><span class="n">area</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_detection_results</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DetectionResult</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Computes and returns the best clustered target detection.</span>
+
+<span class="sd">        Runs density clustering on current targets and stores the highest-scoring</span>
+<span class="sd">        cluster centroid.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            DetectionResult | None: The best target cluster result, or None if no valid</span>
+<span class="sd">                cluster is found.</span>
+<span class="sd">        """</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">detection_target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_best_cluster</span><span class="p">(</span>
+                <span class="n">cluster_radius_deg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cluster_radius_deg</span><span class="p">,</span>
+                <span class="n">min_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_min_neighbors</span><span class="p">,</span>
+                <span class="n">use_area_weighting</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_use_area_weighting</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">detection_target</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_best_cluster</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">cluster_radius_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">12.0</span><span class="p">,</span>
+        <span class="n">min_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">use_area_weighting</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DetectionResult</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Finds the most dense cluster of detected targets using pairwise angular distance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cluster_radius_deg (float, optional): Maximum angular radius in degrees to consider</span>
+<span class="sd">                two targets neighbors. Defaults to 12.0.</span>
+<span class="sd">            min_neighbors (int, optional): Minimum number of detected targets required to form</span>
+<span class="sd">                a cluster. Defaults to 2.</span>
+<span class="sd">            use_area_weighting (bool, optional): Whether to weight cluster centroid and score</span>
+<span class="sd">                by detected target area. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            DetectionResult | None: Centroid and metadata of the most concentrated cluster,</span>
+<span class="sd">                or None if no cluster meets min_neighbors.</span>
+<span class="sd">        """</span>
+
+        <span class="c1"># Calculate Distance Matrix (Broadcasting)</span>
+        <span class="n">dist_sq</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">adj</span> <span class="o">=</span> <span class="n">dist_sq</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">cluster_radius_deg</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Score neighborhoods based on density</span>
+        <span class="k">if</span> <span class="n">use_area_weighting</span><span class="p">:</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="n">adj</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="n">adj</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">best_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+
+        <span class="c1"># Validate against minimum neighbors</span>
+        <span class="n">num_neighbors</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">adj</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">num_neighbors</span> <span class="o">&lt;</span> <span class="n">min_neighbors</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Extract the winning cluster and calculate centroid</span>
+        <span class="n">cluster_mask</span> <span class="o">=</span> <span class="n">adj</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">use_area_weighting</span><span class="p">:</span>
+            <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span><span class="p">[</span><span class="n">cluster_mask</span><span class="p">]</span>
+            <span class="n">target_yaw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">[</span><span class="n">cluster_mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span> <span class="o">/</span> <span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">target_pitch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span><span class="p">[</span><span class="n">cluster_mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span> <span class="o">/</span> <span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">target_yaw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">[</span><span class="n">cluster_mask</span><span class="p">])</span>
+            <span class="n">target_pitch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span><span class="p">[</span><span class="n">cluster_mask</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">DetectionResult</span><span class="p">(</span>
+            <span class="n">target_yaw</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">target_yaw</span><span class="p">),</span>
+            <span class="n">target_pitch</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">target_pitch</span><span class="p">),</span>
+            <span class="n">concentration_score</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]),</span>
+            <span class="n">num_detections</span><span class="o">=</span><span class="n">num_neighbors</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_valid_target</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Check if there is a valid target concentration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if a valid DetectionResult exists, False otherwise.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">detection_target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_concentration_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Get human-readable information about the current fuel concentration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Description of target count, yaw, pitch, and concentration score.</span>
+<span class="sd">        """</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detection_target</span>
+
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">"No fuel detected"</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"Detected </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">num_detections</span><span class="si">}</span><span class="s2"> fuel objects</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"Target: Yaw=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">target_yaw</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°, Pitch=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">target_pitch</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"Concentration score: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">concentration_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_targets_close</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">yaw_threshold_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">,</span>
+        <span class="n">pitch_threshold_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">min_area</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Evaluates whether any detected target satisfies proximity and field-of-view thresholds.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            yaw_threshold_deg (float, optional): Maximum absolute yaw angle in degrees. Defaults to 20.0.</span>
+<span class="sd">            pitch_threshold_deg (float, optional): Upper bound pitch angle in degrees (targets lower in the image).</span>
+<span class="sd">                Defaults to -10.0.</span>
+<span class="sd">            min_area (float, optional): Minimum target bounding area percentage. Defaults to 0.0.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if at least one target meets all threshold conditions, False otherwise.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">yaw_threshold_deg</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span> <span class="o">&lt;=</span> <span class="n">pitch_threshold_deg</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_areas</span> <span class="o">&gt;=</span> <span class="n">min_area</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">matches</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_trigger_targets_close</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">yaw_threshold_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">,</span>
+        <span class="n">pitch_threshold_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">10.0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Creates a WPILib Command Trigger that activates when targets are within specified thresholds.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            yaw_threshold_deg (float, optional): Maximum absolute yaw angle in degrees. Defaults to 20.0.</span>
+<span class="sd">            pitch_threshold_deg (float, optional): Upper bound pitch angle in degrees. Defaults to -10.0.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trigger: A commands2 Trigger active when targets meet the proximity criteria.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span>
+            <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_targets_close</span><span class="p">(</span><span class="n">yaw_threshold_deg</span><span class="p">,</span> <span class="n">pitch_threshold_deg</span><span class="p">)</span>
+        <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+<h5 id="froglib.vision.FROGDetector-functions">Methods:</h5>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGDetector.__init__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__init__</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">__init__</span><span class="p">(</span><span class="n">camera_config</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Initialize the lightweight detection camera.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>camera_config</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            FROGCameraConfig (froglib.vision.FROGCameraConfig)" href="#froglib.vision.FROGCameraConfig">FROGCameraConfig</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Configuration containing camera name and transform.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">camera_config</span><span class="p">:</span> <span class="n">FROGCameraConfig</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Initialize the lightweight detection camera.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        camera_config (FROGCameraConfig): Configuration containing camera name and transform.</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">camera_config</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_min_confidence</span> <span class="o">=</span> <span class="mf">0.8</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_cluster_radius_deg</span> <span class="o">=</span> <span class="mf">12.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_min_neighbors</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_use_area_weighting</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">PhotonTrackedTarget</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">detection_target</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DetectionResult</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># self.alt_detection_target: Optional[DetectionResult] = None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGDetector.get_best_cluster" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">get_best_cluster</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_best_cluster</span><span class="p">(</span>
+    <span class="n">cluster_radius_deg</span><span class="o">=</span><span class="mf">12.0</span><span class="p">,</span>
+    <span class="n">min_neighbors</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">use_area_weighting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Finds the most dense cluster of detected targets using pairwise angular distance.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cluster_radius_deg</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum angular radius in degrees to consider
+two targets neighbors. Defaults to 12.0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>12.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>min_neighbors</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Minimum number of detected targets required to form
+a cluster. Defaults to 2.</p>
+              </div>
+            </td>
+            <td>
+                  <code>2</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>use_area_weighting</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to weight cluster centroid and score
+by detected target area. Defaults to True.</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="            DetectionResult
+
+
+  
+      dataclass
+   (froglib.vision.DetectionResult)" href="#froglib.vision.DetectionResult">DetectionResult</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DetectionResult | None: Centroid and metadata of the most concentrated cluster,
+or None if no cluster meets min_neighbors.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_best_cluster</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">cluster_radius_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">12.0</span><span class="p">,</span>
+    <span class="n">min_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">use_area_weighting</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DetectionResult</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Finds the most dense cluster of detected targets using pairwise angular distance.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cluster_radius_deg (float, optional): Maximum angular radius in degrees to consider</span>
+<span class="sd">            two targets neighbors. Defaults to 12.0.</span>
+<span class="sd">        min_neighbors (int, optional): Minimum number of detected targets required to form</span>
+<span class="sd">            a cluster. Defaults to 2.</span>
+<span class="sd">        use_area_weighting (bool, optional): Whether to weight cluster centroid and score</span>
+<span class="sd">            by detected target area. Defaults to True.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DetectionResult | None: Centroid and metadata of the most concentrated cluster,</span>
+<span class="sd">            or None if no cluster meets min_neighbors.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># Calculate Distance Matrix (Broadcasting)</span>
+    <span class="n">dist_sq</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">adj</span> <span class="o">=</span> <span class="n">dist_sq</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">cluster_radius_deg</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Score neighborhoods based on density</span>
+    <span class="k">if</span> <span class="n">use_area_weighting</span><span class="p">:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">adj</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">adj</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">best_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+
+    <span class="c1"># Validate against minimum neighbors</span>
+    <span class="n">num_neighbors</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">adj</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">num_neighbors</span> <span class="o">&lt;</span> <span class="n">min_neighbors</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Extract the winning cluster and calculate centroid</span>
+    <span class="n">cluster_mask</span> <span class="o">=</span> <span class="n">adj</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">use_area_weighting</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span><span class="p">[</span><span class="n">cluster_mask</span><span class="p">]</span>
+        <span class="n">target_yaw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">[</span><span class="n">cluster_mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span> <span class="o">/</span> <span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">target_pitch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span><span class="p">[</span><span class="n">cluster_mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span> <span class="o">/</span> <span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">target_yaw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">[</span><span class="n">cluster_mask</span><span class="p">])</span>
+        <span class="n">target_pitch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span><span class="p">[</span><span class="n">cluster_mask</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">DetectionResult</span><span class="p">(</span>
+        <span class="n">target_yaw</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">target_yaw</span><span class="p">),</span>
+        <span class="n">target_pitch</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">target_pitch</span><span class="p">),</span>
+        <span class="n">concentration_score</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]),</span>
+        <span class="n">num_detections</span><span class="o">=</span><span class="n">num_neighbors</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGDetector.get_concentration_info" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">get_concentration_info</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_concentration_info</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Get human-readable information about the current fuel concentration.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>str</code></td>            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Description of target count, yaw, pitch, and concentration score.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_concentration_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Get human-readable information about the current fuel concentration.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Description of target count, yaw, pitch, and concentration score.</span>
+<span class="sd">    """</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detection_target</span>
+
+    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"No fuel detected"</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"Detected </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">num_detections</span><span class="si">}</span><span class="s2"> fuel objects</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="sa">f</span><span class="s2">"Target: Yaw=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">target_yaw</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°, Pitch=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">target_pitch</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="sa">f</span><span class="s2">"Concentration score: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">concentration_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGDetector.get_detection_results" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">get_detection_results</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_detection_results</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Computes and returns the best clustered target detection.</p>
+<p>Runs density clustering on current targets and stores the highest-scoring
+cluster centroid.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="            DetectionResult
+
+
+  
+      dataclass
+   (froglib.vision.DetectionResult)" href="#froglib.vision.DetectionResult">DetectionResult</a>] | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DetectionResult | None: The best target cluster result, or None if no valid
+cluster is found.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_detection_results</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DetectionResult</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Computes and returns the best clustered target detection.</span>
+
+<span class="sd">    Runs density clustering on current targets and stores the highest-scoring</span>
+<span class="sd">    cluster centroid.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DetectionResult | None: The best target cluster result, or None if no valid</span>
+<span class="sd">            cluster is found.</span>
+<span class="sd">    """</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detection_target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_best_cluster</span><span class="p">(</span>
+            <span class="n">cluster_radius_deg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cluster_radius_deg</span><span class="p">,</span>
+            <span class="n">min_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_min_neighbors</span><span class="p">,</span>
+            <span class="n">use_area_weighting</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_use_area_weighting</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">detection_target</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGDetector.get_targets" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">get_targets</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_targets</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves the latest unread target detections from the camera.</p>
+<p>Updates the internal targets list with targets from the most recent frame,
+or clears the list if no targets are detected.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Retrieves the latest unread target detections from the camera.</span>
+
+<span class="sd">    Updates the internal targets list with targets from the most recent frame,</span>
+<span class="sd">    or clears the list if no targets are detected.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">results</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAllUnreadResults</span><span class="p">():</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">hasTargets</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">getTargets</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGDetector.get_trigger_targets_close" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">get_trigger_targets_close</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_trigger_targets_close</span><span class="p">(</span>
+    <span class="n">yaw_threshold_deg</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">pitch_threshold_deg</span><span class="o">=-</span><span class="mf">10.0</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a WPILib Command Trigger that activates when targets are within specified thresholds.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>yaw_threshold_deg</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum absolute yaw angle in degrees. Defaults to 20.0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>20.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>pitch_threshold_deg</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Upper bound pitch angle in degrees. Defaults to -10.0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>-10.0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Trigger</code></td>            <td>
+                  <code><span title="commands2.button.Trigger">Trigger</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A commands2 Trigger active when targets meet the proximity criteria.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_trigger_targets_close</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">yaw_threshold_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">,</span>
+    <span class="n">pitch_threshold_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">10.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Creates a WPILib Command Trigger that activates when targets are within specified thresholds.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        yaw_threshold_deg (float, optional): Maximum absolute yaw angle in degrees. Defaults to 20.0.</span>
+<span class="sd">        pitch_threshold_deg (float, optional): Upper bound pitch angle in degrees. Defaults to -10.0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Trigger: A commands2 Trigger active when targets meet the proximity criteria.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span>
+        <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_targets_close</span><span class="p">(</span><span class="n">yaw_threshold_deg</span><span class="p">,</span> <span class="n">pitch_threshold_deg</span><span class="p">)</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGDetector.has_targets_close" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">has_targets_close</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">has_targets_close</span><span class="p">(</span>
+    <span class="n">yaw_threshold_deg</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span>
+    <span class="n">pitch_threshold_deg</span><span class="o">=-</span><span class="mf">10.0</span><span class="p">,</span>
+    <span class="n">min_area</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Evaluates whether any detected target satisfies proximity and field-of-view thresholds.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>yaw_threshold_deg</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum absolute yaw angle in degrees. Defaults to 20.0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>20.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>pitch_threshold_deg</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Upper bound pitch angle in degrees (targets lower in the image).
+Defaults to -10.0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>-10.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>min_area</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Minimum target bounding area percentage. Defaults to 0.0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>bool</code></td>            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True if at least one target meets all threshold conditions, False otherwise.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">has_targets_close</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">yaw_threshold_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">,</span>
+    <span class="n">pitch_threshold_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">10.0</span><span class="p">,</span>
+    <span class="n">min_area</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Evaluates whether any detected target satisfies proximity and field-of-view thresholds.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        yaw_threshold_deg (float, optional): Maximum absolute yaw angle in degrees. Defaults to 20.0.</span>
+<span class="sd">        pitch_threshold_deg (float, optional): Upper bound pitch angle in degrees (targets lower in the image).</span>
+<span class="sd">            Defaults to -10.0.</span>
+<span class="sd">        min_area (float, optional): Minimum target bounding area percentage. Defaults to 0.0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if at least one target meets all threshold conditions, False otherwise.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">yaw_threshold_deg</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span> <span class="o">&lt;=</span> <span class="n">pitch_threshold_deg</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_areas</span> <span class="o">&gt;=</span> <span class="n">min_area</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">matches</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGDetector.has_valid_target" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">has_valid_target</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">has_valid_target</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Check if there is a valid target concentration.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>bool</code></td>            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True if a valid DetectionResult exists, False otherwise.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">has_valid_target</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Check if there is a valid target concentration.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if a valid DetectionResult exists, False otherwise.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">detection_target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGDetector.process_targets" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">process_targets</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">process_targets</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Filters detected targets by confidence and converts angular data into NumPy arrays.</p>
+<p>Extracts yaw, pitch, and bounding area arrays for targets meeting or exceeding
+the minimum detection confidence threshold (<code>_min_confidence</code>).</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">process_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Filters detected targets by confidence and converts angular data into NumPy arrays.</span>
+
+<span class="sd">    Extracts yaw, pitch, and bounding area arrays for targets meeting or exceeding</span>
+<span class="sd">    the minimum detection confidence threshold (`_min_confidence`).</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="k">return</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">objDetectConf</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_confidence</span><span class="p">]</span>
+
+    <span class="c1"># Extract to numpy for other clustering and other analysis methods</span>
+    <span class="k">if</span> <span class="n">valid</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">((</span><span class="n">t</span><span class="o">.</span><span class="n">yaw</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">((</span><span class="n">t</span><span class="o">.</span><span class="n">pitch</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">((</span><span class="n">t</span><span class="o">.</span><span class="n">area</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_yaws</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_areas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="froglib.vision.FROGPoseEstimator" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">FROGPoseEstimator</span>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Robot pose estimator utilizing PhotonVision AprilTag detections and NetworkTables.</p>
+<p>Integrates PhotonCamera with PhotonPoseEstimator to produce estimated robot poses
+on the field. Results and standard deviations are published to NetworkTables under
+<code>FROGSubsystems/Vision/&lt;camera_name&gt;/</code> for real-time dashboard telemetry and pose filtering.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.FROGPoseEstimator.camera">camera</span></code></td>
+            <td>
+                  <code><span title="photonlibpy.PhotonCamera">PhotonCamera</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The underlying PhotonVision camera client.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.FROGPoseEstimator.fieldTags">fieldTags</span></code></td>
+            <td>
+                  <code><span title="robotpy_apriltag.AprilTagFieldLayout">AprilTagFieldLayout</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Known 3D positions of AprilTags on the field.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.FROGPoseEstimator.estimator">estimator</span></code></td>
+            <td>
+                  <code><span title="photonlibpy.PhotonPoseEstimator">PhotonPoseEstimator</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The PhotonLib pose estimation engine.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.vision.FROGPoseEstimator.pose_buffer">pose_buffer</span></code></td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            PoseBuffer (froglib.utils.PoseBuffer)" href="../utils/#froglib.utils.PoseBuffer">PoseBuffer</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Historical buffer of estimated poses for statistical filtering.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+              <details class="mkdocstrings-source">
+                <summary>Source code in <code>froglib/vision.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FROGPoseEstimator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Robot pose estimator utilizing PhotonVision AprilTag detections and NetworkTables.</span>
+
+<span class="sd">    Integrates PhotonCamera with PhotonPoseEstimator to produce estimated robot poses</span>
+<span class="sd">    on the field. Results and standard deviations are published to NetworkTables under</span>
+<span class="sd">    `FROGSubsystems/Vision/&lt;camera_name&gt;/` for real-time dashboard telemetry and pose filtering.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        camera (PhotonCamera): The underlying PhotonVision camera client.</span>
+<span class="sd">        fieldTags (AprilTagFieldLayout): Known 3D positions of AprilTags on the field.</span>
+<span class="sd">        estimator (PhotonPoseEstimator): The PhotonLib pose estimation engine.</span>
+<span class="sd">        pose_buffer (PoseBuffer): Historical buffer of estimated poses for statistical filtering.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fieldTags</span><span class="p">:</span> <span class="n">AprilTagFieldLayout</span><span class="p">,</span>
+        <span class="n">camera_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">robotToCamera</span><span class="p">:</span> <span class="n">Transform3d</span> <span class="o">=</span> <span class="n">Transform3d</span><span class="p">(),</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Initializes the AprilTag pose estimator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fieldTags (AprilTagFieldLayout): Layout containing the known positions of AprilTags.</span>
+<span class="sd">            camera_name (str): The name of the camera configured in PhotonVision.</span>
+<span class="sd">            robotToCamera (Transform3d, optional): 3D transform from robot center to camera lens.</span>
+<span class="sd">                Defaults to identity Transform3d().</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span> <span class="o">=</span> <span class="n">PhotonCamera</span><span class="p">(</span><span class="n">camera_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fieldTags</span> <span class="o">=</span> <span class="n">fieldTags</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">PhotonPoseEstimator</span><span class="p">(</span>
+            <span class="n">fieldTags</span><span class="p">,</span>
+            <span class="n">robotToCamera</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">nt_table</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"FROGSubsystems/Vision/</span><span class="si">{</span><span class="n">camera_name</span><span class="si">}</span><span class="s2">"</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pose_buffer</span> <span class="o">=</span> <span class="n">PoseBuffer</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_latest_pose_pub</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">getStructTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/estimated_pose"</span><span class="p">,</span> <span class="n">Pose2d</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stdev_x_pub</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">getFloatTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/stdev_x"</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stdev_y_pub</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">getFloatTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/stdev_y"</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stdev_rotation_pub</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">getFloatTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/stdev_rotation"</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_has_targets_pub</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">getBooleanTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/has_targets"</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tag_id_pub</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">getIntegerTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/target_id"</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target_ambiguity_rotation_pub</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">getFloatTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/target_ambiguity"</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_estimate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EstimatedRobotPose</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Estimates the robot's field pose from unread camera frames.</span>
+
+<span class="sd">        Reads unread results from the camera, attempting multi-tag coprocessor estimation</span>
+<span class="sd">        first, and falling back to the lowest ambiguity single-tag estimate if multi-tag is</span>
+<span class="sd">        unavailable. Publishes the estimated pose to NetworkTables.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EstimatedRobotPose | None: The estimated 3D robot pose with timestamp, or None</span>
+<span class="sd">                if no valid pose could be calculated.</span>
+<span class="sd">        """</span>
+        <span class="n">estPose</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">getAllUnreadResults</span><span class="p">():</span>
+            <span class="n">estPose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">estimateCoprocMultiTagPose</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">estPose</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">estPose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">estimateLowestAmbiguityPose</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+        <span class="c1"># if we have an estimated Pose, publish it, otherwise publish a bad Pose2d</span>
+        <span class="k">if</span> <span class="n">estPose</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_latest_pose_pub</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">estPose</span><span class="o">.</span><span class="n">estimatedPose</span><span class="o">.</span><span class="n">toPose2d</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_latest_pose_pub</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">Pose2d</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">estPose</span>
+
+        <span class="c1"># estimated_pose = self.update()</span>
+        <span class="c1"># if estimated_pose:</span>
+        <span class="c1">#     targets = estimated_pose.targetsUsed</span>
+        <span class="c1">#     SmartDashboard.putNumber(</span>
+        <span class="c1">#         f"{self._camera.getName()} Targets Found", len(targets)</span>
+        <span class="c1">#     )</span>
+        <span class="c1">#     target1 = targets[0]</span>
+        <span class="c1">#     SmartDashboard.putNumber(</span>
+        <span class="c1">#         f"{self._camera.getName()} First Target Ambiguity",</span>
+        <span class="c1">#         target1.getPoseAmbiguity(),</span>
+        <span class="c1">#     )</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_distance_to_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pose</span><span class="p">:</span> <span class="n">Pose3d</span><span class="p">,</span> <span class="n">tag_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Calculates the 2D planar distance from a given robot pose to a field AprilTag.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pose (Pose3d): Current 3D pose of the robot.</span>
+<span class="sd">            tag_num (int): The fiducial ID of the target AprilTag.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float | None: Planar Euclidean distance in meters, or None if the tag ID</span>
+<span class="sd">                is not found in the field layout.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">tagpose</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTagPose</span><span class="p">(</span><span class="n">tag_num</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">pose</span><span class="o">.</span><span class="n">toPose2d</span><span class="p">()</span><span class="o">.</span><span class="n">translation</span><span class="p">()</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">tagpose</span><span class="o">.</span><span class="n">toPose2d</span><span class="p">()</span><span class="o">.</span><span class="n">translation</span><span class="p">())</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getTagPose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Retrieves the 3D pose of an AprilTag from the field layout.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tag_id (int): The fiducial ID of the AprilTag.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Pose3d | None: The 3D pose of the tag, or None if not present in the layout.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldTags</span><span class="o">.</span><span class="n">getTagPose</span><span class="p">(</span><span class="n">tag_id</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+<h5 id="froglib.vision.FROGPoseEstimator-functions">Methods:</h5>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGPoseEstimator.__init__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__init__</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">__init__</span><span class="p">(</span>
+    <span class="n">fieldTags</span><span class="p">,</span> <span class="n">camera_name</span><span class="p">,</span> <span class="n">robotToCamera</span><span class="o">=</span><span class="n">Transform3d</span><span class="p">()</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Initializes the AprilTag pose estimator.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>fieldTags</code>
+            </td>
+            <td>
+                  <code><span title="robotpy_apriltag.AprilTagFieldLayout">AprilTagFieldLayout</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Layout containing the known positions of AprilTags.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>camera_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The name of the camera configured in PhotonVision.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>robotToCamera</code>
+            </td>
+            <td>
+                  <code><span title="wpimath.geometry.Transform3d">Transform3d</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>3D transform from robot center to camera lens.
+Defaults to identity Transform3d().</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="wpimath.geometry.Transform3d">Transform3d</span>()</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">fieldTags</span><span class="p">:</span> <span class="n">AprilTagFieldLayout</span><span class="p">,</span>
+    <span class="n">camera_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">robotToCamera</span><span class="p">:</span> <span class="n">Transform3d</span> <span class="o">=</span> <span class="n">Transform3d</span><span class="p">(),</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Initializes the AprilTag pose estimator.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fieldTags (AprilTagFieldLayout): Layout containing the known positions of AprilTags.</span>
+<span class="sd">        camera_name (str): The name of the camera configured in PhotonVision.</span>
+<span class="sd">        robotToCamera (Transform3d, optional): 3D transform from robot center to camera lens.</span>
+<span class="sd">            Defaults to identity Transform3d().</span>
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">camera</span> <span class="o">=</span> <span class="n">PhotonCamera</span><span class="p">(</span><span class="n">camera_name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fieldTags</span> <span class="o">=</span> <span class="n">fieldTags</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">PhotonPoseEstimator</span><span class="p">(</span>
+        <span class="n">fieldTags</span><span class="p">,</span>
+        <span class="n">robotToCamera</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">nt_table</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"FROGSubsystems/Vision/</span><span class="si">{</span><span class="n">camera_name</span><span class="si">}</span><span class="s2">"</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pose_buffer</span> <span class="o">=</span> <span class="n">PoseBuffer</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_latest_pose_pub</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">getStructTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/estimated_pose"</span><span class="p">,</span> <span class="n">Pose2d</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_stdev_x_pub</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">getFloatTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/stdev_x"</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_stdev_y_pub</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">getFloatTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/stdev_y"</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_stdev_rotation_pub</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">getFloatTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/stdev_rotation"</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_has_targets_pub</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">getBooleanTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/has_targets"</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tag_id_pub</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">getIntegerTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/target_id"</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_target_ambiguity_rotation_pub</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">NetworkTableInstance</span><span class="o">.</span><span class="n">getDefault</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">getFloatTopic</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nt_table</span><span class="si">}</span><span class="s2">/target_ambiguity"</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGPoseEstimator.getTagPose" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getTagPose</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getTagPose</span><span class="p">(</span><span class="n">tag_id</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves the 3D pose of an AprilTag from the field layout.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>tag_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The fiducial ID of the AprilTag.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pose3d | None: The 3D pose of the tag, or None if not present in the layout.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getTagPose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Retrieves the 3D pose of an AprilTag from the field layout.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tag_id (int): The fiducial ID of the AprilTag.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Pose3d | None: The 3D pose of the tag, or None if not present in the layout.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldTags</span><span class="o">.</span><span class="n">getTagPose</span><span class="p">(</span><span class="n">tag_id</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGPoseEstimator.get_distance_to_tag" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">get_distance_to_tag</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_distance_to_tag</span><span class="p">(</span><span class="n">pose</span><span class="p">,</span> <span class="n">tag_num</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Calculates the 2D planar distance from a given robot pose to a field AprilTag.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>pose</code>
+            </td>
+            <td>
+                  <code><span title="wpimath.geometry.Pose3d">Pose3d</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Current 3D pose of the robot.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>tag_num</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The fiducial ID of the target AprilTag.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="float">float</span> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>float | None: Planar Euclidean distance in meters, or None if the tag ID
+is not found in the field layout.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_distance_to_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pose</span><span class="p">:</span> <span class="n">Pose3d</span><span class="p">,</span> <span class="n">tag_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Calculates the 2D planar distance from a given robot pose to a field AprilTag.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pose (Pose3d): Current 3D pose of the robot.</span>
+<span class="sd">        tag_num (int): The fiducial ID of the target AprilTag.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float | None: Planar Euclidean distance in meters, or None if the tag ID</span>
+<span class="sd">            is not found in the field layout.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">tagpose</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTagPose</span><span class="p">(</span><span class="n">tag_num</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">pose</span><span class="o">.</span><span class="n">toPose2d</span><span class="p">()</span><span class="o">.</span><span class="n">translation</span><span class="p">()</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">tagpose</span><span class="o">.</span><span class="n">toPose2d</span><span class="p">()</span><span class="o">.</span><span class="n">translation</span><span class="p">())</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.vision.FROGPoseEstimator.get_estimate" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">get_estimate</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_estimate</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Estimates the robot's field pose from unread camera frames.</p>
+<p>Reads unread results from the camera, attempting multi-tag coprocessor estimation
+first, and falling back to the lowest ambiguity single-tag estimate if multi-tag is
+unavailable. Publishes the estimated pose to NetworkTables.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="photonlibpy.EstimatedRobotPose">EstimatedRobotPose</span> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>EstimatedRobotPose | None: The estimated 3D robot pose with timestamp, or None
+if no valid pose could be calculated.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/vision.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_estimate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EstimatedRobotPose</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Estimates the robot's field pose from unread camera frames.</span>
+
+<span class="sd">    Reads unread results from the camera, attempting multi-tag coprocessor estimation</span>
+<span class="sd">    first, and falling back to the lowest ambiguity single-tag estimate if multi-tag is</span>
+<span class="sd">    unavailable. Publishes the estimated pose to NetworkTables.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        EstimatedRobotPose | None: The estimated 3D robot pose with timestamp, or None</span>
+<span class="sd">            if no valid pose could be calculated.</span>
+<span class="sd">    """</span>
+    <span class="n">estPose</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">getAllUnreadResults</span><span class="p">():</span>
+        <span class="n">estPose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">estimateCoprocMultiTagPose</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">estPose</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">estPose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">estimateLowestAmbiguityPose</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="c1"># if we have an estimated Pose, publish it, otherwise publish a bad Pose2d</span>
+    <span class="k">if</span> <span class="n">estPose</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_latest_pose_pub</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">estPose</span><span class="o">.</span><span class="n">estimatedPose</span><span class="o">.</span><span class="n">toPose2d</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_latest_pose_pub</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">Pose2d</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">estPose</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

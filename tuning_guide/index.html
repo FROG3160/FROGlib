@@ -1,0 +1,1338 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Hardware Abstraction and Utility Library for FROG 3160">
+      
+      
+        <meta name="author" content="FROG 3160">
+      
+      
+      
+        <link rel="prev" href="../getting_started/">
+      
+      
+        <link rel="next" href="../testing_tuning/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Tuning Guide - FROGlib Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#talonfx-gain-tuning-characterization-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FROGlib Documentation" class="md-header__button md-logo" aria-label="FROGlib Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FROGlib Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tuning Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="light-green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FROG3160/FROGlib" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../getting_started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tuning Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../testing_tuning/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Testing Motor Tuning
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../api/ctre/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FROGlib Documentation" class="md-nav__button md-logo" aria-label="FROGlib Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FROGlib Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FROG3160/FROGlib" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning Guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-phoenix-6-gain-architecture-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Phoenix 6 Gain Architecture &amp; Units
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-gearing-mechanism-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Gearing &amp; Mechanism Units
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Gearing &amp; Mechanism Units">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-configure-gearing-in-firmware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended: Configure Gearing in Firmware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physics-based-gearing-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physics-Based Gearing Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-safety-for-limited-travel-mechanisms-arms-elevators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Safety for Limited-Travel Mechanisms (Arms, Elevators)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-workflow-1-autonomous-on-robot-characterizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Workflow 1: Autonomous On-Robot Characterizer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Workflow 1: Autonomous On-Robot Characterizer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-continuous-mechanism-shooter-flywheel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Continuous Mechanism (Shooter Flywheel)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-bounded-mechanism-elevator-arm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Bounded Mechanism (Elevator / Arm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-the-command-in-robotcontainerpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binding the Command in RobotContainer.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpreting-the-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpreting the Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-workflow-2-wpilib-sysidroutine-with-signallogger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Workflow 2: WPILib SysIdRoutine with SignalLogger
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Workflow 2: WPILib SysIdRoutine with SignalLogger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procedure:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-testing-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Testing &amp; Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing_tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Motor Tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/ctre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CTRE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/motors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/navx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NavX
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/sds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/sensors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/subsystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subsystem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/swerve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Swerve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/xbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xbox
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="talonfx-gain-tuning-characterization-guide">TalonFX Gain Tuning &amp; Characterization Guide</h1>
+<p>This guide explains how to determine firmware gains for CTRE <strong>TalonFX</strong> motor controllers running Phoenix 6 in <strong>FROGlib</strong>.</p>
+<p>FROGlib supports two workflows:
+1. <strong>Autonomous On-Robot Tuning (<code>TalonFXCharacterizer</code>)</strong>: Runs directly on the robot (or in simulation) to test $k_S, k_V, k_A$, synthesize $k_P, k_D$, and output/apply <code>Slot0Configs</code> immediately without manual log export.
+2. <strong>WPILib SysIdRoutine Integration (<code>FROGSysIdHelper</code>)</strong>: Automates WPILib's <code>SysIdRoutine</code> with CTRE Phoenix 6's high-speed <code>SignalLogger</code> (250 Hz frame rates, <code>.hoot</code> logging) for deep offline graphical analysis in the SysId desktop application.</p>
+<hr />
+<h2 id="1-phoenix-6-gain-architecture-units">1. Phoenix 6 Gain Architecture &amp; Units</h2>
+<p>In CTRE Phoenix 6, closed-loop controllers run on-board the TalonFX at <strong>1 kHz</strong>. The controller uses feedforward and feedback gains configured in <code>Slot0Configs</code> (or slots 1–2):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Gain</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Units (Voltage Mode)</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>$k_S$</strong></td>
+<td style="text-align: left;">Static Friction</td>
+<td style="text-align: left;">$\text{Volts}$</td>
+<td style="text-align: left;">Voltage required to overcome static friction / stiction so the motor initiates motion.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>$k_V$</strong></td>
+<td style="text-align: left;">Velocity Feedforward</td>
+<td style="text-align: left;">$\text{Volts} / \text{rps}$</td>
+<td style="text-align: left;">Voltage required per unit of velocity to counter back-EMF ($k_V \approx \frac{12\text{ V}}{\text{Free Speed in RPS}}$).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>$k_A$</strong></td>
+<td style="text-align: left;">Acceleration Feedforward</td>
+<td style="text-align: left;">$\text{Volts} / (\text{rps/s})$</td>
+<td style="text-align: left;">Voltage required per unit of acceleration to overcome mechanism inertia ($J$).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>$k_G$</strong></td>
+<td style="text-align: left;">Gravity Feedforward</td>
+<td style="text-align: left;">$\text{Volts}$</td>
+<td style="text-align: left;">Constant voltage for vertical lifts (<code>Elevator_Static</code>) or $V / \cos(\theta)$ for arms (<code>Arm_Cosine</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>$k_P$</strong></td>
+<td style="text-align: left;">Proportional Feedback</td>
+<td style="text-align: left;">$\text{V / rot}$ (pos) or $\text{V / rps}$ (vel)</td>
+<td style="text-align: left;">Error-correcting voltage per unit of error. Calculated via continuous 2nd-order pole placement ($k_P = k_A \cdot \omega_n^2$).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>$k_D$</strong></td>
+<td style="text-align: left;">Derivative Feedback</td>
+<td style="text-align: left;">$\text{V / rps}$ (pos) or $\text{V} / (\text{rps/s})$ (vel)</td>
+<td style="text-align: left;">Damping voltage per rate of change of error ($k_D = 2 \zeta \omega_n k_A - k_V$).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-gearing-mechanism-units">2. Gearing &amp; Mechanism Units</h2>
+<h3 id="recommended-configure-gearing-in-firmware">Recommended: Configure Gearing in Firmware</h3>
+<p>Set <code>sensor_to_mechanism_ratio</code> in the motor's feedback configuration:</p>
+<pre><code class="language-python">config.feedback.sensor_to_mechanism_ratio = 10.0  # 10 rotor turns = 1 mechanism turn
+</code></pre>
+<p>When configured:
+* All signals (<code>get_position()</code>, <code>get_velocity()</code>, <code>get_acceleration()</code>) return <strong>mechanism rotations</strong>, <strong>mechanism RPS</strong>, and <strong>mechanism $\text{RPS/s}^2$</strong> directly.
+* <code>TalonFXCharacterizer</code> automatically computes gains in <strong>mechanism units</strong>.
+* The resulting <code>Slot0Configs</code> can be applied directly to the motor with zero manual conversion!</p>
+<h3 id="physics-based-gearing-validation">Physics-Based Gearing Validation</h3>
+<p>The characterizer automatically cross-checks your measured $k_V$ against theoretical free speed:
+$$\text{Theoretical } k_V \approx \frac{12.0\text{ V}}{100\text{ RPS}} \times G$$
+If measured $k_V$ deviates by $&gt; 40\%$ from theoretical expectation, the characterizer flags a warning that <code>sensor_to_mechanism_ratio</code> may be missing or inverted.</p>
+<hr />
+<h2 id="3-safety-for-limited-travel-mechanisms-arms-elevators">3. Safety for Limited-Travel Mechanisms (Arms, Elevators)</h2>
+<p>To prevent mechanisms from slamming into hard stops, stripping gears, or burning motor windings, FROGlib implements a multi-layer defense:</p>
+<ol>
+<li><strong>Firmware Soft Limits (<code>SoftwareLimitSwitchConfigs</code>)</strong>: Enforced on-board the TalonFX at <strong>1 kHz</strong>. The controller cuts voltage instantly if a limit is reached.</li>
+<li><strong>Current Clamping (<code>stator_current_limit_amps</code>)</strong>: Normal operation may use 40A–80A, but during testing, current is clamped to a safe threshold (e.g., 15A–20A).</li>
+<li><strong>Virtual Test Envelope (<code>min_test_pos</code>, <code>max_test_pos</code>, <code>soft_limit_buffer</code>)</strong>: Testing is restricted to a safe middle window (e.g., 60–70% of total travel).</li>
+<li><strong>Dynamic Stall Detection</strong>: Monitors stator current and velocity. If the motor binds or stalls, an emergency abort is triggered immediately.</li>
+<li><strong>Auto-Return to Home</strong>: The routine automatically drives back to <code>safe_home_pos</code> between test stages.</li>
+</ol>
+<hr />
+<h2 id="4-workflow-1-autonomous-on-robot-characterizer">4. Workflow 1: Autonomous On-Robot Characterizer</h2>
+<h3 id="example-continuous-mechanism-shooter-flywheel">Example: Continuous Mechanism (Shooter Flywheel)</h3>
+<pre><code class="language-python">from commands2 import Subsystem
+from froglib.ctre import FROGTalonFX, CharacterizationConfig
+
+class FlywheelSubsystem(Subsystem):
+    def __init__(self):
+        super().__init__()
+        self.motor = FROGTalonFX(
+            id=15,
+            signal_profile=FROGTalonFX.SignalProfile.FLYWHEEL,
+            canbus=&quot;canivore&quot;,
+        )
+
+    def get_characterization_command(self):
+        &quot;&quot;&quot;Returns the Command to run during testing.&quot;&quot;&quot;
+        return self.motor.create_characterization_command(
+            config=CharacterizationConfig(
+                mechanism_name=&quot;ShooterFlywheel&quot;,
+                max_voltage=10.0,
+                target_bandwidth_rad_s=25.0,  # omega_n responsiveness
+                auto_apply=True,              # Hot-apply gains directly to Slot 0
+            )
+        )
+</code></pre>
+<h3 id="example-bounded-mechanism-elevator-arm">Example: Bounded Mechanism (Elevator / Arm)</h3>
+<pre><code class="language-python">from commands2 import Subsystem
+from froglib.ctre import FROGTalonFX, CharacterizationConfig
+
+class ElevatorSubsystem(Subsystem):
+    def __init__(self):
+        super().__init__()
+        self.motor = FROGTalonFX(
+            id=20,
+            signal_profile=FROGTalonFX.SignalProfile.POSITION_MM,
+            canbus=&quot;rio&quot;,
+        )
+
+    def get_characterization_command(self):
+        return self.motor.create_characterization_command(
+            config=CharacterizationConfig(
+                mechanism_name=&quot;Elevator&quot;,
+                is_bounded=True,
+                min_test_pos=1.0,              # Rotations above bottom hard stop
+                max_test_pos=18.0,             # Rotations below top hard stop
+                safe_home_pos=5.0,             # Reset position between tests
+                soft_limit_buffer=0.5,         # Keep-out buffer
+                stator_current_limit_amps=18.0, # Safe current cap during test
+                ramp_rate_v_per_s=1.0,         # Faster ramp so breakaway occurs quickly
+                step_timeout_s=1.5,
+                target_bandwidth_rad_s=20.0,
+            )
+        )
+</code></pre>
+<h3 id="binding-the-command-in-robotcontainerpy">Binding the Command in <code>RobotContainer.py</code></h3>
+<p>Bind the command to a button chord or dashboard trigger in <code>testInit</code>:</p>
+<pre><code class="language-python"># In RobotContainer.py
+from wpilib import SmartDashboard
+
+SmartDashboard.putData(
+    &quot;Tune Flywheel&quot;,
+    self.flywheel.get_characterization_command()
+)
+</code></pre>
+<h3 id="interpreting-the-results">Interpreting the Results</h3>
+<p>Upon completion, the characterizer outputs a full report to the console and NetworkTables:</p>
+<pre><code class="language-text">============================================================
+  CHARACTERIZATION REPORT: ShooterFlywheel
+============================================================
+Coordinate Frame: Mechanism Units (Gearing = 1.00:1)
+R² Fit Score    : 0.9984 (Optimal)
+kS (Static)     : 0.2350 V
+kV (Velocity)   : 0.1185 V / rps
+kA (Accel)      : 0.0076 V / (rps/s)
+Recommended kP  : 4.7500 V / rotation
+Recommended kD  : 0.1845 V / rps
+============================================================
+</code></pre>
+<hr />
+<h2 id="5-workflow-2-wpilib-sysidroutine-with-signallogger">5. Workflow 2: WPILib SysIdRoutine with SignalLogger</h2>
+<p>If you prefer using the desktop <strong>WPILib SysId</strong> application to visually inspect raw data curves and perform state-space system identification:</p>
+<pre><code class="language-python">from froglib.ctre import FROGTalonFX
+
+class ArmSubsystem(Subsystem):
+    def __init__(self):
+        super().__init__()
+        self.motor = FROGTalonFX(id=25)
+
+        self.sysid_helper = self.motor.get_sysid_helper(
+            mechanism_name=&quot;Arm&quot;,
+            ramp_rate_v_per_s=0.5,
+            step_voltage=4.0,
+            is_bounded=True,
+            min_pos=0.0,
+            max_pos=15.0,
+        )
+
+    # Expose the four SysId commands
+    def sysid_quasistatic_forward(self):
+        return self.sysid_helper.quasistatic_forward()
+
+    def sysid_quasistatic_reverse(self):
+        return self.sysid_helper.quasistatic_reverse()
+
+    def sysid_dynamic_forward(self):
+        return self.sysid_helper.dynamic_forward()
+
+    def sysid_dynamic_reverse(self):
+        return self.sysid_helper.dynamic_reverse()
+</code></pre>
+<h3 id="procedure">Procedure:</h3>
+<ol>
+<li>Run the 4 routines (<code>quasistatic_forward</code>, <code>quasistatic_reverse</code>, <code>dynamic_forward</code>, <code>dynamic_reverse</code>) via your dashboard.</li>
+<li><code>SignalLogger</code> automatically records high-frequency telemetry at 250 Hz into a <code>.hoot</code> file on the roboRIO.</li>
+<li>Open <strong>Phoenix Tuner X</strong>, go to <strong>Tools -&gt; Log Extractor</strong>, and convert the <code>.hoot</code> file to <code>.wpilog</code>.</li>
+<li>Open the <strong>SysId</strong> desktop application, load the <code>.wpilog</code>, and run the analysis.</li>
+</ol>
+<hr />
+<h2 id="6-testing-verification">6. Testing &amp; Verification</h2>
+<p>Before executing characterization routines on competition hardware or deploying new mechanisms, follow our comprehensive testing guidelines:</p>
+<ul>
+<li><strong>Unit &amp; Physics Simulation</strong>: Run the deterministic test suite (<code>python3 -m unittest discover -s tests -v</code>) to validate algorithms, state transitions, and safety fault-injections against <code>SimulatedTalonFXPlant</code>.</li>
+<li><strong>WPILib Desktop Simulation (Sim GUI / Glass)</strong>: Verify command scheduling, simulation physics (<code>DCMotorSim</code>), and monitor live telemetry under <code>FROGLib/Tuning/&lt;MechanismName&gt;</code> before touching the robot.</li>
+<li><strong>On-Robot Pre-Flight Checklist</strong>: Review gearing configuration, motor inversion, soft limit bounds (<code>min_test_pos</code>, <code>max_test_pos</code>), and stator current clamping.</li>
+</ul>
+<p>For complete step-by-step simulation examples, test suite architecture, and safety protocols, refer to:<br />
+👉 <strong><a href="../testing_tuning/">Testing &amp; Verifying Automated Motor Tuning</a></strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

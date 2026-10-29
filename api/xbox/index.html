@@ -1,0 +1,4708 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Hardware Abstraction and Utility Library for FROG 3160">
+      
+      
+        <meta name="author" content="FROG 3160">
+      
+      
+      
+        <link rel="prev" href="../vision/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Xbox - FROGlib Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#xbox-api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="FROGlib Documentation" class="md-header__button md-logo" aria-label="FROGlib Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FROGlib Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Xbox
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="light-green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FROG3160/FROGlib" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting_started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tuning_guide/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tuning Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../testing_tuning/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Testing Motor Tuning
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../ctre/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FROGlib Documentation" class="md-nav__button md-logo" aria-label="FROGlib Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FROGlib Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FROG3160/FROGlib" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tuning_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing_tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Motor Tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ctre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CTRE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../motors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NavX
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../subsystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subsystem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../swerve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Swerve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xbox
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xbox
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#field-oriented-swerve-driver-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field-Oriented Swerve Driver Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mechanism-operator-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mechanism Operator Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#froglib.xbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xbox
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="xbox">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FROGXboxDriver
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FROGXboxDriver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __init__
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getFieldForward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getFieldForward
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getFieldHeading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getFieldHeading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getFieldLeft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getFieldLeft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getFieldThrottle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getFieldThrottle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getPOVDebounced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getPOVDebounced
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getRobotForward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getRobotForward
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getRobotLeft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getRobotLeft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getRotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getRotation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getSlewLimitedFieldForward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getSlewLimitedFieldForward
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getSlewLimitedFieldLeft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getSlewLimitedFieldLeft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.getSlewLimitedFieldRotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getSlewLimitedFieldRotation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.leftRumble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        leftRumble
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.pov0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pov0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.pov135" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pov135
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.pov180" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pov180
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.pov225" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pov225
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.pov270" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pov270
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.pov315" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pov315
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.pov45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pov45
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.pov90" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pov90
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.rightRumble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rightRumble
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.set_alliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        set_alliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.stopLeftRumble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stopLeftRumble
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxDriver.stopRightRumble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stopRightRumble
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxTactical" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FROGXboxTactical
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FROGXboxTactical">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxTactical-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxTactical.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __init__
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxTactical.getFlyWheelSpeed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getFlyWheelSpeed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxTactical.getIntakeWheelSpeed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getIntakeWheelSpeed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxTactical.getLeadscrewPosition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getLeadscrewPosition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#froglib.xbox.FROGXboxTactical.getTransferWheelSpeed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        getTransferWheelSpeed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="xbox-api">Xbox API</h1>
+<h2 id="overview">Overview</h2>
+<p>The <code>froglib.xbox</code> module provides specialized subclasses of WPILib's <code>CommandXboxController</code> tailored for driver and operator input in FRC:</p>
+<ol>
+<li><strong>Driver Control (<code>FROGXboxDriver</code>)</strong>: Designed for field-oriented swerve drivetrains. It features:</li>
+<li>Configurable joystick deadbands to eliminate drift.</li>
+<li>Slew rate limiting on translation and rotation to prevent mechanical stress, wheel slip, and brownouts.</li>
+<li>Alliance-aware coordinate flipping: Inverts translation controls when on the Red Alliance so "pushing forward" always drives away from the driver's perspective regardless of alliance wall station.</li>
+<li>Debounced D-pad (POV) trigger helpers with haptic rumble pulses on state changes.</li>
+<li><strong>Tactical / Operator Control (<code>FROGXboxTactical</code>)</strong>: Designed for mechanism manipulation (intakes, note indexers/transfers, leadscrews, flywheels), providing deadbanded velocity and trigger getters.</li>
+</ol>
+<h2 id="key-components">Key Components</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RIGHT_RUMBLE</code></td>
+<td>Constant</td>
+<td>Alias for <code>GenericHID.RumbleType.kRightRumble</code>.</td>
+</tr>
+<tr>
+<td><code>LEFT_RUMBLE</code></td>
+<td>Constant</td>
+<td>Alias for <code>GenericHID.RumbleType.kLeftRumble</code>.</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" title="            FROGXboxDriver" href="#froglib.xbox.FROGXboxDriver"><code>FROGXboxDriver</code></a></td>
+<td>Class</td>
+<td>Driver controller with deadbanding, slew rate limiters, alliance flipping, and debounced POV buttons.</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" title="            FROGXboxTactical" href="#froglib.xbox.FROGXboxTactical"><code>FROGXboxTactical</code></a></td>
+<td>Class</td>
+<td>Operator controller with deadbanded stick and trigger getters for robot mechanisms.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usage-examples">Usage Examples</h2>
+<h3 id="field-oriented-swerve-driver-setup">Field-Oriented Swerve Driver Setup</h3>
+<pre><code class="language-python">from wpilib import DriverStation
+from froglib.xbox import FROGXboxDriver
+
+# Initialize driver controller on USB port 0:
+# deadband=0.1, debouncePeriod=0.5s, translationSlew=3.0 units/s, rotSlew=3.0 units/s
+driver_ctrl = FROGXboxDriver(
+    port=0,
+    deadband=0.1,
+    debouncePeriod=0.5,
+    translationSlew=3.0,
+    rotSlew=3.0
+)
+
+# Update alliance color in autonomousInit or teleopInit
+driver_ctrl.set_alliance(DriverStation.getAlliance())
+
+# Query slew-limited, alliance-adjusted velocities in teleop periodic
+forward_velocity = driver_ctrl.getSlewLimitedFieldForward()
+left_velocity = driver_ctrl.getSlewLimitedFieldLeft()
+rotation_rate = driver_ctrl.getSlewLimitedFieldRotation()
+
+# Bind debounced POV direction to preset commands
+# driver_ctrl.pov0().onTrue(AlignToSpeakerCommand())
+# driver_ctrl.pov180().onTrue(AlignToAmpCommand())
+</code></pre>
+<h3 id="mechanism-operator-setup">Mechanism Operator Setup</h3>
+<pre><code class="language-python">from froglib.xbox import FROGXboxTactical
+
+# Initialize tactical controller on USB port 1 with 0.05 deadband
+operator_ctrl = FROGXboxTactical(port=1, deadband=0.05)
+
+# Poll mechanism speeds
+intake_speed = operator_ctrl.getIntakeWheelSpeed()
+shooter_speed = operator_ctrl.getFlyWheelSpeed()
+</code></pre>
+<h2 id="reference">Reference</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="froglib.xbox" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <span class="doc doc-object-name doc-module-name">froglib.xbox</span>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+        <p>Xbox controller abstractions for driver and operator input in FRC.</p>
+<p>This module provides customized subclasses of WPILib's <code>CommandXboxController</code>:
+- <code>FROGXboxDriver</code>: Specialized for field-oriented swerve drive control, featuring
+  stick deadband filtering, slew rate limiters, alliance-aware coordinate inversion,
+  and debounced D-pad (POV) trigger bindings with haptic rumble feedback.
+- <code>FROGXboxTactical</code>: Specialized for mechanism / tactical operator input with
+  deadbanded axis getters for intake, transfer, leadscrew, and flywheel mechanisms.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<h3 id="froglib.xbox-classes">Classes</h3>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="froglib.xbox.FROGXboxDriver" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">FROGXboxDriver</span>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="commands2.button.CommandXboxController">CommandXboxController</span></code></p>
+
+
+
+        <p>Custom Xbox Controller for driver input in field-oriented swerve drive systems.</p>
+<p>Extends <code>CommandXboxController</code> with configurable deadbands, slew rate limiters
+on translation and rotation, alliance-aware forward/left direction flipping, and
+debounced D-pad (POV) buttons with tactile rumble feedback.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.xbox.FROGXboxDriver.deadband">deadband</span></code></td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Deadband threshold below which stick inputs evaluate to 0.0.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.xbox.FROGXboxDriver.debounce_period">debounce_period</span></code></td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Minimum duration in seconds required between POV button triggers.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.xbox.FROGXboxDriver.xSlew">xSlew</span></code></td>
+            <td>
+                  <code><span title="wpimath.filter.SlewRateLimiter">SlewRateLimiter</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Slew rate limiter for forward/backward translation.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.xbox.FROGXboxDriver.ySlew">ySlew</span></code></td>
+            <td>
+                  <code><span title="wpimath.filter.SlewRateLimiter">SlewRateLimiter</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Slew rate limiter for left/right strafing translation.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.xbox.FROGXboxDriver.rotSlew">rotSlew</span></code></td>
+            <td>
+                  <code><span title="wpimath.filter.SlewRateLimiter">SlewRateLimiter</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Slew rate limiter for angular rotation rate.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.xbox.FROGXboxDriver.alliance">alliance</span></code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Alliance scaling factor (1 for Blue Alliance, -1 for Red Alliance).</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+              <details class="mkdocstrings-source">
+                <summary>Source code in <code>froglib/xbox.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FROGXboxDriver</span><span class="p">(</span><span class="n">CommandXboxController</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Custom Xbox Controller for driver input in field-oriented swerve drive systems.</span>
+
+<span class="sd">    Extends `CommandXboxController` with configurable deadbands, slew rate limiters</span>
+<span class="sd">    on translation and rotation, alliance-aware forward/left direction flipping, and</span>
+<span class="sd">    debounced D-pad (POV) buttons with tactile rumble feedback.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        deadband (float): Deadband threshold below which stick inputs evaluate to 0.0.</span>
+<span class="sd">        debounce_period (float): Minimum duration in seconds required between POV button triggers.</span>
+<span class="sd">        xSlew (SlewRateLimiter): Slew rate limiter for forward/backward translation.</span>
+<span class="sd">        ySlew (SlewRateLimiter): Slew rate limiter for left/right strafing translation.</span>
+<span class="sd">        rotSlew (SlewRateLimiter): Slew rate limiter for angular rotation rate.</span>
+<span class="sd">        alliance (int): Alliance scaling factor (1 for Blue Alliance, -1 for Red Alliance).</span>
+<span class="sd">    """</span>
+
+    <span class="n">MODE</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># run auto routines</span>
+    <span class="n">RED_ALLIANCE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">BLUE_ALLIANCE</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">deadband</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">debouncePeriod</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">translationSlew</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">rotSlew</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Initializes the driver controller.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            port (int): Driver Station USB port index for the controller.</span>
+<span class="sd">            deadband (float): Joystick deadband value in range [0, 1].</span>
+<span class="sd">            debouncePeriod (float): Debounce interval for POV buttons in seconds.</span>
+<span class="sd">            translationSlew (float): Maximum rate of change of translation input units per second.</span>
+<span class="sd">            rotSlew (float): Maximum rate of change of rotation input units per second.</span>
+<span class="sd">        """</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_latest</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span> <span class="o">=</span> <span class="n">deadband</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debounce_period</span> <span class="o">=</span> <span class="n">debouncePeriod</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xSlew</span> <span class="o">=</span> <span class="n">SlewRateLimiter</span><span class="p">(</span><span class="n">translationSlew</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ySlew</span> <span class="o">=</span> <span class="n">SlewRateLimiter</span><span class="p">(</span><span class="n">translationSlew</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotSlew</span> <span class="o">=</span> <span class="n">SlewRateLimiter</span><span class="p">(</span><span class="n">rotSlew</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alliance</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getFieldHeading</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the desired robot heading from the Xbox right stick.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Desired heading in radians with CCW positive.</span>
+<span class="sd">        """</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getRightX</span><span class="p">()</span>
+        <span class="n">forward</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getRightY</span><span class="p">()</span>
+        <span class="c1"># convert to radians</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">forward</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the speed/rate of rotation from the Xbox right stick X axis with deadband.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Rotational speed factor from -1 to 1 with CCW being positive.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getRightX</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getSlewLimitedFieldRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the slew-rate-limited rotational speed demand with applied deadband.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Rate-limited rotational speed factor in range [-1, 1].</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotSlew</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRotation</span><span class="p">())</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getFieldForward</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the alliance-oriented forward translation demand with applied deadband.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Forward speed demand in range [-1, 1], inverted when on Red Alliance.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getLeftY</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alliance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getSlewLimitedFieldForward</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the slew-rate-limited alliance-oriented forward translation demand.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Slew-rate-limited forward speed demand in range [-1, 1].</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">xSlew</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFieldForward</span><span class="p">())</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getRobotForward</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the robot-oriented forward translation demand with applied deadband.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Robot-relative forward speed demand in range [-1, 1].</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getLeftY</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getFieldLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the alliance-oriented left strafe translation demand with applied deadband.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Leftward speed demand in range [-1, 1], inverted when on Red Alliance.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getLeftX</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alliance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getSlewLimitedFieldLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the slew-rate-limited alliance-oriented left strafe translation demand.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Slew-rate-limited leftward speed demand in range [-1, 1].</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ySlew</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFieldLeft</span><span class="p">())</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getRobotLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the robot-oriented left strafe translation demand with applied deadband.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Robot-relative leftward speed demand in range [-1, 1].</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getLeftX</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getFieldThrottle</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the throttle demand from the right trigger axis.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Right trigger axis value in range [0, 1].</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRightTriggerAxis</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getPOVDebounced</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets the debounced D-pad (POV) angle and triggers brief haptic rumble feedback.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: POV angle in degrees (0, 45, 90, etc.), or -1 if unpressed or bouncing.</span>
+<span class="sd">        """</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">getFPGATimestamp</span><span class="p">()</span>
+        <span class="n">pov</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hid</span><span class="o">.</span><span class="n">getPOV</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">pov</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_latest</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"POV"</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">debounce_period</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">button_latest</span><span class="p">[</span><span class="s2">"POV"</span><span class="p">]</span> <span class="o">=</span> <span class="n">now</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">pov</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_latest</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"POV"</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">debounce_period</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">RIGHT_RUMBLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">RIGHT_RUMBLE</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># self.update_nt("button_pov", val)</span>
+        <span class="k">return</span> <span class="n">val</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">leftRumble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Activates full rumble on the left controller motor."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">LEFT_RUMBLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">stopLeftRumble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Stops rumble on the left controller motor."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">LEFT_RUMBLE</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">rightRumble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Activates full rumble on the right controller motor."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">RIGHT_RUMBLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">stopRightRumble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Stops rumble on the right controller motor."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">RIGHT_RUMBLE</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_alliance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alliance</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Sets controller alliance mode to invert coordinate directions appropriately.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            alliance (DriverStation.Alliance): Current DriverStation alliance color.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">alliance</span> <span class="o">==</span> <span class="n">DriverStation</span><span class="o">.</span><span class="n">Alliance</span><span class="o">.</span><span class="n">kBlue</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">alliance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLUE_ALLIANCE</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">alliance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED_ALLIANCE</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pov0</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Creates a Command Trigger for the debounced 0° (up) POV button.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">                the CommandScheduler default button loop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trigger: Command Trigger activated when POV button is at 0°.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pov45</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Creates a Command Trigger for the debounced 45° (up-right) POV button.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">                the CommandScheduler default button loop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trigger: Command Trigger activated when POV button is at 45°.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">45</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pov90</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Creates a Command Trigger for the debounced 90° (right) POV button.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">                the CommandScheduler default button loop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trigger: Command Trigger activated when POV button is at 90°.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">90</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pov135</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Creates a Command Trigger for the debounced 135° (down-right) POV button.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">                the CommandScheduler default button loop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trigger: Command Trigger activated when POV button is at 135°.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">135</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pov180</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Creates a Command Trigger for the debounced 180° (down) POV button.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">                the CommandScheduler default button loop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trigger: Command Trigger activated when POV button is at 180°.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">180</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pov225</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Creates a Command Trigger for the debounced 225° (down-left) POV button.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">                the CommandScheduler default button loop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trigger: Command Trigger activated when POV button is at 225°.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">225</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pov270</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Creates a Command Trigger for the debounced 270° (left) POV button.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">                the CommandScheduler default button loop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trigger: Command Trigger activated when POV button is at 270°.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">270</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pov315</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Creates a Command Trigger for the debounced 315° (up-left) POV button.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">                the CommandScheduler default button loop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trigger: Command Trigger activated when POV button is at 315°.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">315</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+<h5 id="froglib.xbox.FROGXboxDriver-functions">Methods:</h5>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.__init__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__init__</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">__init__</span><span class="p">(</span>
+    <span class="n">port</span><span class="p">,</span> <span class="n">deadband</span><span class="p">,</span> <span class="n">debouncePeriod</span><span class="p">,</span> <span class="n">translationSlew</span><span class="p">,</span> <span class="n">rotSlew</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Initializes the driver controller.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>port</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Driver Station USB port index for the controller.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>deadband</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Joystick deadband value in range [0, 1].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>debouncePeriod</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Debounce interval for POV buttons in seconds.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>translationSlew</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum rate of change of translation input units per second.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>rotSlew</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum rate of change of rotation input units per second.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">deadband</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">debouncePeriod</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">translationSlew</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">rotSlew</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Initializes the driver controller.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        port (int): Driver Station USB port index for the controller.</span>
+<span class="sd">        deadband (float): Joystick deadband value in range [0, 1].</span>
+<span class="sd">        debouncePeriod (float): Debounce interval for POV buttons in seconds.</span>
+<span class="sd">        translationSlew (float): Maximum rate of change of translation input units per second.</span>
+<span class="sd">        rotSlew (float): Maximum rate of change of rotation input units per second.</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">button_latest</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span> <span class="o">=</span> <span class="n">deadband</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">debounce_period</span> <span class="o">=</span> <span class="n">debouncePeriod</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">xSlew</span> <span class="o">=</span> <span class="n">SlewRateLimiter</span><span class="p">(</span><span class="n">translationSlew</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ySlew</span> <span class="o">=</span> <span class="n">SlewRateLimiter</span><span class="p">(</span><span class="n">translationSlew</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rotSlew</span> <span class="o">=</span> <span class="n">SlewRateLimiter</span><span class="p">(</span><span class="n">rotSlew</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">alliance</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getFieldForward" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getFieldForward</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getFieldForward</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the alliance-oriented forward translation demand with applied deadband.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Forward speed demand in range [-1, 1], inverted when on Red Alliance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getFieldForward</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the alliance-oriented forward translation demand with applied deadband.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Forward speed demand in range [-1, 1], inverted when on Red Alliance.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getLeftY</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alliance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getFieldHeading" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getFieldHeading</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getFieldHeading</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the desired robot heading from the Xbox right stick.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Desired heading in radians with CCW positive.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getFieldHeading</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the desired robot heading from the Xbox right stick.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Desired heading in radians with CCW positive.</span>
+<span class="sd">    """</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getRightX</span><span class="p">()</span>
+    <span class="n">forward</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getRightY</span><span class="p">()</span>
+    <span class="c1"># convert to radians</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">forward</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getFieldLeft" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getFieldLeft</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getFieldLeft</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the alliance-oriented left strafe translation demand with applied deadband.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Leftward speed demand in range [-1, 1], inverted when on Red Alliance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getFieldLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the alliance-oriented left strafe translation demand with applied deadband.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Leftward speed demand in range [-1, 1], inverted when on Red Alliance.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getLeftX</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alliance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getFieldThrottle" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getFieldThrottle</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getFieldThrottle</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the throttle demand from the right trigger axis.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Right trigger axis value in range [0, 1].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getFieldThrottle</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the throttle demand from the right trigger axis.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Right trigger axis value in range [0, 1].</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRightTriggerAxis</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getPOVDebounced" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getPOVDebounced</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getPOVDebounced</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the debounced D-pad (POV) angle and triggers brief haptic rumble feedback.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>int</code></td>            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>POV angle in degrees (0, 45, 90, etc.), or -1 if unpressed or bouncing.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getPOVDebounced</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the debounced D-pad (POV) angle and triggers brief haptic rumble feedback.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: POV angle in degrees (0, 45, 90, etc.), or -1 if unpressed or bouncing.</span>
+<span class="sd">    """</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">getFPGATimestamp</span><span class="p">()</span>
+    <span class="n">pov</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hid</span><span class="o">.</span><span class="n">getPOV</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">pov</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_latest</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"POV"</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">debounce_period</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">button_latest</span><span class="p">[</span><span class="s2">"POV"</span><span class="p">]</span> <span class="o">=</span> <span class="n">now</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">pov</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_latest</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"POV"</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">debounce_period</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">RIGHT_RUMBLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">RIGHT_RUMBLE</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># self.update_nt("button_pov", val)</span>
+    <span class="k">return</span> <span class="n">val</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getRobotForward" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getRobotForward</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getRobotForward</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the robot-oriented forward translation demand with applied deadband.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Robot-relative forward speed demand in range [-1, 1].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getRobotForward</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the robot-oriented forward translation demand with applied deadband.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Robot-relative forward speed demand in range [-1, 1].</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getLeftY</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getRobotLeft" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getRobotLeft</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getRobotLeft</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the robot-oriented left strafe translation demand with applied deadband.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Robot-relative leftward speed demand in range [-1, 1].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getRobotLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the robot-oriented left strafe translation demand with applied deadband.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Robot-relative leftward speed demand in range [-1, 1].</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getLeftX</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getRotation" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getRotation</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getRotation</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the speed/rate of rotation from the Xbox right stick X axis with deadband.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Rotational speed factor from -1 to 1 with CCW being positive.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the speed/rate of rotation from the Xbox right stick X axis with deadband.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Rotational speed factor from -1 to 1 with CCW being positive.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getRightX</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getSlewLimitedFieldForward" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getSlewLimitedFieldForward</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getSlewLimitedFieldForward</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the slew-rate-limited alliance-oriented forward translation demand.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Slew-rate-limited forward speed demand in range [-1, 1].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getSlewLimitedFieldForward</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the slew-rate-limited alliance-oriented forward translation demand.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Slew-rate-limited forward speed demand in range [-1, 1].</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">xSlew</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFieldForward</span><span class="p">())</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getSlewLimitedFieldLeft" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getSlewLimitedFieldLeft</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getSlewLimitedFieldLeft</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the slew-rate-limited alliance-oriented left strafe translation demand.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Slew-rate-limited leftward speed demand in range [-1, 1].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getSlewLimitedFieldLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the slew-rate-limited alliance-oriented left strafe translation demand.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Slew-rate-limited leftward speed demand in range [-1, 1].</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ySlew</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFieldLeft</span><span class="p">())</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.getSlewLimitedFieldRotation" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getSlewLimitedFieldRotation</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getSlewLimitedFieldRotation</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the slew-rate-limited rotational speed demand with applied deadband.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Rate-limited rotational speed factor in range [-1, 1].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span>
+<span class="normal">97</span>
+<span class="normal">98</span>
+<span class="normal">99</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getSlewLimitedFieldRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets the slew-rate-limited rotational speed demand with applied deadband.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Rate-limited rotational speed factor in range [-1, 1].</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotSlew</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRotation</span><span class="p">())</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.leftRumble" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">leftRumble</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">leftRumble</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Activates full rumble on the left controller motor.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">leftRumble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Activates full rumble on the left controller motor."""</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">LEFT_RUMBLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.pov0" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">pov0</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">pov0</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a Command Trigger for the debounced 0° (up) POV button.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>loop</code>
+            </td>
+            <td>
+                  <code><span title="wpilib.event.EventLoop">EventLoop</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Event loop to bind the trigger to. Defaults to
+the CommandScheduler default button loop.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Trigger</code></td>            <td>
+                  <code><span title="commands2.button.Trigger">Trigger</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Command Trigger activated when POV button is at 0°.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pov0</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Creates a Command Trigger for the debounced 0° (up) POV button.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">            the CommandScheduler default button loop.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Trigger: Command Trigger activated when POV button is at 0°.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.pov135" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">pov135</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">pov135</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a Command Trigger for the debounced 135° (down-right) POV button.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>loop</code>
+            </td>
+            <td>
+                  <code><span title="wpilib.event.EventLoop">EventLoop</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Event loop to bind the trigger to. Defaults to
+the CommandScheduler default button loop.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Trigger</code></td>            <td>
+                  <code><span title="commands2.button.Trigger">Trigger</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Command Trigger activated when POV button is at 135°.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pov135</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Creates a Command Trigger for the debounced 135° (down-right) POV button.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">            the CommandScheduler default button loop.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Trigger: Command Trigger activated when POV button is at 135°.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">135</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.pov180" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">pov180</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">pov180</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a Command Trigger for the debounced 180° (down) POV button.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>loop</code>
+            </td>
+            <td>
+                  <code><span title="wpilib.event.EventLoop">EventLoop</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Event loop to bind the trigger to. Defaults to
+the CommandScheduler default button loop.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Trigger</code></td>            <td>
+                  <code><span title="commands2.button.Trigger">Trigger</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Command Trigger activated when POV button is at 180°.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pov180</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Creates a Command Trigger for the debounced 180° (down) POV button.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">            the CommandScheduler default button loop.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Trigger: Command Trigger activated when POV button is at 180°.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">180</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.pov225" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">pov225</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">pov225</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a Command Trigger for the debounced 225° (down-left) POV button.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>loop</code>
+            </td>
+            <td>
+                  <code><span title="wpilib.event.EventLoop">EventLoop</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Event loop to bind the trigger to. Defaults to
+the CommandScheduler default button loop.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Trigger</code></td>            <td>
+                  <code><span title="commands2.button.Trigger">Trigger</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Command Trigger activated when POV button is at 225°.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pov225</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Creates a Command Trigger for the debounced 225° (down-left) POV button.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">            the CommandScheduler default button loop.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Trigger: Command Trigger activated when POV button is at 225°.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">225</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.pov270" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">pov270</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">pov270</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a Command Trigger for the debounced 270° (left) POV button.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>loop</code>
+            </td>
+            <td>
+                  <code><span title="wpilib.event.EventLoop">EventLoop</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Event loop to bind the trigger to. Defaults to
+the CommandScheduler default button loop.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Trigger</code></td>            <td>
+                  <code><span title="commands2.button.Trigger">Trigger</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Command Trigger activated when POV button is at 270°.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pov270</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Creates a Command Trigger for the debounced 270° (left) POV button.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">            the CommandScheduler default button loop.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Trigger: Command Trigger activated when POV button is at 270°.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">270</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.pov315" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">pov315</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">pov315</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a Command Trigger for the debounced 315° (up-left) POV button.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>loop</code>
+            </td>
+            <td>
+                  <code><span title="wpilib.event.EventLoop">EventLoop</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Event loop to bind the trigger to. Defaults to
+the CommandScheduler default button loop.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Trigger</code></td>            <td>
+                  <code><span title="commands2.button.Trigger">Trigger</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Command Trigger activated when POV button is at 315°.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pov315</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Creates a Command Trigger for the debounced 315° (up-left) POV button.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">            the CommandScheduler default button loop.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Trigger: Command Trigger activated when POV button is at 315°.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">315</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.pov45" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">pov45</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">pov45</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a Command Trigger for the debounced 45° (up-right) POV button.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>loop</code>
+            </td>
+            <td>
+                  <code><span title="wpilib.event.EventLoop">EventLoop</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Event loop to bind the trigger to. Defaults to
+the CommandScheduler default button loop.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Trigger</code></td>            <td>
+                  <code><span title="commands2.button.Trigger">Trigger</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Command Trigger activated when POV button is at 45°.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pov45</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Creates a Command Trigger for the debounced 45° (up-right) POV button.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">            the CommandScheduler default button loop.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Trigger: Command Trigger activated when POV button is at 45°.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">45</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.pov90" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">pov90</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">pov90</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a Command Trigger for the debounced 90° (right) POV button.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>loop</code>
+            </td>
+            <td>
+                  <code><span title="wpilib.event.EventLoop">EventLoop</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Event loop to bind the trigger to. Defaults to
+the CommandScheduler default button loop.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Trigger</code></td>            <td>
+                  <code><span title="commands2.button.Trigger">Trigger</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Command Trigger activated when POV button is at 90°.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pov90</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trigger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Creates a Command Trigger for the debounced 90° (right) POV button.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loop (EventLoop, optional): Event loop to bind the trigger to. Defaults to</span>
+<span class="sd">            the CommandScheduler default button loop.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Trigger: Command Trigger activated when POV button is at 90°.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">CommandScheduler</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getDefaultButtonLoop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Trigger</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPOVDebounced</span><span class="p">()</span> <span class="o">==</span> <span class="mi">90</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.rightRumble" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">rightRumble</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">rightRumble</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Activates full rumble on the right controller motor.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rightRumble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Activates full rumble on the right controller motor."""</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">RIGHT_RUMBLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.set_alliance" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_alliance</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_alliance</span><span class="p">(</span><span class="n">alliance</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Sets controller alliance mode to invert coordinate directions appropriately.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>alliance</code>
+            </td>
+            <td>
+                  <code><span title="wpilib.DriverStation.Alliance">Alliance</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Current DriverStation alliance color.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_alliance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alliance</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Sets controller alliance mode to invert coordinate directions appropriately.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        alliance (DriverStation.Alliance): Current DriverStation alliance color.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">alliance</span> <span class="o">==</span> <span class="n">DriverStation</span><span class="o">.</span><span class="n">Alliance</span><span class="o">.</span><span class="n">kBlue</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alliance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLUE_ALLIANCE</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alliance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED_ALLIANCE</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.stopLeftRumble" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">stopLeftRumble</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">stopLeftRumble</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Stops rumble on the left controller motor.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">stopLeftRumble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Stops rumble on the left controller motor."""</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">LEFT_RUMBLE</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxDriver.stopRightRumble" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">stopRightRumble</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">stopRightRumble</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Stops rumble on the right controller motor.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">stopRightRumble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Stops rumble on the right controller motor."""</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setRumble</span><span class="p">(</span><span class="n">RIGHT_RUMBLE</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="froglib.xbox.FROGXboxTactical" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">FROGXboxTactical</span>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="commands2.button.CommandXboxController">CommandXboxController</span></code></p>
+
+
+
+        <p>Custom Xbox Controller class for mechanism and operator controls.</p>
+<p>Extends <code>CommandXboxController</code> with deadbanded stick and trigger getters
+mapped to robot mechanism velocities and positions.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="froglib.xbox.FROGXboxTactical.deadband">deadband</span></code></td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Deadband threshold applied to joystick axes.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+              <details class="mkdocstrings-source">
+                <summary>Source code in <code>froglib/xbox.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FROGXboxTactical</span><span class="p">(</span><span class="n">CommandXboxController</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Custom Xbox Controller class for mechanism and operator controls.</span>
+
+<span class="sd">    Extends `CommandXboxController` with deadbanded stick and trigger getters</span>
+<span class="sd">    mapped to robot mechanism velocities and positions.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        deadband (float): Deadband threshold applied to joystick axes.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">deadband</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Initializes the tactical/operator controller.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            port (int): Driver Station USB port index.</span>
+<span class="sd">            deadband (float): Joystick deadband value in range [0, 1].</span>
+<span class="sd">        """</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span> <span class="o">=</span> <span class="n">deadband</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getIntakeWheelSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets deadbanded speed for intake wheels from the left Y stick.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Speed factor in range [-1, 1].</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getLeftY</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getTransferWheelSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets deadbanded speed for transfer mechanism wheels from the right Y stick.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Speed factor in range [-1, 1].</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRightY</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getLeadscrewPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets position/command input for a leadscrew from the left trigger axis.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Left trigger axis value in range [0, 1].</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLeftTriggerAxis</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getFlyWheelSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Gets speed command for shooter flywheels from the right trigger axis.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Right trigger axis value in range [0, 1].</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRightTriggerAxis</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+<h5 id="froglib.xbox.FROGXboxTactical-functions">Methods:</h5>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxTactical.__init__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__init__</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">deadband</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Initializes the tactical/operator controller.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>port</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Driver Station USB port index.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>deadband</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Joystick deadband value in range [0, 1].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">deadband</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Initializes the tactical/operator controller.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        port (int): Driver Station USB port index.</span>
+<span class="sd">        deadband (float): Joystick deadband value in range [0, 1].</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span> <span class="o">=</span> <span class="n">deadband</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxTactical.getFlyWheelSpeed" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getFlyWheelSpeed</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getFlyWheelSpeed</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets speed command for shooter flywheels from the right trigger axis.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Right trigger axis value in range [0, 1].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getFlyWheelSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets speed command for shooter flywheels from the right trigger axis.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Right trigger axis value in range [0, 1].</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRightTriggerAxis</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxTactical.getIntakeWheelSpeed" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getIntakeWheelSpeed</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getIntakeWheelSpeed</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets deadbanded speed for intake wheels from the left Y stick.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Speed factor in range [-1, 1].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getIntakeWheelSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets deadbanded speed for intake wheels from the left Y stick.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Speed factor in range [-1, 1].</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getLeftY</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxTactical.getLeadscrewPosition" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getLeadscrewPosition</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getLeadscrewPosition</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets position/command input for a leadscrew from the left trigger axis.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Left trigger axis value in range [0, 1].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getLeadscrewPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets position/command input for a leadscrew from the left trigger axis.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Left trigger axis value in range [0, 1].</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLeftTriggerAxis</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h6 id="froglib.xbox.FROGXboxTactical.getTransferWheelSpeed" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">getTransferWheelSpeed</span>
+
+
+</h6>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">getTransferWheelSpeed</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gets deadbanded speed for transfer mechanism wheels from the right Y stick.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Speed factor in range [-1, 1].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>froglib/xbox.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">getTransferWheelSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Gets deadbanded speed for transfer mechanism wheels from the right Y stick.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Speed factor in range [-1, 1].</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">applyDeadband</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRightY</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadband</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>
