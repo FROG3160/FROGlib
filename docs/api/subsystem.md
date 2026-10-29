@@ -13,6 +13,7 @@ Modern FRC robots require rapid parameter tuning during testing and comprehensiv
 1. **Declarative Telemetry (`@telemetry`)**: Decorate any zero-argument method to automatically publish its return value to NetworkTables (`FROGSubsystems/<SubsystemName>/telemetry/<TopicName>`) and simultaneously append historical data to the WPILib `DataLogManager`.
 2. **Dashboard Tunables (`@tunable`)**: Decorate a setter method to expose a tunable property under `FROGSubsystems/<SubsystemName>/tunables/<TopicName>`. Changes typed on Shuffleboard or AdvantageScope immediately invoke the setter method.
 3. **Automated Reflection**: On initialization, `FROGSubsystem` scans its class for `@telemetry` and `@tunable` decorators, discovering all telemetry and tunable descriptors and registering TalonFX motors for diagnostics without manual registration.
+4. **Shared Type Mapping (`_get_typed_topic`)**: Shared NetworkTables helper used internally by both `Tunable` and `Telemetry` to resolve appropriate typed topics (`getDoubleTopic`, `getBooleanTopic`, `getStringTopic`, `getStructTopic`) based on Python data types (`int`, `float`, `bool`, `str`, `Pose2d`).
 
 ---
 
@@ -25,6 +26,7 @@ Modern FRC robots require rapid parameter tuning during testing and comprehensiv
 | `@telemetry` | `decorator / descriptor` | Decorator that turns a method into an automated telemetry getter published to NetworkTables and optionally logged to WPILib DataLog. |
 | `Tunable` | `class (Descriptor)` | Python descriptor implementing bidirectional NetworkTables synchronization for `int`, `float`, `bool`, `str`, and `Pose2d`. |
 | `Telemetry` | `class (Descriptor)` | Python descriptor managing periodic telemetry publishing and typed WPILib DataLog entries (`DoubleLogEntry`, `BooleanLogEntry`, `StringLogEntry`). |
+| `_get_typed_topic` | `function` | Shared NetworkTables helper used by `Tunable` and `Telemetry` to obtain typed NT topics. |
 | `Direction` | `Enum` | Enumeration representing mechanism motion (`FORWARD = 1`, `REVERSE = -1`, `IDLE = 0`). |
 
 ---

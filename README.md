@@ -67,12 +67,14 @@ pip install -e .
 - **`FROGSysIdHelper`**: Seamless bridge to WPILib `SysIdRoutine` with CTRE Phoenix 6 `SignalLogger` recording high-frequency 250 Hz `.hoot` logs for desktop SysId analysis.
 - **Configuration & Results**: `CharacterizationConfig` dataclass and `TuningResult` with automatic export to `Slot0Configs`/`Slot1Configs` and Python code generation.
 
-### 2. CTRE Phoenix 6 Hardware Wrappers (`froglib.ctre`)
-- **`FROGTalonFX`**: Enhanced Falcon 500 and Kraken X60 motor controller wrapper with:
+### 2. CTRE Phoenix 6 Hardware Wrappers & Configuration (`froglib.ctre`)
+All CTRE Phoenix 6 hardware wrappers and configuration classes (`FROGTalonFX`, `FROGTalonFXConfig`, `FROGFeedbackConfig`, `FROGCanCoder`, `FROGCANCoderConfig`, `FROGPigeonGyro`, `TalonFXCharacterizer`, `FROGSysIdHelper`, `get_frog_talon_config`, `get_frog_cancoder_config`) are consolidated into `froglib.ctre`:
+- **`FROGTalonFX` & `FROGTalonFXConfig`**: Enhanced Falcon 500 and Kraken X60 motor controller wrapper with feedback (`FROGFeedbackConfig`) and gain slot helpers, alongside:
   - `SignalProfile` CAN bus frame rate optimization (`BASIC`, `FLYWHEEL`, `POSITION_MM`, `SWERVE_DRIVE`, `SWERVE_AZIMUTH`, `TUNING`) reducing CAN utilization from >85% down to <45%.
   - Built-in `simulation_init()` and `simulation_update()` using WPILib `DCMotorSim` and `LinearSystemId`.
+  - Factory helper `get_frog_talon_config()`.
 - **`FROGPigeonGyro`**: Wrapper for Pigeon 2.0 IMU with yaw/pitch/roll retrieval and zeroing.
-- **`FROGCanCoder`**: Magnetic absolute encoder wrapper with sensor-to-mechanism ratio synchronization and offset handling.
+- **`FROGCanCoder` & `FROGCANCoderConfig`**: Magnetic absolute encoder wrapper with sensor-to-mechanism ratio synchronization, steering offset handling, and factory helper `get_frog_cancoder_config()`.
 
 ### 3. Declarative Subsystem Architecture (`froglib.subsystem`)
 - **`FROGSubsystem`**: Base class extending WPILib `Subsystem` with declarative descriptors.
@@ -92,9 +94,9 @@ pip install -e .
 
 ### 6. Controllers, Sensors & Math Utilities (`froglib.xbox`, `froglib.navx`, `froglib.field`, `froglib.utils`)
 - **`FROGXboxDriver` & `FROGXboxTactical`**: Driver and tactical operator controllers with stick shaping, exponential curves, deadbands, debounced triggers, and rumble feedback.
-- **`FROGNavXGyro`**: Kauai Labs NavX IMU wrapper.
+- **`FROGNavXGyro` (alias `FROGGyro`)**: Kauai Labs NavX IMU wrapper in `froglib.navx` with alliance-aware resets and `getAngleConstrained()`.
 - **`FROGField`**: Coordinate transforms between red/blue alliances and field points of interest.
-- **Utilities**: `DriveTrain`, `GearStage`, `Buffer`, `PoseBuffer`, and `RobotRelativeTarget` coordinate helpers.
+- **Utilities (`froglib.utils`)**: Mechanical drivetrain calculations (`DriveTrain`, `GearStage`), circular data buffers (`Buffer`, `PoseBuffer`), and `RobotRelativeTarget` coordinate helpers.
 
 ---
 

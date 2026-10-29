@@ -9,7 +9,7 @@ The `froglib.swerve` module provides high-level control abstractions, kinematics
 A swerve drive allows an FRC robot to translate in any direction while independently controlling chassis rotation. `froglib.swerve` coordinates this through two main classes:
 
 1. **[`SwerveModule`][froglib.swerve.SwerveModule]**: Controls a single wheel assembly consisting of a drive motor ([`FROGTalonFX`][froglib.ctre.FROGTalonFX]), an azimuth steering motor ([`FROGTalonFX`][froglib.ctre.FROGTalonFX]), and a steering encoder ([`FROGCanCoder`][froglib.ctre.FROGCanCoder]). It continuously handles azimuth angle optimization (reversing drive direction if the turn angle exceeds 90°) and sets closed-loop velocity and position commands.
-2. **[`SwerveChassis`][froglib.swerve.SwerveChassis]**: Coordinates all four modules using WPILib's `SwerveDrive4Kinematics` and `SwerveDrive4PoseEstimator`. It provides field-oriented driving, robot-centric driving, autonomous heading tracking via a `ProfiledPIDControllerRadians`, chassis wheel locking (X-brake), and comprehensive NetworkTables telemetry.
+2. **[`SwerveChassis`][froglib.swerve.SwerveChassis]**: Coordinates all four modules using WPILib's `SwerveDrive4Kinematics` and `SwerveDrive4PoseEstimator`. It provides field-oriented driving (`fieldOrientedDrive()` with optional rotation throttling via `throttle_rotation: bool = True`), robot-centric driving, autonomous heading tracking via a `ProfiledPIDControllerRadians`, chassis wheel locking (X-brake), and comprehensive NetworkTables telemetry.
 
 ---
 
@@ -17,7 +17,7 @@ A swerve drive allows an FRC robot to translate in any direction while independe
 
 | Class | Base Class | Description |
 | :--- | :--- | :--- |
-| `SwerveChassis` | `object` | Kinematics and odometry manager coordinating four swerve modules and a Pigeon 2.0 gyro. |
+| `SwerveChassis` | `object` | Kinematics and odometry manager coordinating four swerve modules and a Pigeon 2.0 gyro; supports field-oriented drive with `throttle_rotation` control. |
 | `SwerveModule` | `object` | Individual swerve module controller handling drive velocity, steer position, and azimuth optimization. |
 | `SwerveModuleConfig` | `dataclass` | Configuration structure specifying motor IDs, CANcoder ID, motor/sensor configs, location, and wheel diameter. |
 | `RotationControllerConfig` | `object` | PID gains and trapezoidal motion profiling constraints for autonomous rotation control. |
@@ -104,8 +104,9 @@ chassis = SwerveChassis(
 chassis.enable()
 
 # Driving during teleop periodic:
-# Command forward 80% speed, 20% left drift, no rotation, at 100% throttle
-chassis.fieldOrientedDrive(vX=0.8, vY=0.2, vT=0.0, throttle=1.0)
+# Command forward 80% speed, 20% left drift, no rotation, at 100% throttle.
+# throttle_rotation (default True) determines whether rotation is scaled with translation throttle:
+chassis.fieldOrientedDrive(vX=0.8, vY=0.2, vT=0.0, throttle=1.0, throttle_rotation=True)
 
 # In autonomous or when holding position:
 # chassis.lockChassis()
