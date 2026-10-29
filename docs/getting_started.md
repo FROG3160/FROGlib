@@ -72,7 +72,9 @@ pip install dist/froglib-*.whl
 
 ---
 
-## 2. Hardware Configuration: `FROGTalonFX`
+## 2. Hardware Configuration: CTRE Phoenix 6 (`froglib.ctre`)
+
+All CTRE hardware and configuration classes (`FROGTalonFX`, `FROGTalonFXConfig`, `FROGFeedbackConfig`, `FROGCanCoder`, `FROGCANCoderConfig`, `FROGPigeonGyro`, `TalonFXCharacterizer`, `FROGSysIdHelper`, `get_frog_talon_config`, `get_frog_cancoder_config`) are consolidated into `froglib.ctre`. (Note: for IMU sensing with NavX, `FROGNavXGyro` and its alias `FROGGyro` reside in `froglib.navx`, while mechanical drivetrain helpers `DriveTrain` and `GearStage` are located in `froglib.utils`).
 
 The `FROGTalonFX` wrapper extends CTRE Phoenix 6's `TalonFX` with `SignalProfile` CAN bus frame rate optimization, reducing bus utilization while ensuring high update rates where needed:
 

@@ -6,13 +6,16 @@ The `froglib.navx` module provides a specialized wrapper for the Kauai Labs NavX
 
 - **Counter-Clockwise Positive**: Standard NavX yaw outputs follow compass bearing conventions (clockwise positive). `FROGNavXGyro` inverts this telemetry to adhere to standard Cartesian/trigonometric conventions (counter-clockwise positive), matching WPILib kinematics and odometry standards.
 - **Alliance-Aware Reorientation**: Allows resetting robot heading while automatically accounting for alliance color (0° heading for the Blue alliance driver station perspective, 180° heading for the Red alliance perspective).
+- **Constrained Heading (`getAngleConstrained()`)**: Returns the heading constrained to the continuous `[-180, 180]` degree range, useful for angular error calculation and steering controllers.
 - **WPILib Geometry Interoperability**: Directly exports robot heading as `wpimath.geometry.Rotation2d` objects for seamless integration into drivetrain pose estimators.
+- **Compatibility Alias**: `FROGGyro` is provided as an alias for `FROGNavXGyro` (consolidating the sensor wrapper from legacy `froglib.sensors`).
 
 ## Key Components
 
 | Component | Type | Description |
 |-----------|------|-------------|
-| [`FROGNavXGyro`][froglib.navx.FROGNavXGyro] | Class | Wraps the Kauai Labs NavX AHRS over SPI with CCW-positive angles, roll/pitch telemetry, and alliance-specific resets. |
+| [`FROGNavXGyro`][froglib.navx.FROGNavXGyro] | Class | Wraps the Kauai Labs NavX AHRS over SPI with CCW-positive angles, roll/pitch telemetry, `getAngleConstrained()`, and alliance-specific resets. |
+| `FROGGyro` | Class Alias | Backward-compatibility alias pointing directly to `FROGNavXGyro`. |
 
 ## Usage Examples
 
@@ -20,7 +23,7 @@ The `froglib.navx` module provides a specialized wrapper for the Kauai Labs NavX
 
 ```python
 from wpimath.geometry import Rotation2d
-from froglib.navx import FROGNavXGyro
+from froglib.navx import FROGNavXGyro  # or FROGGyro
 
 # 1. Initialize NavX over SPI
 navx = FROGNavXGyro()
@@ -28,12 +31,15 @@ navx = FROGNavXGyro()
 # 2. Get current heading as degrees (CCW positive)
 heading_deg = navx.getAngleCCW()
 
-# 3. Get heading as a WPILib Rotation2d object
+# 3. Get heading constrained to [-180, 180] degrees
+constrained_deg = navx.getAngleConstrained()
+
+# 4. Get heading as a WPILib Rotation2d object
 heading_rot2d = navx.getRotation2d()
 
-# 4. Get rotational velocity in radians/sec
+# 5. Get rotational velocity in radians/sec
 rot_rate = navx.getRadiansPerSecCCW()
-print(f"Heading: {heading_deg:.2f}°, Rate: {rot_rate:.3f} rad/s")
+print(f"Heading: {heading_deg:.2f}°, Constrained: {constrained_deg:.2f}°, Rate: {rot_rate:.3f} rad/s")
 ```
 
 ### Alliance-Aware Heading Reset

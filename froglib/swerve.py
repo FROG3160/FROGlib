@@ -353,7 +353,7 @@ class SwerveModule:
                 self.drive_motor.get_closed_loop_error().value
             )
             self._module_angle_error_pub.set(
-                self.drive_motor.get_closed_loop_error().value
+                self.steer_motor.get_closed_loop_error().value
             )
 
         else:
@@ -510,9 +510,14 @@ class SwerveChassis:
         for module in self.modules:
             module.enable()
 
-    # TODO: #4 Consolidate fieldOrientedDrive and fieldOrientedAutoRotateDrive
-    # add a boolean parameter to indicate whether to apply throttle to rotation or not
-    def fieldOrientedDrive(self, vX: float, vY: float, vT: float, throttle: float = 1.0) -> None:
+    def fieldOrientedDrive(
+        self,
+        vX: float,
+        vY: float,
+        vT: float,
+        throttle: float = 1.0,
+        throttle_rotation: bool = True,
+    ) -> None:
         """Calculates and applies field-oriented chassis speeds with proportional throttle.
 
         Args:
@@ -521,12 +526,18 @@ class SwerveChassis:
             vY (float): Requested velocity in Y direction (to the left when facing field).
                 Proportion of max speed (-1.0 to 1.0).
             vT (float): Requested rotational velocity, CCW positive (-1.0 to 1.0).
-            throttle (float, optional): Proportional scaling factor applied across all 3 inputs.
-                Defaults to 1.0.
+            throttle (float, optional): Proportional scaling factor applied to translational speeds
+                and optionally rotational speed. Defaults to 1.0.
+            throttle_rotation (bool, optional): Whether to scale rotational velocity by throttle.
+                When True, rotational speed is scaled by throttle; when False, rotational speed
+                is unscaled. Defaults to True.
         """
         xSpeed = vX * self.max_speed * throttle
         ySpeed = vY * self.max_speed * throttle
-        rotSpeed = vT * self.max_rotation_speed * throttle
+        if throttle_rotation:
+            rotSpeed = vT * self.max_rotation_speed * throttle
+        else:
+            rotSpeed = vT * self.max_rotation_speed
         self.apply_chassis_speeds(
             ChassisSpeeds.fromFieldRelativeSpeeds(
                 xSpeed, ySpeed, rotSpeed, self.getRotation2d()
@@ -539,6 +550,7 @@ class SwerveChassis:
         """Calculates field-oriented chassis speeds where throttle only scales translation.
 
         Rotational speed is commanded at full scale regardless of the throttle setting.
+        Delegates to `fieldOrientedDrive` with `throttle_rotation=False`.
 
         Args:
             vX (float): Requested velocity in X direction (downfield).
@@ -549,14 +561,7 @@ class SwerveChassis:
             throttle (float, optional): Proportional scaling factor applied to X and Y speeds.
                 Defaults to 1.0.
         """
-        xSpeed = vX * self.max_speed * throttle
-        ySpeed = vY * self.max_speed * throttle
-        rotSpeed = vT * self.max_rotation_speed
-        self.apply_chassis_speeds(
-            ChassisSpeeds.fromFieldRelativeSpeeds(
-                xSpeed, ySpeed, rotSpeed, self.getRotation2d()
-            )
-        )
+        self.fieldOrientedDrive(vX, vY, vT, throttle=throttle, throttle_rotation=False)
 
     def fieldOrientedDriveWithHeading(
         self, vX: float, vY: float, target_heading: float, throttle: float = 1.0

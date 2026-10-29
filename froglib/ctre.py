@@ -10,286 +10,55 @@ from dataclasses import dataclass, field
 from enum import Enum, auto
 import math
 import time
-from typing import Any, Callable, List, Optional, Tuple, Union
+from typing import Any, Callable, List, Optional, Tuple
+import numpy as np
+from ntcore import NetworkTableInstance
+from phoenix6 import StatusSignal, SignalLogger, unmanaged
+from phoenix6.canbus import CANBus
+from phoenix6.configs.cancoder_configs import (
+    CANcoderConfiguration,
+    MagnetSensorConfigs,
+)
+from phoenix6.configs.config_groups import (
+    CurrentLimitsConfigs,
+    FeedbackConfigs,
+    Slot0Configs,
+    Slot1Configs,
+    SoftwareLimitSwitchConfigs,
+)
+from phoenix6.configs.talon_fx_configs import (
+    FeedbackSensorSourceValue,
+    MotorOutputConfigs,
+    TalonFXConfiguration,
+)
+from phoenix6.controls import PositionVoltage, VoltageOut
+from phoenix6.hardware.cancoder import CANcoder
+from phoenix6.hardware.pigeon2 import Pigeon2
+from phoenix6.hardware.talon_fx import TalonFX
+from phoenix6.signals.spn_enums import (
+    GravityTypeValue,
+    InvertedValue,
+    NeutralModeValue,
+    SensorDirectionValue,
+    StaticFeedforwardSignValue,
+)
+from wpimath.geometry import Rotation2d
+from wpilib.simulation import DCMotorSim
+from wpimath.system.plant import DCMotor, LinearSystemId
+from wpimath.units import radiansToRotations, volts, seconds, volts_per_second
+from commands2 import Command, FunctionalCommand
+from commands2.sysid import SysIdRoutine
+from wpimath.sysid import SysIdRoutineLog
 
 # ------------------------------------------------------------------------------
-# Imports with graceful fallbacks for testing/headless environments
+# Standard Motor & Sensor Configurations & Constants
 # ------------------------------------------------------------------------------
 
-try:
-    from ntcore import NetworkTableInstance
-except ImportError:
-    class _DummyPublisher:
-        def set(self, val: Any):
-            pass
+MAX_FALCON_RPM: int = 6380
+"""Maximum free speed RPM for Falcon 500 motor."""
 
-    class _DummyTopic:
-        def publish(self):
-            return _DummyPublisher()
-
-    class _DummyNT:
-        def getStringTopic(self, _):
-            return _DummyTopic()
-
-        def getFloatTopic(self, _):
-            return _DummyTopic()
-
-    class NetworkTableInstance:  # type: ignore
-        @staticmethod
-        def getDefault():
-            return _DummyNT()
-
-try:
-    from phoenix6 import StatusSignal, SignalLogger, unmanaged
-    from phoenix6.canbus import CANBus
-    from phoenix6.configs.cancoder_configs import (
-        CANcoderConfiguration,
-        MagnetSensorConfigs,
-    )
-    from phoenix6.configs.config_groups import (
-        CurrentLimitsConfigs,
-        FeedbackConfigs,
-        Slot0Configs,
-        Slot1Configs,
-        SoftwareLimitSwitchConfigs,
-    )
-    from phoenix6.configs.talon_fx_configs import (
-        FeedbackSensorSourceValue,
-        MotorOutputConfigs,
-        TalonFXConfiguration,
-    )
-    from phoenix6.controls import PositionVoltage, VoltageOut
-    from phoenix6.hardware.cancoder import CANcoder
-    from phoenix6.hardware.pigeon2 import Pigeon2
-    from phoenix6.hardware.talon_fx import TalonFX
-    from phoenix6.signals.spn_enums import (
-        GravityTypeValue,
-        InvertedValue,
-        NeutralModeValue,
-        SensorDirectionValue,
-        StaticFeedforwardSignValue,
-    )
-except ImportError:
-    StatusSignal = object  # type: ignore
-    SignalLogger = None  # type: ignore
-
-    class _DummyUnmanaged:
-        @staticmethod
-        def feed_enable(_):
-            pass
-
-    unmanaged = _DummyUnmanaged()  # type: ignore
-
-    class CANBus:  # type: ignore
-        def __init__(self, name: str = "rio"):
-            self.name = name
-
-    class CANcoderConfiguration:  # type: ignore
-        def with_magnet_sensor(self, _):
-            return self
-
-    class MagnetSensorConfigs:  # type: ignore
-        def with_sensor_direction(self, _):
-            return self
-
-        def with_absolute_sensor_range(self, _):
-            return self
-
-    class Slot0Configs:  # type: ignore
-        def __init__(self):
-            self.k_s = 0.0
-            self.k_v = 0.0
-            self.k_a = 0.0
-            self.k_g = 0.0
-            self.k_p = 0.0
-            self.k_d = 0.0
-
-    class Slot1Configs(Slot0Configs):  # type: ignore
-        pass
-
-    class CurrentLimitsConfigs:  # type: ignore
-        def __init__(self):
-            self.stator_current_limit_enable = False
-            self.stator_current_limit = 0.0
-
-    class SoftwareLimitSwitchConfigs:  # type: ignore
-        pass
-
-    class FeedbackConfigs:  # type: ignore
-        def __init__(self):
-            self.sensor_to_mechanism_ratio = 1.0
-            self.rotor_to_sensor_ratio = 1.0
-
-    class MotorOutputConfigs:  # type: ignore
-        def with_neutral_mode(self, _):
-            return self
-
-        def with_inverted(self, _):
-            return self
-
-    class TalonFXConfiguration:  # type: ignore
-        def __init__(self):
-            self.feedback = FeedbackConfigs()
-            self.slot0 = Slot0Configs()
-            self.slot1 = Slot1Configs()
-            self.current_limits = CurrentLimitsConfigs()
-
-    class FeedbackSensorSourceValue:  # type: ignore
-        ROTOR_SENSOR = 0
-
-    class VoltageOut:  # type: ignore
-        def __init__(self, output: float):
-            self.output = output
-
-    class PositionVoltage:  # type: ignore
-        def __init__(self, position: float):
-            self.position = position
-
-    class CANcoder:  # type: ignore
-        def __init__(self, id: int, canbus: Any = "rio"):
-            self.id = id
-            self.configurator = self
-
-        def apply(self, _):
-            pass
-
-        def optimize_bus_utilization(self):
-            pass
-
-    class Pigeon2:  # type: ignore
-        def __init__(self, id: int):
-            self.id = id
-
-        def reset(self):
-            pass
-
-        def optimize_bus_utilization(self):
-            pass
-
-        def get_yaw(self):
-            return self
-
-        def set_update_frequency(self, _):
-            pass
-
-    class _DummySignal:
-        def __init__(self, value: float = 0.0):
-            self.value = value
-
-        def set_update_frequency(self, _):
-            pass
-
-    class TalonFX:  # type: ignore
-        def __init__(self, device_id: int, canbus: Any = "rio"):
-            self.device_id = device_id
-            self.configurator = self
-
-        def apply(self, _):
-            pass
-
-        def optimize_bus_utilization(self):
-            pass
-
-        def get_position(self):
-            return _DummySignal(0.0)
-
-        def get_velocity(self):
-            return _DummySignal(0.0)
-
-        def get_acceleration(self):
-            return _DummySignal(0.0)
-
-        def get_motor_voltage(self):
-            return _DummySignal(0.0)
-
-        def get_stator_current(self):
-            return _DummySignal(0.0)
-
-        def get_supply_voltage(self):
-            return _DummySignal(12.0)
-
-        def get_device_temp(self):
-            return _DummySignal(25.0)
-
-        def get_fault_field(self):
-            return _DummySignal(0.0)
-
-        def get_rotor_velocity(self):
-            return _DummySignal(0.0)
-
-        def set_control(self, _):
-            pass
-
-    class GravityTypeValue:  # type: ignore
-        pass
-
-    class InvertedValue:  # type: ignore
-        CLOCKWISE_POSITIVE = 0
-        COUNTER_CLOCKWISE_POSITIVE = 1
-
-    class NeutralModeValue:  # type: ignore
-        COAST = 0
-        BRAKE = 1
-
-    class SensorDirectionValue:  # type: ignore
-        COUNTER_CLOCKWISE_POSITIVE = 1
-
-    class StaticFeedforwardSignValue:  # type: ignore
-        pass
-
-try:
-    from wpimath.geometry import Rotation2d
-    from wpilib.simulation import DCMotorSim
-    from wpimath.system.plant import DCMotor, LinearSystemId
-    from wpimath.units import radiansToRotations
-except ImportError:
-    class Rotation2d:  # type: ignore
-        def __init__(self, value: float = 0.0):
-            self.value = value
-
-        @staticmethod
-        def fromDegrees(deg: float):
-            return Rotation2d(math.radians(deg))
-
-    class DCMotor:  # type: ignore
-        @staticmethod
-        def falcon500(_=1):
-            return DCMotor()
-
-    class LinearSystemId:  # type: ignore
-        @staticmethod
-        def DCMotorSystem(*_):
-            return object()
-
-    class DCMotorSim:  # type: ignore
-        def __init__(self, *_):
-            pass
-
-        def setState(self, *_):
-            pass
-
-    def radiansToRotations(rad: float) -> float:
-        return rad / (2.0 * math.pi)
-
-try:
-    from commands2 import Command
-    from commands2.sysid import SysIdRoutine
-    from wpimath.sysid import SysIdRoutineLog
-    from wpimath.units import volts, seconds, volts_per_second
-except ImportError:
-    Command = object  # type: ignore
-    SysIdRoutine = None  # type: ignore
-    SysIdRoutineLog = None  # type: ignore
-
-try:
-    import numpy as np
-except ImportError:
-    np = None  # type: ignore
-
-
-# ------------------------------------------------------------------------------
-# Standard Motor & Sensor Configurations
-# ------------------------------------------------------------------------------
+MAX_KRAKEN_X60_RPM: int = 6000
+"""Maximum free speed RPM for Kraken X60 motor."""
 
 MOTOR_OUTPUT_CWP_BRAKE: MotorOutputConfigs = (
     MotorOutputConfigs()
@@ -319,33 +88,105 @@ MOTOR_OUTPUT_CCWP_COAST: MotorOutputConfigs = (
 )
 """MotorOutputConfigs: Coast neutral mode and Counter-Clockwise Positive inversion."""
 
-MAGNET_SENSOR_CCWP: MagnetSensorConfigs = (
+MAGNET_CONFIG_CONTWRAP_CCWP = (
     MagnetSensorConfigs()
+    .with_absolute_sensor_discontinuity_point(0.5)
     .with_sensor_direction(SensorDirectionValue.COUNTER_CLOCKWISE_POSITIVE)
-    .with_absolute_sensor_range(0)
 )
-"""MagnetSensorConfigs: Counter-Clockwise Positive direction with 0 to 1 absolute range."""
+"""MagnetSensorConfigs: Discontinuity point at 0.5 with CCW positive direction."""
 
-MAGNET_CONFIG_CONTWRAP_CCWP = MAGNET_SENSOR_CCWP
-"""Backward compatibility alias for MAGNET_SENSOR_CCWP."""
+MAGNET_SENSOR_CCWP = MAGNET_CONFIG_CONTWRAP_CCWP
+"""Backward compatibility alias for MAGNET_CONFIG_CONTWRAP_CCWP."""
 
 
 def get_frog_talon_config() -> TalonFXConfiguration:
-    """Returns a default TalonFXConfiguration instance for FROGlib mechanisms.
+    """Returns a TalonFXConfiguration with FROG safe defaults (40A supply / 60A stator current limits)."""
+    return TalonFXConfiguration().with_current_limits(
+        CurrentLimitsConfigs()
+        .with_supply_current_limit(40)
+        .with_supply_current_limit_enable(True)
+        .with_stator_current_limit(60)
+        .with_stator_current_limit_enable(True)
+    )
 
-    Returns:
-        TalonFXConfiguration: Default TalonFX configuration.
+
+def get_frog_cancoder_config(steer_offset: float = 0.0) -> CANcoderConfiguration:
+    """Returns a CANcoderConfiguration with FROG defaults and optional magnet offset."""
+    return CANcoderConfiguration().with_magnet_sensor(
+        MagnetSensorConfigs()
+        .with_absolute_sensor_discontinuity_point(0.5)
+        .with_magnet_offset(steer_offset)
+        .with_sensor_direction(SensorDirectionValue.COUNTER_CLOCKWISE_POSITIVE)
+    )
+
+
+class FROGFeedbackConfig(FeedbackConfigs):
+    """FROG subclass of FeedbackConfigs that allows parameter passing during instantiation.
+
+    Args:
+        remote_sensor_id: CAN ID of the remote sensor. Defaults to 0.
+        sensor_source: Sensor source value from FeedbackSensorSourceValue. Defaults to
+            FeedbackSensorSourceValue.ROTOR_SENSOR.
+        rotor_to_sensor_ratio: Gear ratio between motor rotor and sensor. Defaults to 1.0.
+        sensor_to_mechanism_ratio: Gear ratio between sensor and final mechanism. Defaults to 1.0.
     """
-    return TalonFXConfiguration()
+
+    def __init__(
+        self,
+        remote_sensor_id: int = 0,
+        sensor_source: FeedbackSensorSourceValue = FeedbackSensorSourceValue.ROTOR_SENSOR,
+        rotor_to_sensor_ratio: float = 1.0,
+        sensor_to_mechanism_ratio: float = 1.0,
+    ):
+        super().__init__()
+        self.feedback_remote_sensor_id = remote_sensor_id
+        self.feedback_sensor_source = sensor_source
+        self.rotor_to_sensor_ratio = rotor_to_sensor_ratio
+        self.sensor_to_mechanism_ratio = sensor_to_mechanism_ratio
 
 
-def get_frog_cancoder_config() -> CANcoderConfiguration:
-    """Returns a standard CANcoderConfiguration with CCW positive magnet sensor.
+class FROGTalonFXConfig(TalonFXConfiguration):
+    """FROG subclass of TalonFXConfiguration with inline gain and feedback initialization.
 
-    Returns:
-        CANcoderConfiguration: CANcoder configuration with MAGNET_SENSOR_CCWP applied.
+    Applies FROG safe default current limits (40A supply / 60A stator current limits).
+
+    Args:
+        feedback_config: Feedback configuration for the motor. Defaults to FROGFeedbackConfig().
+        slot0gains: Slot 0 PID and feedforward gains. Defaults to Slot0Configs().
+        slot1gains: Slot 1 PID and feedforward gains. Defaults to Slot1Configs().
     """
-    return CANcoderConfiguration().with_magnet_sensor(MAGNET_SENSOR_CCWP)
+
+    def __init__(
+        self,
+        feedback_config: Optional[FeedbackConfigs] = None,
+        slot0gains: Optional[Slot0Configs] = None,
+        slot1gains: Optional[Slot1Configs] = None,
+    ):
+        super().__init__()
+        frog_defaults = get_frog_talon_config()
+        self.current_limits = frog_defaults.current_limits
+        self.feedback = (
+            feedback_config if feedback_config is not None else FROGFeedbackConfig()
+        )
+        self.slot0 = slot0gains if slot0gains is not None else Slot0Configs()
+        self.slot1 = slot1gains if slot1gains is not None else Slot1Configs()
+
+
+class FROGCANCoderConfig(CANcoderConfiguration):
+    """CANcoderConfiguration subclass that applies FROG CCW and steer offset defaults.
+
+    Args:
+        steer_offset: Magnet offset in rotations to calibrate wheel zero heading. Defaults to 0.0.
+    """
+
+    def __init__(self, steer_offset: float = 0.0):
+        super().__init__()
+        self.with_magnet_sensor(
+            MagnetSensorConfigs()
+            .with_absolute_sensor_discontinuity_point(0.5)
+            .with_magnet_offset(steer_offset)
+            .with_sensor_direction(SensorDirectionValue.COUNTER_CLOCKWISE_POSITIVE)
+        )
 
 
 # ------------------------------------------------------------------------------
@@ -990,23 +831,18 @@ class TalonFXCharacterizer:
         """
         return self._result
 
-    def create_characterization_command(self) -> Any:
+    def create_characterization_command(self) -> FunctionalCommand:
         """Creates a runnable WPILib Command that executes the characterization routine.
 
         Returns:
             FunctionalCommand: A WPILib command running setup(), periodic(), and teardown().
         """
-        try:
-            from commands2 import FunctionalCommand
-
-            return FunctionalCommand(
-                onInit=self.setup,
-                onExecute=lambda: self.periodic(),
-                onEnd=lambda interrupted: self.teardown() if interrupted else None,
-                isFinished=lambda: self.state in (self.State.COMPUTE_AND_FINISH, self.State.ABORTED),
-            )
-        except ImportError:
-            return None
+        return FunctionalCommand(
+            onInit=self.setup,
+            onExecute=lambda: self.periodic(),
+            onEnd=lambda interrupted: self.teardown() if interrupted else None,
+            isFinished=lambda: self.state in (self.State.COMPUTE_AND_FINISH, self.State.ABORTED),
+        )
 
 
 class FROGSysIdHelper:
@@ -1045,10 +881,6 @@ class FROGSysIdHelper:
         self.is_bounded = is_bounded
         self.min_pos = min_pos
         self.max_pos = max_pos
-
-        if SysIdRoutine is None:
-            self._routine = None
-            return
 
         routine_config = SysIdRoutine.Config(
             rampRate=volts_per_second(ramp_rate_v_per_s),
@@ -1118,18 +950,13 @@ class FROGSysIdHelper:
             return None
         return self._wrap_sysid_command(self._routine.dynamic(SysIdRoutine.Direction.kReverse))
 
-    def _wrap_sysid_command(self, cmd: Any) -> Any:
-        try:
-            from commands2 import FunctionalCommand
-
-            return FunctionalCommand(
-                onInit=lambda: self._on_start(),
-                onExecute=cmd.execute,
-                onEnd=lambda interrupted: self._on_end(interrupted, cmd),
-                isFinished=cmd.isFinished,
-            )
-        except ImportError:
-            return None
+    def _wrap_sysid_command(self, cmd: Any) -> FunctionalCommand:
+        return FunctionalCommand(
+            onInit=lambda: self._on_start(),
+            onExecute=cmd.execute,
+            onEnd=lambda interrupted: self._on_end(interrupted, cmd),
+            isFinished=cmd.isFinished,
+        )
 
     def _on_start(self):
         if hasattr(self.motor, "apply_usage_mode"):
@@ -1183,7 +1010,7 @@ class FROGTalonFX(TalonFX):
     def __init__(
         self,
         id: int,
-        motor_config: TalonFXConfiguration = get_frog_talon_config(),
+        motor_config: Optional[TalonFXConfiguration] = None,
         canbus: str = "rio",
         motor_name: str = "",
         signal_profile: SignalProfile = SignalProfile.BASIC,
@@ -1201,7 +1028,9 @@ class FROGTalonFX(TalonFX):
         """
         super().__init__(device_id=id, canbus=CANBus(canbus))
         self.motor_name = motor_name if motor_name else f"TalonFX({id})"
-        self.config = motor_config
+        self.config = (
+            motor_config if motor_config is not None else get_frog_talon_config()
+        )
         self.motor_model = motor_model
         self.configurator.apply(self.config)
         self.apply_usage_mode(signal_profile)
@@ -1343,7 +1172,7 @@ class FROGTalonFX(TalonFX):
         if measurement_std_devs is None:
             measurement_std_devs = [0.0, 0.0]
 
-        devs = np.array(measurement_std_devs) if np is not None else measurement_std_devs
+        devs = np.array(measurement_std_devs)
         self.physim = DCMotorSim(plant, motor_model, devs)
         self.physim.setState(0.0, 0.0)
 
@@ -1481,7 +1310,7 @@ class FROGCanCoder(CANcoder):
     def __init__(
         self,
         id: int,
-        config: CANcoderConfiguration = get_frog_cancoder_config(),
+        config: Optional[CANcoderConfiguration] = None,
         canbus: str = "rio",
     ):
         """Initializes the CANcoder with configuration and bus utilization optimization.
@@ -1492,5 +1321,7 @@ class FROGCanCoder(CANcoder):
             canbus: CAN bus identifier string. Defaults to "rio".
         """
         super().__init__(id, canbus)
+        if config is None:
+            config = get_frog_cancoder_config()
         self.configurator.apply(config)
         self.optimize_bus_utilization()

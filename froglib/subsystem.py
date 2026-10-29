@@ -22,6 +22,31 @@ class Direction(Enum):
     IDLE = 0
 
 
+def _get_typed_topic(
+    table: ntcore.NetworkTable, key: str, value_type: type
+) -> Optional[ntcore.Topic]:
+    """Returns the appropriate typed NetworkTables topic for the given value type.
+
+    Args:
+        table (ntcore.NetworkTable): NetworkTables table to create topic in.
+        key (str): Topic key name.
+        value_type (type): Python type (int, float, bool, str, or Pose2d).
+
+    Returns:
+        Optional[ntcore.Topic]: Typed topic object or None if unsupported.
+    """
+    if value_type in (int, float):
+        return table.getDoubleTopic(key)
+    elif value_type is bool:
+        return table.getBooleanTopic(key)
+    elif value_type is str:
+        return table.getStringTopic(key)
+    elif value_type is Pose2d:
+        return table.getStructTopic(key, Pose2d)
+    else:
+        return None
+
+
 class Tunable:
     """Descriptor for tunable NetworkTables values editable from dashboard or code.
 
@@ -74,7 +99,7 @@ class Tunable:
             setattr(obj, "_tunable_data", {})
         tunable_data = getattr(obj, "_tunable_data")
         if self._attr_name not in tunable_data:
-            topic = self._get_typed_topic(
+            topic = _get_typed_topic(
                 obj.nt_tunables, self.topic_name, type(self.default)
             )
             pub = topic.publish()
@@ -131,27 +156,11 @@ class Tunable:
         if hasattr(obj, setter_name):
             getattr(obj, setter_name)(value)
 
-    def _get_typed_topic(self, table: ntcore.NetworkTable, key: str, value_type: type):
-        """Returns the appropriate typed NetworkTables topic for the given value type.
-
-        Args:
-            table (ntcore.NetworkTable): NetworkTables table to create topic in.
-            key (str): Topic key name.
-            value_type (type): Python type (int, float, bool, str, or Pose2d).
-
-        Returns:
-            Optional[ntcore.Topic]: Typed topic object or None if unsupported.
-        """
-        if value_type in (int, float):
-            return table.getDoubleTopic(key)
-        elif value_type is bool:
-            return table.getBooleanTopic(key)
-        elif value_type is str:
-            return table.getStringTopic(key)
-        elif value_type is Pose2d:
-            return table.getStructTopic(key, Pose2d)
-        else:
-            return None
+    def _get_typed_topic(
+        self, table: ntcore.NetworkTable, key: str, value_type: type
+    ) -> Optional[ntcore.Topic]:
+        """Delegates to module-level `_get_typed_topic` helper function."""
+        return _get_typed_topic(table, key, value_type)
 
 
 class Telemetry:
@@ -206,7 +215,7 @@ class Telemetry:
         if self._attr_name not in telemetry_data:
             # We need a sample value to determine type
             value = self.getter(obj)
-            topic = self._get_typed_topic(obj.nt_table, self.topic_name, type(value))
+            topic = _get_typed_topic(obj.nt_table, self.topic_name, type(value))
 
             pub = None
             if topic:
@@ -245,27 +254,11 @@ class Telemetry:
             storage["log"].append(value)
         return value
 
-    def _get_typed_topic(self, table: ntcore.NetworkTable, key: str, value_type: type):
-        """Returns the appropriate typed NetworkTables topic for the given value type.
-
-        Args:
-            table (ntcore.NetworkTable): NetworkTables table to create topic in.
-            key (str): Topic key name.
-            value_type (type): Python type (int, float, bool, str, or Pose2d).
-
-        Returns:
-            Optional[ntcore.Topic]: Typed topic object or None if unsupported.
-        """
-        if value_type in (int, float):
-            return table.getDoubleTopic(key)
-        elif value_type is bool:
-            return table.getBooleanTopic(key)
-        elif value_type is str:
-            return table.getStringTopic(key)
-        elif value_type is Pose2d:
-            return table.getStructTopic(key, Pose2d)
-        else:
-            return None
+    def _get_typed_topic(
+        self, table: ntcore.NetworkTable, key: str, value_type: type
+    ) -> Optional[ntcore.Topic]:
+        """Delegates to module-level `_get_typed_topic` helper function."""
+        return _get_typed_topic(table, key, value_type)
 
 
 def tunable(

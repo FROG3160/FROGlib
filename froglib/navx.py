@@ -8,6 +8,7 @@ positive coordinate conventions required for swerve drivetrains and odometry.
 import math
 from navx import AHRS
 from wpimath.geometry import Rotation2d
+from froglib.utils import constrain_radians
 
 
 class FROGNavXGyro:
@@ -107,13 +108,9 @@ class FROGNavXGyro:
         self.gyro.reset()
 
     def getAngleConstrained(self) -> float:
-        """Gets the current angle constrained to the range [-180, 180] degrees.
-
-        Returns:
-            float: Constrained angle in degrees.
-        """
-        angle = self.getAngle()
-        return math.degrees(math.atan2(math.sin(angle), math.cos(angle)))
+        """Returns the constrained CCW heading angle in degrees between -180 and 180."""
+        rad = math.radians(self.getAngleCCW())
+        return math.degrees(constrain_radians(rad))
 
     def setAngleAdjustment(self, angle: float):
         """Sets the NavX internal angle adjustment.
@@ -130,3 +127,8 @@ class FROGNavXGyro:
             float: Adjustment angle in degrees.
         """
         return self.gyro.getAngleAdjustment()
+
+
+# Alias for backward compatibility after removing froglib.sensors
+FROGGyro = FROGNavXGyro
+
