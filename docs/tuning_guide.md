@@ -190,3 +190,17 @@ class ArmSubsystem(Subsystem):
 2. `SignalLogger` automatically records high-frequency telemetry at 250 Hz into a `.hoot` file on the roboRIO.
 3. Open **Phoenix Tuner X**, go to **Tools -> Log Extractor**, and convert the `.hoot` file to `.wpilog`.
 4. Open the **SysId** desktop application, load the `.wpilog`, and run the analysis.
+
+---
+
+## 6. Testing & Verification
+
+Before executing characterization routines on competition hardware or deploying new mechanisms, follow our comprehensive testing guidelines:
+
+- **Unit & Physics Simulation**: Run the deterministic test suite (`python3 -m unittest discover -s tests -v`) to validate algorithms, state transitions, and safety fault-injections against `SimulatedTalonFXPlant`.
+- **WPILib Desktop Simulation (Sim GUI / Glass)**: Verify command scheduling, simulation physics (`DCMotorSim`), and monitor live telemetry under `FROGLib/Tuning/<MechanismName>` before touching the robot.
+- **On-Robot Pre-Flight Checklist**: Review gearing configuration, motor inversion, soft limit bounds (`min_test_pos`, `max_test_pos`), and stator current clamping.
+
+For complete step-by-step simulation examples, test suite architecture, and safety protocols, refer to:  
+👉 **[Testing & Verifying Automated Motor Tuning](testing_tuning.md)**
+

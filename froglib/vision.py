@@ -1,3 +1,12 @@
+"""Computer vision utilities and pose estimation for FRC robots using PhotonVision.
+
+This module provides high-level abstractions for AprilTag-based robot pose estimation
+and lightweight object/game-piece detection using PhotonVision. It includes pose estimation
+with NetworkTables telemetry logging (`FROGPoseEstimator`), camera configuration helpers
+(`FROGCameraConfig`), and density-based target clustering without external machine
+learning dependencies (`FROGDetector`, `DetectionResult`).
+"""
+
 from dataclasses import dataclass
 import numpy as np
 from typing import List, Tuple, Optional, Dict
@@ -13,18 +22,54 @@ from commands2.button import Trigger
 
 
 class FROGCameraConfig:
+    """Configuration container for a PhotonVision camera mounted on the robot.
+
+    Attributes:
+        name (str): The NetworkTables/PhotonVision camera name.
+        robotToCamera (Transform3d): The 3D coordinate transform from the robot
+            center of rotation to the camera optical center.
+    """
+
     def __init__(self, name: str, robotToCamera: Transform3d = Transform3d()):
+        """Initializes a camera configuration.
+
+        Args:
+            name (str): The unique name of the camera in PhotonVision.
+            robotToCamera (Transform3d, optional): 3D transform from robot frame
+                to camera frame. Defaults to identity Transform3d().
+        """
         self.name = name
         self.robotToCamera = robotToCamera
 
 
 class FROGPoseEstimator:
+    """Robot pose estimator utilizing PhotonVision AprilTag detections and NetworkTables.
+
+    Integrates PhotonCamera with PhotonPoseEstimator to produce estimated robot poses
+    on the field. Results and standard deviations are published to NetworkTables under
+    `FROGSubsystems/Vision/<camera_name>/` for real-time dashboard telemetry and pose filtering.
+
+    Attributes:
+        camera (PhotonCamera): The underlying PhotonVision camera client.
+        fieldTags (AprilTagFieldLayout): Known 3D positions of AprilTags on the field.
+        estimator (PhotonPoseEstimator): The PhotonLib pose estimation engine.
+        pose_buffer (PoseBuffer): Historical buffer of estimated poses for statistical filtering.
+    """
+
     def __init__(
         self,
         fieldTags: AprilTagFieldLayout,
         camera_name: str,
         robotToCamera: Transform3d = Transform3d(),
     ):
+        """Initializes the AprilTag pose estimator.
+
+        Args:
+            fieldTags (AprilTagFieldLayout): Layout containing the known positions of AprilTags.
+            camera_name (str): The name of the camera configured in PhotonVision.
+            robotToCamera (Transform3d, optional): 3D transform from robot center to camera lens.
+                Defaults to identity Transform3d().
+        """
         self.camera = PhotonCamera(camera_name)
         self.fieldTags = fieldTags
         self.estimator = PhotonPoseEstimator(
@@ -72,6 +117,16 @@ class FROGPoseEstimator:
         )
 
     def get_estimate(self) -> EstimatedRobotPose | None:
+        """Estimates the robot's field pose from unread camera frames.
+
+        Reads unread results from the camera, attempting multi-tag coprocessor estimation
+        first, and falling back to the lowest ambiguity single-tag estimate if multi-tag is
+        unavailable. Publishes the estimated pose to NetworkTables.
+
+        Returns:
+            EstimatedRobotPose | None: The estimated 3D robot pose with timestamp, or None
+                if no valid pose could be calculated.
+        """
         estPose = None
         for result in self.camera.getAllUnreadResults():
             estPose = self.estimator.estimateCoprocMultiTagPose(result)
@@ -99,6 +154,16 @@ class FROGPoseEstimator:
         #     )
 
     def get_distance_to_tag(self, pose: Pose3d, tag_num: int) -> float | None:
+        """Calculates the 2D planar distance from a given robot pose to a field AprilTag.
+
+        Args:
+            pose (Pose3d): Current 3D pose of the robot.
+            tag_num (int): The fiducial ID of the target AprilTag.
+
+        Returns:
+            float | None: Planar Euclidean distance in meters, or None if the tag ID
+                is not found in the field layout.
+        """
         if tagpose := self.getTagPose(tag_num):
             return (
                 pose.toPose2d().translation().distance(tagpose.toPose2d().translation())
@@ -107,6 +172,14 @@ class FROGPoseEstimator:
             return None
 
     def getTagPose(self, tag_id: int):
+        """Retrieves the 3D pose of an AprilTag from the field layout.
+
+        Args:
+            tag_id (int): The fiducial ID of the AprilTag.
+
+        Returns:
+            Pose3d | None: The 3D pose of the tag, or None if not present in the layout.
+        """
         return self.fieldTags.getTagPose(tag_id)
 
     # def periodic(self):
@@ -146,7 +219,16 @@ class FROGPoseEstimator:
 
 @dataclass
 class DetectionResult:
-    """Result of detection processing"""
+    """Result of detection processing and spatial clustering.
+
+    Attributes:
+        target_yaw (float): Centroid yaw angle in degrees relative to the camera center.
+        target_pitch (float): Centroid pitch angle in degrees relative to the camera center.
+        concentration_score (float): Density or area-weighted concentration score of the cluster.
+        num_detections (int): Total number of detected targets grouped within the cluster.
+        avg_confidence (float, optional): Average detection confidence of targets in the cluster.
+            Defaults to 0.0.
+    """
 
     target_yaw: float
     target_pitch: float
@@ -157,8 +239,8 @@ class DetectionResult:
 
 
 class FROGDetector(PhotonCamera):
-    """
-    Lightweight version of FROGDetection with no sklearn dependency.
+    """Lightweight version of FROGDetection with no sklearn dependency.
+
     Uses only numpy for all clustering operations.
     """
 
@@ -166,11 +248,10 @@ class FROGDetector(PhotonCamera):
         self,
         camera_config: FROGCameraConfig,
     ):
-        """
-        Initialize the lightweight detection camera.
+        """Initialize the lightweight detection camera.
 
         Args:
-            camera_config: Configuration for the camera
+            camera_config (FROGCameraConfig): Configuration containing camera name and transform.
         """
         super().__init__(camera_config.name)
         self._min_confidence = 0.8
@@ -185,6 +266,11 @@ class FROGDetector(PhotonCamera):
         self._areas: np.ndarray = np.array([])
 
     def get_targets(self):
+        """Retrieves the latest unread target detections from the camera.
+
+        Updates the internal targets list with targets from the most recent frame,
+        or clears the list if no targets are detected.
+        """
         if results := self.getAllUnreadResults():
             result = results[-1]
 
@@ -197,6 +283,11 @@ class FROGDetector(PhotonCamera):
             self.targets = []
 
     def process_targets(self):
+        """Filters detected targets by confidence and converts angular data into NumPy arrays.
+
+        Extracts yaw, pitch, and bounding area arrays for targets meeting or exceeding
+        the minimum detection confidence threshold (`_min_confidence`).
+        """
         if self.targets is None:
             self._yaws = self._pitches = self._areas = np.array([])
             return
@@ -213,6 +304,15 @@ class FROGDetector(PhotonCamera):
     def get_detection_results(
         self,
     ) -> Optional[DetectionResult] | None:
+        """Computes and returns the best clustered target detection.
+
+        Runs density clustering on current targets and stores the highest-scoring
+        cluster centroid.
+
+        Returns:
+            DetectionResult | None: The best target cluster result, or None if no valid
+                cluster is found.
+        """
 
         if self.targets:
             self.detection_target = self.get_best_cluster(
@@ -230,6 +330,20 @@ class FROGDetector(PhotonCamera):
         min_neighbors: int = 2,
         use_area_weighting: bool = True,
     ) -> Optional[DetectionResult]:
+        """Finds the most dense cluster of detected targets using pairwise angular distance.
+
+        Args:
+            cluster_radius_deg (float, optional): Maximum angular radius in degrees to consider
+                two targets neighbors. Defaults to 12.0.
+            min_neighbors (int, optional): Minimum number of detected targets required to form
+                a cluster. Defaults to 2.
+            use_area_weighting (bool, optional): Whether to weight cluster centroid and score
+                by detected target area. Defaults to True.
+
+        Returns:
+            DetectionResult | None: Centroid and metadata of the most concentrated cluster,
+                or None if no cluster meets min_neighbors.
+        """
 
         # Calculate Distance Matrix (Broadcasting)
         dist_sq = (self._yaws[:, np.newaxis] - self._yaws[np.newaxis, :]) ** 2 + (
@@ -269,11 +383,19 @@ class FROGDetector(PhotonCamera):
         )
 
     def has_valid_target(self) -> bool:
-        """Check if there is a valid target concentration."""
+        """Check if there is a valid target concentration.
+
+        Returns:
+            bool: True if a valid DetectionResult exists, False otherwise.
+        """
         return self.detection_target is not None
 
     def get_concentration_info(self) -> str:
-        """Get human-readable information about the current fuel concentration."""
+        """Get human-readable information about the current fuel concentration.
+
+        Returns:
+            str: Description of target count, yaw, pitch, and concentration score.
+        """
         result = self.detection_target
 
         if result is None:
@@ -291,6 +413,17 @@ class FROGDetector(PhotonCamera):
         pitch_threshold_deg: float = -10.0,
         min_area: float = 0.0,
     ) -> bool:
+        """Evaluates whether any detected target satisfies proximity and field-of-view thresholds.
+
+        Args:
+            yaw_threshold_deg (float, optional): Maximum absolute yaw angle in degrees. Defaults to 20.0.
+            pitch_threshold_deg (float, optional): Upper bound pitch angle in degrees (targets lower in the image).
+                Defaults to -10.0.
+            min_area (float, optional): Minimum target bounding area percentage. Defaults to 0.0.
+
+        Returns:
+            bool: True if at least one target meets all threshold conditions, False otherwise.
+        """
         if len(self._yaws) == 0:
             return False
         matches = (
@@ -305,6 +438,15 @@ class FROGDetector(PhotonCamera):
         yaw_threshold_deg: float = 20.0,
         pitch_threshold_deg: float = -10.0,
     ) -> Trigger:
+        """Creates a WPILib Command Trigger that activates when targets are within specified thresholds.
+
+        Args:
+            yaw_threshold_deg (float, optional): Maximum absolute yaw angle in degrees. Defaults to 20.0.
+            pitch_threshold_deg (float, optional): Upper bound pitch angle in degrees. Defaults to -10.0.
+
+        Returns:
+            Trigger: A commands2 Trigger active when targets meet the proximity criteria.
+        """
         return Trigger(
             lambda: self.has_targets_close(yaw_threshold_deg, pitch_threshold_deg)
         )

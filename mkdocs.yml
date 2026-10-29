@@ -49,6 +49,7 @@ nav:
   - Home: index.md
   - Getting Started: getting_started.md
   - Tuning Guide: tuning_guide.md
+  - Testing Motor Tuning: testing_tuning.md
   - API Reference:
       - CTRE: api/ctre.md
       - Field: api/field.md
